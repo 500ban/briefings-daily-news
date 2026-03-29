@@ -133,8 +133,7 @@ a:focus-visible {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   white-space: nowrap;
 }
 
@@ -148,9 +147,8 @@ a:focus-visible {
   background: rgba(255, 255, 255, 0.55);
   color: var(--muted);
   font-size: 0.9rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  text-transform: uppercase;
   backdrop-filter: blur(12px);
 }
 
@@ -184,6 +182,8 @@ a:focus-visible {
   font-size: clamp(3rem, 6vw, 6rem);
   line-height: 0.94;
   letter-spacing: -0.05em;
+  text-wrap: balance;
+  line-break: strict;
 }
 
 .site-title a {
@@ -619,7 +619,8 @@ a:focus-visible {
   padding-top: 20px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.84rem;
+  opacity: 0.82;
 }
 
 .site-footer-inner p {
@@ -661,7 +662,7 @@ a:focus-visible {
 
   .site-brand-text {
     font-size: 0.76rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
   }
 
   .site-header-link {
@@ -670,8 +671,8 @@ a:focus-visible {
   }
 
   .site-title {
-    max-width: 8ch;
-    font-size: clamp(2.35rem, 13vw, 3.4rem);
+    max-width: 10ch;
+    font-size: clamp(2.15rem, 11vw, 3.05rem);
   }
 
   .site-description {

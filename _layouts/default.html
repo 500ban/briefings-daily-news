@@ -15,10 +15,10 @@
         <div class="site-header-bar">
           <a class="site-brand" href="{{ '/' | relative_url }}">
             <span class="site-brand-mark">DB</span>
-            <span class="site-brand-text">Daily Briefing</span>
+            <span class="site-brand-text">デイリーブリーフィング</span>
           </a>
           {% if page.layout == 'post' %}
-          <a class="site-header-link" href="{{ '/' | relative_url }}">Archive</a>
+          <a class="site-header-link" href="{{ '/' | relative_url }}">一覧へ戻る</a>
           {% endif %}
         </div>
         {% if page.url == '/' %}
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="site-hero-rail">
-            <p class="hero-rail-label">Coverage</p>
+            <p class="hero-rail-label">カテゴリ</p>
             <ul class="hero-topics">
               <li>ビジネス・経済</li>
               <li>AI最新動向</li>
@@ -45,9 +45,9 @@
               <li>セキュリティ</li>
             </ul>
             {% if latest_post %}
-            <p class="hero-issue-date">Latest issue: {{ latest_post.date | date: "%Y-%m-%d" }}</p>
+            <p class="hero-issue-date">最新号: {{ latest_post.date | date: "%Y-%m-%d" }}</p>
             {% else %}
-            <p class="hero-issue-date">Preparing the first issue.</p>
+            <p class="hero-issue-date">初回公開を準備中です。</p>
             {% endif %}
           </div>
         </div>

@@ -8,14 +8,14 @@ title: デイリーブリーフィング
 {% if latest_post %}
 <section class="home-section">
   <div class="section-heading">
-    <p class="section-kicker">Latest Issue</p>
+    <p class="section-kicker">最新号</p>
     <h2>まずは今日のブリーフィングから。</h2>
     <p>その日の重要トピックを、読み切れる分量で一覧できます。</p>
   </div>
   <a class="feature-brief" href="{{ latest_post.url | relative_url }}">
     <div class="feature-brief-top">
       <p class="feature-date">{{ latest_post.date | date: "%Y-%m-%d" }}</p>
-      <span class="feature-chip">Today</span>
+      <span class="feature-chip">最新</span>
     </div>
     <h3>{{ latest_post.title | remove_first: "📅 " }}</h3>
     <p>AI、ビジネス、国内技術、EM/PM、セキュリティまで、固定6カテゴリで追えます。</p>
@@ -26,7 +26,7 @@ title: デイリーブリーフィング
 
 <section id="archive" class="home-section">
   <div class="section-heading">
-    <p class="section-kicker">Archive</p>
+    <p class="section-kicker">アーカイブ</p>
     <h2>公開済みブリーフィング</h2>
     <p>新しい順に並んでいます。</p>
   </div>
@@ -45,6 +45,6 @@ title: デイリーブリーフィング
     {% endfor %}
   </ol>
   {% else %}
-  <p class="empty-state">まだ公開済みのブリーフィングはありません。最初の issue が公開されると、ここに並びます。</p>
+  <p class="empty-state">まだ公開済みのブリーフィングはありません。最初の公開分がここに並びます。</p>
   {% endif %}
 </section>
