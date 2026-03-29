@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <p class="site-kicker">Personal Daily News Briefing</p>
+        <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+        <p class="site-description">{{ site.description }}</p>
+      </div>
+    </header>
+    <main class="container content">
+      {{ content }}
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <p>Generated with Claude Cowork, published with Jekyll and GitHub Pages.</p>
+      </div>
+    </footer>
+  </body>
+</html>

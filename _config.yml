@@ -1,0 +1,8 @@
+title: "デイリーブリーフィング"
+description: "Claude Cowork が生成する個人向けデイリーニュースブリーフィング"
+lang: ja
+timezone: Asia/Tokyo
+markdown: kramdown
+kramdown:
+  input: GFM
+show_excerpts: false
