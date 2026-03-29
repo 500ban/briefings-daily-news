@@ -7,17 +7,53 @@ description: "Generates a daily news briefing by collecting articles from 15 fix
 
 ## 概要
 
-毎朝のニュースブリーフィングを自動生成するスキル。固定された15ソースからWeb検索で最新記事を収集し、6カテゴリに分類・日本語要約してMarkdownファイルを出力する。
+毎朝のニュースブリーフィングを自動生成するスキル。固定された15ソースからWeb検索で最新記事を収集し、6カテゴリに分類・日本語要約してMarkdownファイルを出力し、GitHubへ自動pushする。
 
 ## ワークフロー
 
+### Step 0: リポジトリの準備（/tmp/repos/ に shallow clone）
+
+マウント先フォルダへのgit操作はロックファイル制約で失敗するため、必ず `/tmp/repos/` で作業する。
+
+```bash
+# .env からトークン読み込み
+WORKSPACE="/sessions/bold-exciting-cori/mnt/デイリーニュース"
+ENV_FILE="$WORKSPACE/.env"
+if [ -f "$ENV_FILE" ]; then
+  export $(grep -v '^#' "$ENV_FILE" | xargs)
+fi
+
+REPO="briefings-dairy-news"
+OWNER="500ban"
+WORK="/tmp/repos/$REPO"
+
+# ディスク残量チェック（500MB 未満は中止）
+FREE_MB=$(df /tmp --output=avail -m 2>/dev/null | tail -1 | tr -d ' ')
+if [ "${FREE_MB:-0}" -lt 500 ]; then
+  echo "⛔ ディスク残量不足: ${FREE_MB}MB — 中止"
+  exit 1
+fi
+
+# shallow clone または pull
+if [ -d "$WORK/.git" ]; then
+  cd "$WORK"
+  git pull --rebase origin main
+else
+  rm -rf "$WORK"
+  git clone --depth 1 --branch main \
+    "https://${GITHUB_TOKEN}@github.com/${OWNER}/${REPO}.git" "$WORK"
+  cd "$WORK"
+fi
+```
+
 ### Step 1: ソース別の最新記事収集
 
-SOURCES.md に定義された15ソースについて、Web検索で直近24時間の最新記事を収集する。
+SOURCES.md に定義された15ソースについて、Web検索で直近1週間の最新記事を収集する。
 
 - 各ソースにつき、サイト名を含む検索クエリを使用（例: `site:nikkei.com 最新ニュース`）
 - 英語ソースの記事も収集対象に含める
 - 各カテゴリの目標件数に達するまで収集する
+- 1週間以上前の記事は除外する
 
 ### Step 2: カテゴリ分類と選定
 
@@ -47,11 +83,36 @@ TEMPLATE.md のフォーマットに従い、以下の構造でMarkdownファイ
 1. **🎯 今日のまとめ**（カテゴリごとに2〜3行の要約、常時表示）
 2. **折りたたみ詳細**（`<details markdown="block">` で各カテゴリの全記事を格納）
 
-### Step 5: ファイル保存とgit push
+生成したファイルは `/tmp/repos/briefings-dairy-news/_posts/YYYY-MM-DD-briefing.md` に保存する。
 
-1. 生成したMarkdownを `_posts/YYYY-MM-DD-briefing.md` として保存
-2. Jekyll用のYAMLフロントマターを付与（title, date, layout）
-3. `git add` → `git commit -m "📰 YYYY-MM-DD briefing"` → `git push`
+### Step 5: git commit & push
+
+```bash
+cd /tmp/repos/briefings-dairy-news
+
+# push 前に必ず rebase（競合防止）
+git pull --rebase origin main || {
+  git checkout --theirs .
+  git add .
+  git rebase --continue
+}
+
+TODAY=$(date +%Y-%m-%d)
+git add "_posts/${TODAY}-briefing.md"
+git commit -m "${TODAY} briefing"
+git push origin main
+```
+
+### Step 6: 実行ログの記録
+
+実行結果をワークスペースフォルダに記録する（VMリセット後も残る）。
+
+```bash
+WORKSPACE="/sessions/bold-exciting-cori/mnt/デイリーニュース"
+LOG="$WORKSPACE/drafts/logs/briefing.log"
+mkdir -p "$(dirname "$LOG")"
+echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
+```
 
 ## ルール
 
