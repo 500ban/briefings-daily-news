@@ -5,22 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace }}">
+    <meta name="theme-color" content="#f4ede3">
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   </head>
-  <body>
+  <body class="{% if page.url == '/' %}page-home{% elsif page.layout == 'post' %}page-post{% else %}page-default{% endif %}">
+    {% assign latest_post = site.posts.first %}
     <header class="site-header">
-      <div class="container">
-        <p class="site-kicker">Personal Daily News Briefing</p>
-        <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
-        <p class="site-description">{{ site.description }}</p>
+      <div class="site-shell">
+        <div class="site-header-bar">
+          <a class="site-brand" href="{{ '/' | relative_url }}">
+            <span class="site-brand-mark">DB</span>
+            <span class="site-brand-text">Daily Briefing</span>
+          </a>
+          {% if page.layout == 'post' %}
+          <a class="site-header-link" href="{{ '/' | relative_url }}">Archive</a>
+          {% endif %}
+        </div>
+        {% if page.url == '/' %}
+        <div class="site-hero">
+          <div class="site-hero-copy">
+            <p class="site-kicker">Personal Daily News Briefing</p>
+            <h1 class="site-title">{{ site.title }}</h1>
+            <p class="site-description">{{ site.description }}</p>
+            <div class="site-hero-actions">
+              {% if latest_post %}
+              <a class="button button-primary" href="{{ latest_post.url | relative_url }}">最新号を読む</a>
+              {% endif %}
+              <a class="button button-secondary" href="#archive">一覧を見る</a>
+            </div>
+          </div>
+          <div class="site-hero-rail">
+            <p class="hero-rail-label">Coverage</p>
+            <ul class="hero-topics">
+              <li>ビジネス・経済</li>
+              <li>AI最新動向</li>
+              <li>新サービス・ローンチ</li>
+              <li>国内技術・ツール</li>
+              <li>EM/PM</li>
+              <li>セキュリティ</li>
+            </ul>
+            {% if latest_post %}
+            <p class="hero-issue-date">Latest issue: {{ latest_post.date | date: "%Y-%m-%d" }}</p>
+            {% else %}
+            <p class="hero-issue-date">Preparing the first issue.</p>
+            {% endif %}
+          </div>
+        </div>
+        {% else %}
+        <div class="site-intro">
+          <p class="site-kicker">Personal Daily News Briefing</p>
+          <p class="site-title site-title-compact"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></p>
+          <p class="site-description">{{ site.description }}</p>
+        </div>
+        {% endif %}
       </div>
     </header>
-    <main class="container content">
-      {{ content }}
+    <main class="site-main">
+      <div class="site-shell content">
+        {{ content }}
+      </div>
     </main>
     <footer class="site-footer">
-      <div class="container">
-        <p>Generated with Claude Cowork, published with Jekyll and GitHub Pages.</p>
+      <div class="site-shell site-footer-inner">
+        <p>Generated with Claude Cowork.</p>
+        <p>Published with Jekyll and GitHub Pages.</p>
       </div>
     </footer>
   </body>
