@@ -36,11 +36,11 @@ layout: post
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 </details>
 
@@ -49,7 +49,7 @@ layout: post
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 </details>
 
@@ -58,7 +58,7 @@ layout: post
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 </details>
 
@@ -67,7 +67,7 @@ layout: post
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 </details>
 
@@ -76,7 +76,7 @@ layout: post
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 </details>
 
@@ -85,7 +85,7 @@ layout: post
 
 - **記事見出し**
   1行要約。
-  → URL
+  → [ソース名](https://example.com/article-url)
 
 </details>
 ```
@@ -96,3 +96,4 @@ layout: post
 - `N件` は各カテゴリの実際の記事数に置換する
 - カテゴリ内に該当記事がない場合、まとめに「本日の更新なし」と記載し、detailsセクションは省略する
 - カテゴリの順序は固定：ビジネス → AI → 新サービス → 国内技術 → EM/PM → セキュリティ
+- リンクは必ずMarkdown形式 `[ソース名](URL)` で記述する。素のURL（`https://...` のみ）は `<details>` ブロック内でクリックできないため使用禁止
