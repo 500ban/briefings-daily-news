@@ -11,6 +11,9 @@
 - `cowork/SKILL.md`
 - `cowork/SOURCES.md`
 - `cowork/TEMPLATE.md`
+- `cowork/SELECTION_RULES.md`
+- `cowork/CHECKLIST.md`
+- `cowork/RUNBOOK.md`
 
 ---
 
@@ -33,8 +36,9 @@
 - `cowork/SKILL.md`
 - `cowork/SOURCES.md`
 - `cowork/TEMPLATE.md`
-- 必要に応じて `cowork/SELECTION_RULES.md`
-- 必要に応じて `cowork/CHECKLIST.md`
+- `cowork/RUNBOOK.md`
+- `cowork/SELECTION_RULES.md`
+- `cowork/CHECKLIST.md`
 
 ルールが曖昧なときは、独自判断で仕様を増やさず既存ファイルを優先する。
 
@@ -43,7 +47,7 @@
 ### 2. 固定ソースを Web検索で収集する
 
 `cowork/SOURCES.md` に定義された固定ソースについて、
-Web検索を使って直近24時間の最新記事候補を集める。
+Web検索を使って直近1週間の最新記事候補を集める。
 
 基本方針:
 - ソースを固定して追う
@@ -103,9 +107,10 @@ Web検索を使って直近24時間の最新記事候補を集める。
 
 ---
 
-### 5. いったん下書きを作る
+### 5. まず `drafts/tmp/` に下書きを作る
 
-必要に応じて、まず `drafts/tmp/` に下書きファイルを作ってよい。
+原則として、まず `drafts/tmp/` に下書きファイルを作る。
+正式版を先に `_posts/` に置かない。
 
 推奨ファイル名:
 - `drafts/tmp/YYYY-MM-DD-briefing.md`
@@ -116,11 +121,23 @@ Web検索を使って直近24時間の最新記事候補を集める。
 - details セクションの整合確認
 - リンクの抜け漏れ確認
 
-下書きで問題が解消したら、正式版を `_posts/` に作成する。
+下書きで問題が解消したら、チェックを行ったうえで正式版を `_posts/` に作成する。
 
 ---
 
-### 6. 正式ファイルを `_posts/` に保存する
+### 6. 下書きに対して保存前チェックを行う
+
+`cowork/CHECKLIST.md` を使って、`drafts/tmp/` の下書き段階で確認する。
+
+必須ルール:
+- チェック項目に1つでも失敗がある場合、`_posts/` に保存しない
+- チェック項目に1つでも失敗がある場合、`git add` `git commit` `git push` を行わない
+- 問題が残る場合は `drafts/tmp/` のまま止め、修正後に再チェックする
+- とくに `1週間以上前の記事` `重複記事` `元記事リンク` `details 構造` を見落とさない
+
+---
+
+### 7. チェック合格後のみ正式ファイルを `_posts/` に保存する
 
 正式な保存先:
 - `_posts/YYYY-MM-DD-briefing.md`
@@ -132,23 +149,6 @@ Web検索を使って直近24時間の最新記事候補を集める。
 - 「今日のまとめ」がある
 - details セクションが正しい
 - 0件カテゴリは「本日の更新なし」をまとめに書き、details は省略する
-
----
-
-### 7. 保存後チェックを行う
-
-保存後は最低限、以下を確認する。
-
-- ファイル名の日付が正しい
-- front matter が壊れていない
-- 6カテゴリの順序が正しい
-- 全記事にリンクがある
-- リンクが空でない
-- 見出しが具体的
-- 事実ベースの短い要約になっている
-- details の開閉タグが崩れていない
-- 「本日の更新なし」の扱いが適切
-- 不自然な重複記事が残っていない
 
 ---
 
@@ -166,7 +166,7 @@ Web検索を使って直近24時間の最新記事候補を集める。
 
 ### 9. commit / push する
 
-問題がなければ以下を行う。
+下書きチェックに合格し、正式版が `_posts/` に保存されている場合のみ以下を行う。
 
 1. `git status`
 2. `git add`
@@ -177,6 +177,7 @@ Web検索を使って直近24時間の最新記事候補を集める。
 - 差分がなければ commit しない
 - エラー時は中途半端な状態で push しない
 - push 成功まで確認する
+- `cowork/CHECKLIST.md` に未解消項目がある場合は commit / push しない
 
 ---
 
@@ -204,6 +205,11 @@ Cowork の役割は、調査・要約・Markdown 生成・git push まで。
 - いったん `drafts/tmp/` に戻す
 - `_posts/` の正式版を急いで更新しない
 
+### ケース3b: checklist に1つでも失敗がある
+- `_posts/` に保存しない
+- `git add` `git commit` `git push` をしない
+- `drafts/tmp/` の下書きを修正し、再チェックする
+
 ### ケース4: git push に失敗する
 - エラーを確認する
 - リトライ可能なら再試行する
@@ -217,8 +223,8 @@ Cowork の役割は、調査・要約・Markdown 生成・git push まで。
 
 ## 1回の実行で達成すべきこと
 
-- 当日のブリーフィングが1本生成されている
-- `_posts/YYYY-MM-DD-briefing.md` が完成している
+- 当日のブリーフィング下書きが `drafts/tmp/` で確認されている
+- `cowork/CHECKLIST.md` の項目を満たしたものだけが `_posts/YYYY-MM-DD-briefing.md` として保存されている
 - 内容がテンプレート準拠である
 - GitHub に push 済みである
 
