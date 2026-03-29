@@ -176,6 +176,14 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
+.site-kicker-home {
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+
 .site-title {
   max-width: 9ch;
   margin: 0;
@@ -184,6 +192,16 @@ a:focus-visible {
   letter-spacing: -0.05em;
   text-wrap: balance;
   line-break: strict;
+}
+
+.site-title-home {
+  max-width: none;
+  font-size: clamp(3rem, 7vw, 5.7rem);
+  line-height: 0.9;
+}
+
+.site-title-line {
+  display: block;
 }
 
 .site-title a {
@@ -203,6 +221,11 @@ a:focus-visible {
   color: var(--muted);
   font-size: clamp(1rem, 1.8vw, 1.28rem);
   line-height: 1.65;
+}
+
+.site-description-home {
+  max-width: 28rem;
+  font-size: clamp(1rem, 1.9vw, 1.2rem);
 }
 
 .site-hero-actions {
@@ -675,8 +698,26 @@ a:focus-visible {
     font-size: clamp(2.15rem, 11vw, 3.05rem);
   }
 
+  .site-kicker-home {
+    margin-bottom: 14px;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+  }
+
+  .site-title-home {
+    max-width: none;
+    font-size: clamp(2.45rem, 12.2vw, 3.55rem);
+    line-height: 0.92;
+  }
+
   .site-description {
     font-size: 1rem;
+  }
+
+  .site-description-home {
+    max-width: 22rem;
+    font-size: 0.98rem;
+    line-height: 1.75;
   }
 
   .site-hero-actions {

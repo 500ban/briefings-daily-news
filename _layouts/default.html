@@ -24,9 +24,12 @@
         {% if page.url == '/' %}
         <div class="site-hero">
           <div class="site-hero-copy">
-            <p class="site-kicker">Personal Daily News Briefing</p>
-            <h1 class="site-title">{{ site.title }}</h1>
-            <p class="site-description">{{ site.description }}</p>
+            <p class="site-kicker site-kicker-home">AI・ビジネス・技術を毎日ひとまとめに</p>
+            <h1 class="site-title site-title-home">
+              <span class="site-title-line">デイリー</span>
+              <span class="site-title-line">ブリーフィング</span>
+            </h1>
+            <p class="site-description site-description-home">Claude Cowork が生成する個人向けニュースブリーフィング</p>
             <div class="site-hero-actions">
               {% if latest_post %}
               <a class="button button-primary" href="{{ latest_post.url | relative_url }}">最新号を読む</a>
