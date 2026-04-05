@@ -54,6 +54,8 @@ SOURCES.md に定義された15ソースについて、Web検索で直近1週間
 - 英語ソースの記事も収集対象に含める
 - 各カテゴリの目標件数に達するまで収集する
 - 1週間以上前の記事は除外する
+- **過去の `_posts/*.md` に既掲載のURLは採用しない**（最終的に check.sh が機械検証する）
+- `cowork/DENYLIST.md` のNGドメイン（`cybernews.com`, `fortune.com`, `theregister.com`, `news.crunchbase.com`, `bloomberg.com`, `markets.financialcontent.com` ほか）および NG URLパターン（`/news` トップ、`leaderboard/*`, `/tag/*` 等）は最初から除外する
 
 ### Step 2: カテゴリ分類と選定
 
@@ -83,7 +85,24 @@ TEMPLATE.md のフォーマットに従い、以下の構造でMarkdownファイ
 1. **🎯 今日のまとめ**（カテゴリごとに2〜3行の要約、常時表示）
 2. **折りたたみ詳細**（`<details markdown="block">` で各カテゴリの全記事を格納）
 
-生成したファイルは `/tmp/repos/briefings-dairy-news/_posts/YYYY-MM-DD-briefing.md` に保存する。
+まず `drafts/tmp/YYYY-MM-DD-briefing.md` に下書きを作る。
+
+### Step 4.5: 機械検証（★必須）
+
+下書きに対して `cowork/scripts/check.sh` を実行し、`PASS` を確認する。
+
+```bash
+cd /tmp/repos/briefings-dairy-news
+bash cowork/scripts/check.sh drafts/tmp/$(date +%Y-%m-%d)-briefing.md
+```
+
+このスクリプトが以下を一括検証する：
+- ソースホワイトリスト照合（SOURCES.md）
+- DENYLIST ドメイン・パターン照合
+- 個別記事URL パターン（一覧・ランキング・タグ・HNトップを検出）
+- クロス日重複（他の `_posts/*.md` との URL 重複）
+
+`FAIL` が1つでもあれば下書きを修正して再実行する。`PASS` 後のみ `_posts/YYYY-MM-DD-briefing.md` へ正式保存する。
 
 ### Step 5: git commit & push
 
@@ -125,6 +144,9 @@ echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 - AI関連のニュースは「🤖 AI最新動向」カテゴリに集約する。ただしAI × ビジネス（業界動向・規制・大型資金調達等）は「📰 ビジネス・経済」にも含めてよい
 - 1週間以上前の古い記事は除外する
 - 同じトピックの重複記事は最も情報量の多い1本に絞る
+- **過去の `_posts/*.md` に既に掲載された URL は二度と採用しない**（Step 0.5 の除外リストで機械的に検査する）
+- `cowork/SOURCES.md` ホワイトリスト外のドメインは件数埋めであっても採用しない
+- 資金調達・IPO・M&A は「📰 ビジネス・経済」に入れる。「🚀 新サービス・ローンチ」は製品・サービスの新規公開に限定する
 
 ### 品質ルール
 - 各カテゴリの最小件数を満たせない場合、無理に埋めず「本日の更新なし」と記載する
@@ -135,3 +157,5 @@ echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 
 - `SOURCES.md` - ソース定義（15ソースの一覧、カテゴリ、URL）
 - `TEMPLATE.md` - ブリーフィングのMarkdownテンプレート
+- `DENYLIST.md` - 過去に混入したNGドメイン・NG URLパターンの逆引きリスト
+- `CHECKLIST.md` - 保存前の検証項目（ソース照合・個別URL・7日以内・クロス日重複など）

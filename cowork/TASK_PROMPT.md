@@ -16,6 +16,7 @@
 - `cowork/RUNBOOK.md`
 - `cowork/SELECTION_RULES.md`
 - `cowork/CHECKLIST.md`
+- `cowork/DENYLIST.md`
 
 作業の基本ルール:
 
@@ -28,6 +29,9 @@
 - AI関連は `🤖 AI最新動向` を基本とし、AI × ビジネス（資金調達・規制・大型提携など）は `📰 ビジネス・経済` に含めてもよい
 - 最小件数を満たせないカテゴリは無理に埋めず、まとめに `本日の更新なし` と記載し、details セクションは省略する
 - 古い記事、日付未確認の記事、ソース定義外の記事で件数を埋めない
+- `cowork/DENYLIST.md` のNGドメイン・NG URLパターンに該当する候補は最初から除外する
+- **過去の `_posts/*.md` に既に掲載された URL は二度と採用しない**（下の手順 2 で除外リストを作る）
+- 資金調達・IPO・M&A は「📰 ビジネス・経済」に入れる。「🚀 新サービス・ローンチ」は製品・サービスの新規公開に限定する
 - 要約は全文日本語、1〜2文、事実ベースとし、意見や推測を含めない
 
 作業手順:
@@ -66,13 +70,22 @@ fi
 ```
 
 2. 固定 15 ソースを Web検索し、直近 7 日以内の記事候補を集める
-3. 候補ごとに `ソース名 / 公開日 / URL / カテゴリ / keep or drop の理由` を明確にしたうえで選定する
+3. 候補ごとに `ソース名 / 公開日 / URL / カテゴリ / keep or drop の理由` を明確にしたうえで選定する。このとき過去の `_posts/*.md` に既掲載のURLは必ず除外する
 4. 選定結果を 6 カテゴリに整理する
 5. まず `drafts/tmp/YYYY-MM-DD-briefing.md` に下書きを作る
-6. `_posts/` に保存する前に、`cowork/CHECKLIST.md` を使って下書きを確認する
-7. checklist に1つでも失敗がある場合は、`_posts/` に保存せず、`git add` `git commit` `git push` も行わない
-8. checklist に合格した場合のみ、完成版を `_posts/YYYY-MM-DD-briefing.md` に保存する
-9. push 前の rebase、add、commit、push は以下のコマンドを使う
+6. **機械検証スクリプトを実行する**（ソースホワイトリスト、DENYLIST、個別記事URL、クロス日重複を一括検証）
+
+```bash
+cd /tmp/repos/briefings-dairy-news
+bash cowork/scripts/check.sh drafts/tmp/$(date +%Y-%m-%d)-briefing.md
+```
+
+`FAIL` が出たら下書きを修正し、再実行する。`PASS` が出るまで次に進まない。
+
+7. `PASS` 後、`cowork/CHECKLIST.md` の人手判断項目（カテゴリ順、日本語の品質、7日以内、件数カウント整合、カテゴリ境界）を確認する
+8. checklist に1つでも失敗がある場合は、`_posts/` に保存せず、`git add` `git commit` `git push` も行わない
+9. checklist に合格した場合のみ、完成版を `_posts/YYYY-MM-DD-briefing.md` に保存する
+10. push 前の rebase、add、commit、push は以下のコマンドを使う
 
 ```bash
 cd /tmp/repos/briefings-dairy-news
@@ -90,7 +103,7 @@ git commit -m "${TODAY} briefing"
 git push origin main
 ```
 
-10. push 成功後のみ、ログは以下のコマンドで記録する
+11. push 成功後のみ、ログは以下のコマンドで記録する
 
 ```bash
 LOG="/sessions/bold-exciting-cori/mnt/デイリーニュース/drafts/logs/briefing.log"
@@ -105,7 +118,9 @@ echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 - 1週間以上前の記事が混ざっている
 - 記事個別 URL ではないリンクが含まれている
 - 公開日を確認できていない記事が含まれている
-- ソース定義外の記事が含まれている
+- ソース定義外の記事（`cowork/DENYLIST.md` 該当含む）が含まれている
+- `cowork/scripts/check.sh` が `FAIL` を返した（過去の `_posts/*.md` との重複やホワイトリスト違反を含む）
+- 資金調達・IPO・M&A 記事が「新サービス・ローンチ」カテゴリに入っている
 - details 構造やカテゴリ順がテンプレートと一致していない
 
 この場合は `_posts/` を更新せず、commit / push も行わず、下書きのまま止めてください。

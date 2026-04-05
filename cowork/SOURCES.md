@@ -43,7 +43,9 @@
 | Hacker News | EN | `site:news.ycombinator.com Show HN OR Launch` | news.ycombinator.com |
 | Product Hunt | EN | `site:producthunt.com` | producthunt.com |
 
-対象トピック：新しいSaaS・ツール、スタートアップの資金調達・ローンチ、開発者向けツール・ライブラリ
+対象トピック：新しいSaaS・ツール、スタートアップの**製品ローンチ**、開発者向けツール・ライブラリ
+
+※ 資金調達・IPO・M&A のニュースは本カテゴリではなく「📰 ビジネス・経済」へ入れる（`cowork/SELECTION_RULES.md` 参照）。
 
 ## 🇯🇵 国内技術・ツール（2〜3本）
 
