@@ -630,6 +630,40 @@ a:focus-visible {
   margin-bottom: 22px;
 }
 
+/* ── 内側の「詳しく読む」details ── */
+.post-body details details {
+  border-radius: 12px;
+  background: rgba(242, 229, 215, 0.28);
+  box-shadow: none;
+  margin-top: 2px;
+}
+
+.post-body details details[open] {
+  background: rgba(242, 229, 215, 0.42);
+}
+
+.post-body details details summary {
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.post-body details[open] details[open] summary {
+  background: rgba(242, 229, 215, 0.5);
+}
+
+.post-body details details > *:not(summary) {
+  padding-right: 16px;
+  padding-left: 16px;
+  font-size: 0.97rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.post-body details details > :last-child {
+  margin-bottom: 14px;
+}
+
 .site-footer {
   padding-bottom: 42px;
 }
