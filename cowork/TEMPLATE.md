@@ -34,13 +34,17 @@ layout: post
 <details markdown="block">
 <summary>📰 ビジネス・経済（N件）</summary>
 
-- **記事見出し**
+- **記事見出し（日本語ソース）**
   1〜2文の要約。
   → [ソース名](https://example.com/article-url)
 
-- **記事見出し**
+- **記事見出し（英語ソース）**
   1〜2文の要約。
   → [ソース名](https://example.com/article-url)
+  <details><summary>📖 詳しく読む</summary>
+  記事の具体的な内容を日本語で詳述する。数字・固有名詞・背景・経緯・結論など、
+  元記事を読まなくても内容を把握できるレベルの情報量で書く。
+  </details>
 
 </details>
 
@@ -110,6 +114,17 @@ layout: post
 - まとめ本文で言及する記事は、必ず同カテゴリの `<details>` 側にも登場していること（片方だけに出てくる記事を作らない）
 - `<details>` 内の各記事は「**見出し**」＋ **1〜2文の要約** ＋ 元記事リンク の構成
 - 要約は事実ベース。推測・感想・評価語（「注目」「話題」など）は極力避ける
+
+### 英語ソース記事の詳細要約（📖 詳しく読む）
+- 英語ソースの記事には、1〜2文の通常要約に加えて `<details><summary>📖 詳しく読む</summary>...</details>` の折り畳みブロックを付ける
+- **対象ソース（`SOURCES.md` で言語=EN のもの）**: Reuters, TechCrunch, OpenAI Blog, Google Research Blog, Anthropic Blog, Hacker News, Product Hunt, LeadDev, The Hacker News
+- **目的**: 英語の元記事を読まなくても内容を具体的に把握できるようにする
+- **情報量**: 数字、固有名詞、背景・経緯、技術的な仕組み、結論・影響など、記事の実質的な中身を日本語で詳述する。全文翻訳ではなく、要点を再構成した日本語ダイジェストとする
+- **書き方ルール**:
+  - 事実ベースを維持する（推測・意見を入れない）
+  - 全文転載・逐語訳はしない。要点の再構成として書く
+  - 日本語ソース（nikkei.com, newspicks.com, dev.classmethod.jp, forest.watch.impress.co.jp, ipa.go.jp）の記事には付けない
+- **構造**: 記事リンクの直後に `<details>` をネストする。カテゴリ単位の `<details>` の中にさらに記事単位の `<details>` が入る形になる
 
 ### リンクの要件
 - リンクは必ず Markdown 形式 `[ソース名](URL)` で記述する。素のURL（`https://...` のみ）は `<details>` ブロック内でクリックできないため使用禁止
