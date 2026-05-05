@@ -5,7 +5,8 @@
 ## 0. 機械検証スクリプトを最初に実行する（★必須）
 
 `cowork/scripts/check.sh` で以下を一括検証できる：
-- ソースホワイトリスト照合（SOURCES.md）
+- 主要信頼ソース / 反応補助ソース照合（SOURCES.md）
+- 反応補助ソースの別枠許可と手動確認警告
 - DENYLIST ドメイン・パターン照合
 - 個別記事URL パターン検証
 - クロス日重複（他の `_posts/*.md` との URL 突き合わせ）
@@ -16,7 +17,7 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 
 `PASS` が出るまで `_posts/` に保存しない。`FAIL:` の各行が具体的な違反箇所。
 
-**以下の B〜E 項目はこのスクリプトが自動検証する。人間（またはモデル）が手動で確認するのは A・D・F・G・H の人手判断が必要な項目**に限定できる。
+**以下の B〜E 項目はこのスクリプトが自動検証する。人間（またはモデル）が手動で確認するのは A・D・F・G・H・I の人手判断が必要な項目**に限定できる。
 
 ## A. ファイル・構造
 
@@ -29,10 +30,12 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 - [ ] `<details>` の `summary` に書いた件数カウント（例：「3件」）が実際の記事数と一致している
 - [ ] 0件カテゴリはまとめに `本日の更新なし` と書き、details セクションを**省略**している
 
-## B. ソース照合（SOURCES.md ホワイトリスト）
+## B. ソース照合（SOURCES.md）
 
-- [ ] すべての記事URLのドメインが `cowork/SOURCES.md` の限定リストに含まれる
-  - 許可ドメイン（15エントリ）: `nikkei.com`, `newspicks.com`, `reuters.com`, `techcrunch.com`, `openai.com`, `research.google`, `anthropic.com`, `news.ycombinator.com`, `producthunt.com`, `dev.classmethod.jp`, `forest.watch.impress.co.jp`, `leaddev.com`, `thehackernews.com`, `ipa.go.jp`
+- [ ] 通常ニュース本文のURLドメインが `cowork/SOURCES.md` の主要信頼ソースに含まれる
+  - 主要信頼ソース: `nikkei.com`, `newspicks.com`, `reuters.com`, `techcrunch.com`, `openai.com`, `research.google`, `anthropic.com`, `news.ycombinator.com`, `producthunt.com`, `dev.classmethod.jp`, `forest.watch.impress.co.jp`, `leaddev.com`, `thehackernews.com`, `ipa.go.jp`
+- [ ] 反応補助ソースは、反応欄・補足欄に限って使われている
+  - 反応補助ソース: `reddit.com`, `github.com`, `youtube.com`, `youtu.be`, `x.com`, `twitter.com`
 - [ ] `cowork/DENYLIST.md` に記載のNGドメインが**含まれていない**
   - 既知NG: `cybernews.com`, `fortune.com`, `theregister.com`, `news.crunchbase.com`, `bloomberg.com`, `markets.financialcontent.com`
 - [ ] 類似ドメイン（例: `reuters.com` に対する `markets.financialcontent.com`）を誤認して採用していない
@@ -43,10 +46,14 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
   - `anthropic.com/news`（末尾スラッシュ有無問わず、個別スラグなし）
   - `openai.com/blog`、`openai.com/news`（個別スラグなし）
   - `producthunt.com/leaderboard/*`（ランキングページ）
+  - `reddit.com/r/{subreddit}` のような一覧ページ（`/comments/` のないもの）
+  - `github.com/{owner}/{repo}` のようなリポジトリトップ（issue / discussion / pull / release / commit 等の個別ページではないもの）
+  - `youtube.com/@channel`, `youtube.com/channel/*`, `youtube.com/results*`（個別動画ではないもの）
+  - `x.com/{user}`, `twitter.com/{user}`（個別投稿ではないもの）
   - `*/tag/*`, `*/category/*`, `*/topics/*`, `*/search?*`, `*/?s=*`
   - `news.ycombinator.com`, `/news`, `/newest`（`/item?id=...` のないもの）
   - ドメイン直下（例: `https://techcrunch.com/`）
-- [ ] OKパターン例: `anthropic.com/news/{slug}`, `openai.com/index/{slug}`, `techcrunch.com/YYYY/MM/DD/{slug}/`, `news.ycombinator.com/item?id={id}`
+- [ ] OKパターン例: `anthropic.com/news/{slug}`, `openai.com/index/{slug}`, `techcrunch.com/YYYY/MM/DD/{slug}/`, `news.ycombinator.com/item?id={id}`, `reddit.com/r/{subreddit}/comments/{id}/{slug}`, `github.com/{owner}/{repo}/issues/{id}`, `youtube.com/watch?v={id}`, `x.com/{user}/status/{id}`
 
 ## D. 鮮度（7日以内）
 
@@ -61,6 +68,7 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 ## F. 記述品質
 
 - [ ] 全記事に元記事リンクがある
+- [ ] 通常ニュース本文には主要信頼ソースまたは公式情報のリンクがある
 - [ ] 見出しが具体的で、日本語として自然（「〇〇について」のような曖昧見出しはNG）
 - [ ] 要約が1〜2文で事実ベース（推測・意見なし）
 - [ ] 全文転載になっていない
@@ -75,3 +83,11 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 
 - [ ] 意図しないファイル差分が混ざっていない
 - [ ] レイアウト・GitHub Actions・`cowork/*` など公開基盤ファイルを誤って変更していない
+
+## I. コミュニティ反応（last30days 補助利用時）
+
+- [ ] `last30days-skill` は候補発見・反応確認の補助として使われており、主要信頼ソースの置き換えになっていない
+- [ ] 反応補助ソースだけで事実主張を書いていない
+- [ ] コミュニティ反応は `補足:` または `コミュニティ反応:` として通常ニュース本文から区別されている
+- [ ] 反応補助ソースには、Reddit / HN / GitHub / YouTube / X などの出典種別が分かるリンク名が付いている
+- [ ] `cowork/scripts/check.sh` の `WARN: 反応補助ソース` が出た場合、該当URLが反応欄・補足欄として妥当か手動確認した

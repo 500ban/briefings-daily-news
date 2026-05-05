@@ -7,7 +7,7 @@
 #   bash cowork/scripts/check.sh _posts/2026-04-05-briefing.md
 #
 # 検証内容:
-#   1. ソース照合（SOURCES.md ホワイトリスト）
+#   1. ソース照合（SOURCES.md 主要信頼ソース / 反応補助ソース）
 #   2. DENYLIST ドメイン照合
 #   3. 個別記事URL パターン検証（一覧・ランキング・タグ等を検出）
 #   4. クロス日重複（他の _posts/*.md と URL の重複を検出）
@@ -35,11 +35,12 @@ fi
 
 FAILED=0
 fail() { echo "FAIL: $1" >&2; FAILED=1; }
+warn() { echo "WARN: $1" >&2; }
 
 # -----------------------------------------------------------------------------
-# 定義: ホワイトリスト（SOURCES.md の15エントリ、ユニーク14ドメイン）
+# 定義: SOURCES.md の主要信頼ソース / 反応補助ソース
 # -----------------------------------------------------------------------------
-WHITELIST=(
+PRIMARY_SOURCES=(
   nikkei.com
   newspicks.com
   reuters.com
@@ -56,6 +57,16 @@ WHITELIST=(
   ipa.go.jp
 )
 
+REACTION_SOURCES=(
+  reddit.com
+  old.reddit.com
+  github.com
+  youtube.com
+  youtu.be
+  x.com
+  twitter.com
+)
+
 # DENYLIST ドメイン（DENYLIST.md と同期）
 DENYLIST=(
   cybernews.com
@@ -65,6 +76,33 @@ DENYLIST=(
   bloomberg.com
   markets.financialcontent.com
 )
+
+domain_matches() {
+  local domain="$1"
+  local allowed="$2"
+  case "$domain" in
+    "$allowed"|*".$allowed") return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+is_primary_source() {
+  local domain="$1"
+  local src
+  for src in "${PRIMARY_SOURCES[@]}"; do
+    domain_matches "$domain" "$src" && return 0
+  done
+  return 1
+}
+
+is_reaction_source() {
+  local domain="$1"
+  local src
+  for src in "${REACTION_SOURCES[@]}"; do
+    domain_matches "$domain" "$src" && return 0
+  done
+  return 1
+}
 
 # -----------------------------------------------------------------------------
 # URL 抽出
@@ -83,21 +121,20 @@ while IFS= read -r url; do
   [ -z "$url" ] && continue
   domain=$(echo "$url" | sed -E 's|https?://([^/]+).*|\1|' | sed 's|^www\.||')
 
-  # DENYLIST 先判定
   for dl in "${DENYLIST[@]}"; do
-    case "$domain" in
-      "$dl"|*".$dl") fail "DENYLISTドメイン: $url";;
-    esac
+    domain_matches "$domain" "$dl" && fail "DENYLISTドメイン: $url"
   done
 
-  # ホワイトリスト判定
-  ok=0
-  for wl in "${WHITELIST[@]}"; do
-    case "$domain" in
-      "$wl"|*".$wl") ok=1; break;;
-    esac
-  done
-  [ $ok -eq 0 ] && fail "ソース定義外ドメイン($domain): $url"
+  if is_primary_source "$domain"; then
+    continue
+  fi
+
+  if is_reaction_source "$domain"; then
+    warn "反応補助ソース（補足/コミュニティ反応として手動確認）: $url"
+    continue
+  fi
+
+  fail "ソース定義外ドメイン($domain): $url"
 done <<< "$URLS"
 
 # -----------------------------------------------------------------------------
@@ -127,9 +164,58 @@ https://openai.com/index|https://openai.com/index/)
     *producthunt.com/leaderboard*) fail "ランキングURL(ProductHunt): $url" ;;
   esac
 
+  # Reddit 一覧・検索・サブレディットトップ
+  case "$url" in
+    https://reddit.com|https://reddit.com/|\
+https://www.reddit.com|https://www.reddit.com/|\
+https://old.reddit.com|https://old.reddit.com/)
+      fail "RedditトップURL: $url" ;;
+    *reddit.com/r/*)
+      case "$url" in
+        *"/comments/"*) ;;
+        *) fail "Reddit一覧URL（個別comments URLではない）: $url" ;;
+      esac ;;
+  esac
+
+  # GitHub は repo トップではなく issue/discussion/pull/release/commit 等に限定
+  case "$url" in
+    https://github.com|https://github.com/)
+      fail "GitHubトップURL: $url" ;;
+    https://github.com/*/*)
+      case "$url" in
+        *"/issues/"*|*"/discussions/"*|*"/pull/"*|*"/releases/"*|*"/commit/"*|*"/compare/"*|*"/blob/"*)
+          ;;
+        *) fail "GitHubリポジトリトップURL（個別ページではない）: $url" ;;
+      esac ;;
+  esac
+
+  # YouTube は個別動画URLに限定
+  case "$url" in
+    https://youtube.com|https://youtube.com/|\
+https://www.youtube.com|https://www.youtube.com/|\
+*youtube.com/@*|*youtube.com/channel/*|*youtube.com/c/*|*youtube.com/results*)
+      fail "YouTube一覧/チャンネルURL: $url" ;;
+    *youtube.com/watch*)
+      case "$url" in
+        *"v="*) ;;
+        *) fail "YouTube動画IDなしURL: $url" ;;
+      esac ;;
+  esac
+
+  # X / Twitter は個別投稿に限定
+  case "$url" in
+    https://x.com|https://x.com/|https://twitter.com|https://twitter.com/)
+      fail "X/TwitterトップURL: $url" ;;
+    https://x.com/*|https://twitter.com/*)
+      case "$url" in
+        *"/status/"*) ;;
+        *) fail "X/TwitterプロフィールURL（個別投稿ではない）: $url" ;;
+      esac ;;
+  esac
+
   # タグ・カテゴリ・検索
   case "$url" in
-    *"/tag/"*|*"/category/"*|*"/topics/"*|*"/search?"*|*"/?s="*)
+    *"/tag/"*|*"/category/"*|*"/topics/"*|*"/search?"*|*"/?s="*|*"/search/"*)
       fail "タグ/カテゴリ/検索URL: $url" ;;
   esac
 

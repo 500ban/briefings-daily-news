@@ -7,11 +7,12 @@ GitHub Pages で公開するためのものです。
 
 このリポジトリでは、Claude Cowork が主体となって以下を行います。
 
-1. 固定ソースの最新記事を Web検索で収集する
-2. 6カテゴリに分類する
-3. 日本語で要約する
-4. Jekyll 用の Markdown ファイルを `_posts/` に保存する
-5. `git commit && git push` する
+1. 必要に応じて `last30days-skill` で候補トピックとコミュニティ反応を発見する
+2. 主要信頼ソースの最新記事を Web検索で収集・裏取りする
+3. 6カテゴリに分類する
+4. 日本語で要約する
+5. Jekyll 用の Markdown ファイルを `_posts/` に保存する
+6. `git commit && git push` する
 
 GitHub Actions は、push 後に Jekyll をビルドし、GitHub Pages に反映するためだけに使います。
 ニュース収集・要約・分類は GitHub Actions では行いません。
@@ -33,8 +34,11 @@ GitHub Actions は、push 後に Jekyll をビルドし、GitHub Pages に反映
 
 ## ブリーフィング生成の基本方針
 
-- 固定ソースを追う
+- 主要信頼ソースを追う
+- `last30days-skill` は発見エンジンとして補助利用し、主要信頼ソースの置き換えにはしない
 - 初期方針として、取得は Cowork の Web検索で統一する
+- Reddit / Hacker News / GitHub / YouTube / X などの反応補助ソースは、通常ニュース本文と分けて「補足」「コミュニティ反応」として扱う
+- 反応補助ソースだけで未確認の事実を断定しない
 - 英語ソースも日本語で要約する
 - 英語ソースの記事には「📖 詳しく読む」折り畳みで詳細な日本語ダイジェストを付ける（詳細は `cowork/TEMPLATE.md` 参照）
 - 事実ベースで簡潔に書く
