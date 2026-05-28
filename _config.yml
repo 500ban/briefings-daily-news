@@ -6,3 +6,11 @@ markdown: kramdown
 kramdown:
   input: GFM
 show_excerpts: false
+
+# 公開対象外のディレクトリ（ナレッジ取り込みからも除外したい資料）
+exclude:
+  - archive/
+  - drafts/
+  - cowork/
+  - CLAUDE.md
+  - AGENTS.md

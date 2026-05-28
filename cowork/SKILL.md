@@ -13,13 +13,14 @@ description: "Generates a daily news briefing by using last30days as a discovery
 
 ## ワークフロー
 
-### Step 0: リポジトリの準備（/tmp/repos/ に shallow clone）
+### Step 0: リポジトリの準備（/tmp/work/ に shallow clone）
 
-マウント先フォルダへのgit操作はロックファイル制約で失敗するため、必ず `/tmp/repos/` で作業する。
+マウント先フォルダへのgit操作はロックファイル制約で失敗するため、必ず `/tmp/work/` で作業する。
+（過去は `/tmp/repos/` を使っていたが、別セッションのオーナーが残るとパーミッション衝突するため `/tmp/work/` に変更した）
 
 ```bash
 # .env からトークン読み込み
-WORKSPACE="/sessions/bold-exciting-cori/mnt/デイリーニュース"
+WORKSPACE=$(ls -d /sessions/*/mnt/デイリーニュース 2>/dev/null | head -1)
 ENV_FILE="$WORKSPACE/.env"
 if [ -f "$ENV_FILE" ]; then
   export $(grep -v '^#' "$ENV_FILE" | xargs)
@@ -27,7 +28,8 @@ fi
 
 REPO="briefings-dairy-news"
 OWNER="500ban"
-WORK="/tmp/repos/$REPO"
+# /tmp/repos は過去セッションのオーナーが残ると権限衝突するため /tmp/work を使う
+WORK="/tmp/work/$REPO"
 
 # ディスク残量チェック（500MB 未満は中止）
 FREE_MB=$(df /tmp --output=avail -m 2>/dev/null | tail -1 | tr -d ' ')
@@ -69,16 +71,41 @@ fi
 - 通常ニュースとして採用する場合は、Step 1.5 の主要信頼ソース・公式情報・信頼媒体で裏取りする
 - 裏取りできないが有用な反応は、テンプレート上の「コミュニティ反応」として明示して掲載してよい
 
-### Step 1.5: 主要信頼ソースでの最新記事収集・裏取り
+### Step 1.5: 主要信頼ソースでの最新記事収集・裏取り（必ずサブエージェントで実行）
 
-SOURCES.md に定義された主要信頼ソースについて、Web検索で直近1週間の最新記事を収集する。`last30days-skill` で見つけた候補も、通常ニュースとして扱う場合はここで裏取りする。
+**このステップは、必ず `general-purpose` サブエージェント（Task tool）で実行する。**
+WebSearch の生テキストを親コンテキストに乗せないことが、本リポジトリのトークン
+効率化方針の核心である（親で20回検索すると毎朝1万トークン以上が浪費される）。
 
-- 各ソースにつき、サイト名を含む検索クエリを使用（例: `site:nikkei.com 最新ニュース`）
-- 英語ソースの記事も収集対象に含める
-- 各カテゴリの目標件数に達するまで収集する
-- 1週間以上前の記事は除外する
-- **過去の `_posts/*.md` に既掲載のURLは採用しない**（最終的に check.sh が機械検証する）
-- `cowork/DENYLIST.md` のNGドメイン（`cybernews.com`, `fortune.com`, `theregister.com`, `news.crunchbase.com`, `bloomberg.com`, `markets.financialcontent.com` ほか）および NG URLパターン（`/news` トップ、`leaderboard/*`, `/tag/*` 等）は最初から除外する
+サブエージェントへの指示は以下の固定テンプレートを使う。
+
+```
+SOURCES.md に定義された15ソースから、本日（YYYY-MM-DD）から直近7日以内に
+公開された記事候補を集めてください。
+
+返答は次の表形式のみ。前置き・要約・所感は一切書かないこと。
+
+| カテゴリ | ソース | 公開日 | URL | 1行要約 |
+
+ルール:
+- 個別記事URLのみ。一覧/トップ/タグ/ランキングは含めない
+- 公開日が確認できない記事は含めない
+- DENYLIST のドメイン（cybernews.com, fortune.com, theregister.com,
+  news.crunchbase.com, bloomberg.com, markets.financialcontent.com）は含めない
+- 各カテゴリ 上限5本、合計30本以内
+- 1ソースにつき WebSearch は最大2回まで
+```
+
+サブエージェントの戻り値（表）に対して、親側では以下のみを行う：
+
+1. 表中の URL が `cowork/cache/past_urls.txt`（check.sh が常時更新する過去URL一覧）
+   に含まれていれば候補から除外する。1本ずつ手動 grep せず、`comm -23` を使う
+2. カテゴリ境界（資金調達は📰へ、新製品リリースは🚀へ、AI×ビジネスは原則🤖）の判断
+3. 重複トピックの最も情報量の多い1本だけを残す絞り込み
+
+**過去URLとの重複は、収集時に手動で確認しない**。最終的に `check.sh` が
+`drafts/tmp/` のドラフトに対してクロス日重複を機械検証するため、親で
+`grep -qF` のループを回すことは禁止する（過去にこれが大きなトークン浪費源になった）。
 
 ### Step 2: カテゴリ分類と選定
 
@@ -116,7 +143,7 @@ TEMPLATE.md のフォーマットに従い、以下の構造でMarkdownファイ
 下書きに対して `cowork/scripts/check.sh` を実行し、`PASS` を確認する。
 
 ```bash
-cd /tmp/repos/briefings-dairy-news
+cd /tmp/work/briefings-dairy-news
 bash cowork/scripts/check.sh drafts/tmp/$(date +%Y-%m-%d)-briefing.md
 ```
 
@@ -132,7 +159,7 @@ bash cowork/scripts/check.sh drafts/tmp/$(date +%Y-%m-%d)-briefing.md
 ### Step 5: git commit & push
 
 ```bash
-cd /tmp/repos/briefings-dairy-news
+cd /tmp/work/briefings-dairy-news
 
 # push 前に必ず rebase（競合防止）
 git pull --rebase origin main || {
@@ -152,7 +179,7 @@ git push origin main
 実行結果をワークスペースフォルダに記録する（VMリセット後も残る）。
 
 ```bash
-WORKSPACE="/sessions/bold-exciting-cori/mnt/デイリーニュース"
+WORKSPACE=$(ls -d /sessions/*/mnt/デイリーニュース 2>/dev/null | head -1)
 LOG="$WORKSPACE/drafts/logs/briefing.log"
 mkdir -p "$(dirname "$LOG")"
 echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
@@ -170,7 +197,7 @@ echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 - AI関連のニュースは「🤖 AI最新動向」カテゴリに集約する。ただしAI × ビジネス（業界動向・規制・大型資金調達等）は「📰 ビジネス・経済」にも含めてよい
 - 1週間以上前の古い記事は除外する
 - 同じトピックの重複記事は最も情報量の多い1本に絞る
-- **過去の `_posts/*.md` に既に掲載された URL は二度と採用しない**（Step 0.5 の除外リストで機械的に検査する）
+- **過去の `_posts/*.md` に既に掲載された URL は二度と採用しない**（収集時には判定せず、`cowork/scripts/check.sh` のクロス日重複検証に任せる）
 - `cowork/SOURCES.md` の主要信頼ソース / 反応補助ソース外のドメインは件数埋めであっても採用しない
 - ただし `cowork/SOURCES.md` の「反応・補助ソース」は、反応欄・補足欄に限り採用できる
 - 反応補助ソースだけを根拠に、未確認の事実・数字・発表内容を通常ニュースとして断定しない
