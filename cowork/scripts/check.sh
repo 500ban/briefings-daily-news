@@ -7,8 +7,9 @@
 #   bash cowork/scripts/check.sh _posts/2026-04-05-briefing.md
 #
 # 検証内容:
+#   0. 構造検証（front matter 日付一致 / サマリー6カテゴリの固定順 / 件数整合）
 #   1. ソース照合（SOURCES.md 主要信頼ソース / 反応補助ソース）
-#   2. DENYLIST ドメイン照合
+#   2. DENYLIST ドメイン照合（+ DENYLIST.md との同期ずれ検知 = WARN）
 #   3. 個別記事URL パターン検証（一覧・ランキング・タグ等を検出）
 #   4. クロス日重複（他の _posts/*.md と URL の重複を検出）
 #
@@ -17,9 +18,11 @@
 #   FAIL → 1件以上失敗。理由を stderr に列挙して exit 1
 #
 # NOTE:
-#   - 7日以内ルール（鮮度）は元ページの公開日を必要とするため本スクリプトでは検証しない。
-#     Cowork 側が収集段階で判断する。
+#   - 7日以内ルール（鮮度）と元記事リンクの死活は、元ページのネット取得が必要なため
+#     本スクリプト（オフライン実行前提）では検証しない。Cowork 側が収集段階で判断する。
 #   - URL の抽出は Markdown リンク `→ [text](url)` 形式と生URLの両方をカバー。
+#   - 構造検証は TEMPLATE.md の出力フォーマットを前提とする。フォーマットを変えたら
+#     本スクリプトの構造検証セクションも合わせて更新すること。
 
 set -u
 
@@ -36,6 +39,60 @@ fi
 FAILED=0
 fail() { echo "FAIL: $1" >&2; FAILED=1; }
 warn() { echo "WARN: $1" >&2; }
+
+# -----------------------------------------------------------------------------
+# 0. 構造検証（オフライン・TEMPLATE.md 準拠を前提）
+# -----------------------------------------------------------------------------
+# 0-1. front matter の date がファイル名の日付と一致するか
+FNAME_DATE=$(basename "$DRAFT" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
+FM_DATE=$(grep -m1 '^date:' "$DRAFT" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
+if [ -z "$FM_DATE" ]; then
+  fail "front matter に date がありません"
+elif [ -n "$FNAME_DATE" ] && [ "$FM_DATE" != "$FNAME_DATE" ]; then
+  fail "front matter の date ($FM_DATE) がファイル名の日付 ($FNAME_DATE) と一致しません"
+fi
+
+# 0-2. サマリーの6カテゴリ見出しが固定順で揃っているか
+EXPECTED_CATS=$(printf '%s\n' \
+  "📰 ビジネス・経済" \
+  "🤖 AI最新動向" \
+  "🚀 新サービス・ローンチ" \
+  "🇯🇵 国内技術・ツール" \
+  "📋 EM/PM" \
+  "🔒 セキュリティ")
+ACTUAL_CATS=$(grep -oE '^\*\*[^*]+\*\*' "$DRAFT" \
+  | sed -E 's/^\*\*//; s/\*\*$//' \
+  | grep -E '(📰|🤖|🚀|🇯🇵|📋|🔒)')
+if [ "$ACTUAL_CATS" != "$EXPECTED_CATS" ]; then
+  fail "サマリーの6カテゴリ見出しが固定順（ビジネス→AI→新サービス→国内技術→EM/PM→セキュリティ）で揃っていません"
+fi
+
+# 0-3. 件数整合: 各カテゴリ details の （N件） == 直下の記事バレット(^- **)数
+COUNT_REPORT=$(awk '
+  function emit() {
+    if (cat == "") return
+    if (has_cnt && decl+0 != cnt) print "MISMATCH\t" line "\t" cat "\t" decl "\t" cnt
+    else if (!has_cnt)           print "NOCOUNT\t"  line "\t" cat
+  }
+  /^<summary>(📰|🤖|🚀|🇯🇵|📋|🔒)/ {
+    emit()
+    cat=$0; line=NR; cnt=0
+    has_cnt = ($0 ~ /（[0-9]+件）/) ? 1 : 0
+    decl=$0; gsub(/[^0-9]/, "", decl)
+    next
+  }
+  /^- \*\*/ { if (cat != "") cnt++ }
+  END { emit() }
+' "$DRAFT")
+if [ -n "$COUNT_REPORT" ]; then
+  while IFS=$'\t' read -r kind line cat decl cnt; do
+    [ -z "$kind" ] && continue
+    case "$kind" in
+      MISMATCH) fail "件数不一致(L$line): $cat 表記=${decl}件 実記事数=${cnt}件" ;;
+      NOCOUNT)  warn "件数表記なしのカテゴリブロック(L$line): $cat — 「本日の更新なし」は details セクションを省略するのが原則" ;;
+    esac
+  done <<< "$COUNT_REPORT"
+fi
 
 # -----------------------------------------------------------------------------
 # 定義: SOURCES.md の主要信頼ソース / 反応補助ソース
@@ -103,6 +160,27 @@ is_reaction_source() {
   done
   return 1
 }
+
+# -----------------------------------------------------------------------------
+# DENYLIST 同期ずれ検知（WARN のみ・ブロックしない）
+# -----------------------------------------------------------------------------
+# 上の DENYLIST 配列と DENYLIST.md の「NGドメイン」表が乖離していないかを点検する。
+# 完全な単一管理化（check.sh が .md を読む）への第一歩。差異は WARN で可視化する。
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)
+DENYLIST_MD="$SCRIPT_DIR/../DENYLIST.md"
+if [ -f "$DENYLIST_MD" ]; then
+  DENY_MD=$(awk '/^## NGドメイン/{f=1; next} /^## /{f=0} f' "$DENYLIST_MD" \
+    | grep -oE '`[a-z0-9.-]+\.[a-z]{2,}`' | tr -d '`' | sort -u)
+  DENY_SCRIPT=$(printf '%s\n' "${DENYLIST[@]}" | sort -u)
+  if [ -n "$DENY_MD" ]; then
+    while IFS= read -r d; do
+      [ -n "$d" ] && warn "DENYLIST同期ずれ: DENYLIST.md にあるが check.sh 未登録: $d"
+    done < <(comm -23 <(echo "$DENY_MD") <(echo "$DENY_SCRIPT"))
+    while IFS= read -r d; do
+      [ -n "$d" ] && warn "DENYLIST同期ずれ: check.sh にあるが DENYLIST.md 未記載: $d"
+    done < <(comm -13 <(echo "$DENY_MD") <(echo "$DENY_SCRIPT"))
+  fi
+fi
 
 # -----------------------------------------------------------------------------
 # URL 抽出
