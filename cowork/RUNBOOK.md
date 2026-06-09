@@ -103,6 +103,50 @@ Web検索を使って直近1週間の最新記事候補を集める。Step 2 で
 
 ---
 
+### 2.6. WebSearch が利用できない時のフォールバック（Chrome MCP）
+
+WebSearch がレート上限・障害などで使えない場合は、収集を諦めて中止するのではなく、以下の優先順で代替手段を試みる。
+
+#### 優先順位
+
+1. **Chrome MCP（`mcp__Claude_in_Chrome__*`）** — 最優先のフォールバック
+2. `mcp__workspace__web_fetch` — 会話に URL が出現済みの場合のみ使える補助
+3. `last30days-skill` — 候補トピック発見のための補助
+4. それでも候補が集まらない場合のみ、`drafts/tmp/` で止め、`drafts/logs/briefing.log` に `ABORTED` を記録する
+
+#### Chrome MCP フォールバック手順
+
+1. `mcp__Claude_in_Chrome__list_connected_browsers` で接続済みブラウザを確認
+   - 結果が空の場合、`switch_browser` で接続待機。それでも繋がらない場合は中止
+2. `mcp__Claude_in_Chrome__select_browser` で deviceId を指定
+3. `mcp__Claude_in_Chrome__tabs_context_mcp` で `createIfEmpty: true` を渡し作業用タブを作成
+4. 各ソースの一覧ページ（例: `https://techcrunch.com/category/artificial-intelligence/`, `https://www.nikkei.com/`, `https://www.anthropic.com/news`, `https://openai.com/news/`, `https://thehackernews.com/`, `https://dev.classmethod.jp/`, `https://forest.watch.impress.co.jp/`, `https://leaddev.com/`, `https://news.ycombinator.com/show`, `https://www.producthunt.com/` 等）に `navigate` し、`javascript_tool` で個別記事 URL・見出し・日付を抽出する
+5. 採用候補ごとに、必要なら個別記事へ `navigate` して `get_page_text` を取り、公開日と本文の要点を確認する
+6. 以降は Step 3 以降（カテゴリ分類・要約・下書き）に通常どおり進む
+
+#### 各ソースの URL 抽出パターン例
+
+- **TechCrunch / Anthropic / OpenAI / LeadDev**: `document.querySelectorAll('a[href*="/2026/"]')` または `a[href*="/news/"], a[href*="/index/"]`
+- **日経新聞**: `a[href*="/article/"]`（個別記事 ID パターン `DGXZQ...`）
+- **The Hacker News**: `a[href*="thehackernews.com/2026/"]`
+- **DevelopersIO**: `a[href*="/articles/"]`
+- **窓の杜**: `a[href*="/docs/news/"]`, `a[href*="/docs/digest/"]`
+- **Hacker News (Show HN)**: `tr.athing` を走査して `id` を取り、`https://news.ycombinator.com/item?id={id}` を URL とする
+- **Product Hunt**: `a[href*="/products/"]`
+
+#### Chrome MCP フォールバック時の制約
+
+- 接続が必要なため、scheduled task では「ブラウザ未接続」で停止する可能性がある。その場合は無理に推測埋めをせず、`ABORTED` ログを書き、ユーザー再実行を待つ
+- ブラウザは tier "read" のため、`navigate` と `javascript_tool` による DOM 読み取りはできるが、フォーム送信や追加クリックが必要なソース（ログインゲート等）は採用を諦める
+- 取得した内容は AI 推定ではなく、ページ DOM に存在した事実のみを採用する。日付が DOM 上で確認できない記事は採用しない
+
+#### ログ表記
+
+- WebSearch を使った通常ルート → `briefing — SUCCESS`
+- Chrome MCP フォールバック経由で完走 → `briefing — SUCCESS (via Chrome MCP)`
+- どちらも不可で中止 → `briefing — ABORTED: <理由>`
+
+
 ### 3. 6カテゴリに分類する
 
 カテゴリ順は固定。

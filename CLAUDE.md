@@ -37,6 +37,7 @@ GitHub Actions は、push 後に Jekyll をビルドし、GitHub Pages に反映
 - 主要信頼ソースを追う
 - `last30days-skill` は発見エンジンとして補助利用し、主要信頼ソースの置き換えにはしない
 - 初期方針として、取得は Cowork の Web検索で統一する
+- Web検索が利用できない場合（週次レート上限・障害など）は、Chrome MCP（`mcp__Claude_in_Chrome__*`）にフォールバックする。手順は `cowork/RUNBOOK.md` の Step 2.6 と `cowork/SKILL.md` の Step 1.6 を参照する
 - Reddit / Hacker News / GitHub / YouTube / X などの反応補助ソースは、通常ニュース本文と分けて「補足」「コミュニティ反応」として扱う
 - 反応補助ソースだけで未確認の事実を断定しない
 - 英語ソースも日本語で要約する

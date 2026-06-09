@@ -107,6 +107,21 @@ SOURCES.md に定義された15ソースから、本日（YYYY-MM-DD）から直
 `drafts/tmp/` のドラフトに対してクロス日重複を機械検証するため、親で
 `grep -qF` のループを回すことは禁止する（過去にこれが大きなトークン浪費源になった）。
 
+### Step 1.6: WebSearch が利用できない時のフォールバック（Chrome MCP）
+
+WebSearch が週次レート上限や障害などで使えない場合は、`drafts/tmp/` で
+中止する前に、必ず Chrome MCP（`mcp__Claude_in_Chrome__*`）による直接ブラウジングを試みる。
+
+1. `list_connected_browsers` で接続を確認 → `select_browser` で deviceId 指定 → `tabs_context_mcp` で作業タブを作成
+2. SOURCES.md の各一覧ページに `navigate` し、`javascript_tool` で個別記事 URL・タイトル・公開日を抽出
+3. 採用候補ごとに、個別ページへ `navigate` して `get_page_text` で公開日と内容を確認
+4. 親コンテキストへの戻りは、サブエージェント経由と同様、表形式（ソース / 日付 / URL / 見出し / 採用判断）に圧縮する
+5. ブラウザ未接続で接続待機しても繋がらない場合は、`ABORTED` ログを書いて中止する
+
+詳細手順とソース別の URL 抽出パターンは `cowork/RUNBOOK.md` の Step 2.6 を参照する。
+Chrome MCP 経由で完走した場合のログは `briefing — SUCCESS (via Chrome MCP)` を使う。
+
+
 ### Step 2: カテゴリ分類と選定
 
 収集した記事を6カテゴリに分類し、各カテゴリの目標件数に絞り込む。
