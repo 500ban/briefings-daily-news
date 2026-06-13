@@ -36,13 +36,13 @@ layout: post
 
 - **記事見出し（日本語ソース）**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
 
 - **記事見出し（英語ソース）**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
   補足: HN では導入コストに関する議論が多い。
-  → [Hacker News](https://news.ycombinator.com/item?id=00000000)
+  → [Hacker News](https://news.ycombinator.com/item?id=00000000) <!-- pub:YYYY-MM-DD -->
   <details><summary>📖 詳しく読む</summary>
   記事の具体的な内容を日本語で詳述する。数字・固有名詞・背景・経緯・結論など、
   元記事を読まなくても内容を把握できるレベルの情報量で書く。
@@ -55,7 +55,7 @@ layout: post
 
 - **記事見出し**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
 
 </details>
 
@@ -64,7 +64,7 @@ layout: post
 
 - **記事見出し**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
 
 </details>
 
@@ -73,7 +73,7 @@ layout: post
 
 - **記事見出し**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
 
 </details>
 
@@ -82,7 +82,7 @@ layout: post
 
 - **記事見出し**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
 
 </details>
 
@@ -91,7 +91,7 @@ layout: post
 
 - **記事見出し**
   1〜2文の要約。
-  → [ソース名](https://example.com/article-url)
+  → [ソース名](https://example.com/article-url) <!-- pub:YYYY-MM-DD -->
 
 </details>
 ```
@@ -153,6 +153,10 @@ layout: post
   - 検索結果ページ
 - リンク先ページで**公開日が確認できること**。公開日が不明な記事は採用しない
 - 採用時点で **7日以内**（直近1週間）に公開された記事のみ採用する
+- **各リンク行の末尾に、確認した公開日を `<!-- pub:YYYY-MM-DD -->` 形式の HTML コメントで必ず付与する**（例：`→ [TechCrunch](https://...) <!-- pub:2026-06-09 -->`）
+  - このコメントは GitHub Pages のレンダリングでは表示されず、読者には見えない
+  - `cowork/scripts/check.sh` がこのマーカーを基準日と突き合わせ、7日以内かをオフラインで機械検証する（マーカーが無いと鮮度を検証できず WARN になる）
+  - 通常ニュースの主要リンクだけでなく、反応・補助ソースのリンク行にも付ける
 - 反応補助ソースも個別URLを使う。Redditのサブレディット一覧、GitHubのリポジトリトップ、YouTubeチャンネル、Xプロフィールなどは原則として使わない
 
 ### 整合性チェック（保存前）
@@ -160,4 +164,5 @@ layout: post
 - `（N件）` の数字が `<details>` 内の実際のリスト項目数と一致していること
 - 0件カテゴリの `<details>` ブロックが削除されていること
 - すべてのリンクが個別記事URLであること
+- **すべてのリンク行に `<!-- pub:YYYY-MM-DD -->` の公開日マーカーが付き、いずれも基準日から7日以内であること**
 - 反応補助ソースが、通常ニュース本文の事実確認リンクとして単独利用されていないこと

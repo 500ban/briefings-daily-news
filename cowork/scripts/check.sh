@@ -7,7 +7,7 @@
 #   bash cowork/scripts/check.sh _posts/2026-04-05-briefing.md
 #
 # 検証内容:
-#   0. 構造検証（front matter 日付一致 / サマリー6カテゴリの固定順 / 件数整合）
+#   0. 構造検証（front matter 日付一致 / サマリー6カテゴリの固定順 / 件数整合 / 鮮度7日以内）
 #   1. ソース照合（SOURCES.md 主要信頼ソース / 反応補助ソース）
 #   2. DENYLIST ドメイン照合（+ DENYLIST.md との同期ずれ検知 = WARN）
 #   3. 個別記事URL パターン検証（一覧・ランキング・タグ等を検出）
@@ -18,8 +18,10 @@
 #   FAIL → 1件以上失敗。理由を stderr に列挙して exit 1
 #
 # NOTE:
-#   - 7日以内ルール（鮮度）と元記事リンクの死活は、元ページのネット取得が必要なため
-#     本スクリプト（オフライン実行前提）では検証しない。Cowork 側が収集段階で判断する。
+#   - 鮮度（7日以内）は各記事の <!-- pub:YYYY-MM-DD --> マーカー（TEMPLATE.md 準拠）を
+#     基準日（front matter / ファイル名の日付）と突き合わせてオフライン検証する。
+#     マーカーが無い場合は WARN にとどめる（移行期。安定後に FAIL へ昇格予定）。
+#   - 元記事リンクの死活（URLが生きているか）は、ネット取得が必要なため本スクリプトでは検証しない。
 #   - URL の抽出は Markdown リンク `→ [text](url)` 形式と生URLの両方をカバー。
 #   - 構造検証は TEMPLATE.md の出力フォーマットを前提とする。フォーマットを変えたら
 #     本スクリプトの構造検証セクションも合わせて更新すること。
@@ -92,6 +94,44 @@ if [ -n "$COUNT_REPORT" ]; then
       NOCOUNT)  warn "件数表記なしのカテゴリブロック(L$line): $cat — 「本日の更新なし」は details セクションを省略するのが原則" ;;
     esac
   done <<< "$COUNT_REPORT"
+fi
+
+# 0-4. 鮮度検証（オフライン）: 記事の公開日マーカー <!-- pub:YYYY-MM-DD --> が
+#      基準日（front matter / ファイル名の日付）から7日以内か。
+#      マーカーは TEMPLATE.md の形式に従い各記事リンク行末に付与する。
+BASE_DATE="${FM_DATE:-$FNAME_DATE}"
+PUB_DATES=$(grep -oE '<!--[[:space:]]*pub:[0-9]{4}-[0-9]{2}-[0-9]{2}[[:space:]]*-->' "$DRAFT" \
+  | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}')
+LINK_COUNT=$(grep -cE '^[[:space:]]*→ \[' "$DRAFT")
+if [ -z "$PUB_DATES" ]; then
+  if [ "${LINK_COUNT:-0}" -gt 0 ]; then
+    warn "公開日マーカー(<!-- pub:YYYY-MM-DD -->)が無いため鮮度を機械検証できません（移行期はWARN。TEMPLATE.md 参照）"
+  fi
+else
+  base_epoch=$(date -d "$BASE_DATE" +%s 2>/dev/null || echo "")
+  if [ -z "$base_epoch" ]; then
+    warn "基準日を解釈できず鮮度検証をスキップ: $BASE_DATE"
+  else
+    PUB_COUNT=0
+    while IFS= read -r pd; do
+      [ -z "$pd" ] && continue
+      PUB_COUNT=$((PUB_COUNT + 1))
+      pe=$(date -d "$pd" +%s 2>/dev/null || echo "")
+      if [ -z "$pe" ]; then
+        fail "公開日マーカーの日付が不正: $pd"
+        continue
+      fi
+      diff_days=$(( (base_epoch - pe) / 86400 ))
+      if [ "$diff_days" -gt 7 ]; then
+        fail "鮮度逸脱: 記事公開日 $pd は基準日 $BASE_DATE から ${diff_days}日前（7日超）"
+      elif [ "$diff_days" -lt 0 ]; then
+        fail "公開日が基準日より未来: $pd（基準日 $BASE_DATE）"
+      fi
+    done <<< "$PUB_DATES"
+    if [ "${LINK_COUNT:-0}" -gt 0 ] && [ "$PUB_COUNT" -lt "$LINK_COUNT" ]; then
+      warn "公開日マーカーが一部記事で欠落の可能性（記事リンク ${LINK_COUNT} / マーカー ${PUB_COUNT}）"
+    fi
+  fi
 fi
 
 # -----------------------------------------------------------------------------
