@@ -8,8 +8,8 @@
 #
 # 検証内容:
 #   0. 構造検証（front matter 日付一致 / サマリー6カテゴリの固定順 / 件数整合 / 鮮度7日以内）
-#   1. ソース照合（SOURCES.md 主要信頼ソース / 反応補助ソース）
-#   2. DENYLIST ドメイン照合（+ DENYLIST.md との同期ずれ検知 = WARN）
+#   1. ソース照合（SOURCES.md を直接パースして主要信頼ソース / 反応補助ソースを判定）
+#   2. DENYLIST ドメイン照合（DENYLIST.md を直接パース。読込失敗時は exit 2 で停止）
 #   3. 個別記事URL パターン検証（一覧・ランキング・タグ等を検出）
 #   4. クロス日重複（他の _posts/*.md と URL の重複を検出）
 #
@@ -135,44 +135,58 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# 定義: SOURCES.md の主要信頼ソース / 反応補助ソース
+# 定義の読み込み（単一の正: SOURCES.md / DENYLIST.md から動的に生成）
 # -----------------------------------------------------------------------------
-PRIMARY_SOURCES=(
-  nikkei.com
-  newspicks.com
-  reuters.com
-  techcrunch.com
-  openai.com
-  research.google
-  anthropic.com
-  news.ycombinator.com
-  producthunt.com
-  dev.classmethod.jp
-  forest.watch.impress.co.jp
-  leaddev.com
-  thehackernews.com
-  ipa.go.jp
-)
+# ハードコードを廃し、SOURCES.md（主要信頼ソース/反応補助ソース）と
+# DENYLIST.md（NGドメイン）を直接パースして配列を構築する。
+# パース失敗時は「黙って素通し」を避けるため、番兵チェックで exit 2（設定エラー）で止める。
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)
+SOURCES_MD="$SCRIPT_DIR/../SOURCES.md"
+DENYLIST_MD="$SCRIPT_DIR/../DENYLIST.md"
 
-REACTION_SOURCES=(
-  reddit.com
-  old.reddit.com
-  github.com
-  youtube.com
-  youtu.be
-  x.com
-  twitter.com
-)
+# SOURCES.md のテーブルURL列（最終データ列）からドメインを抽出。パスは除去。
+# region=primary は「## 反応・補助ソース」より前、reaction はそれ以降のテーブル。
+parse_sources() {
+  local file="$1" want="$2"
+  [ -f "$file" ] || return 0
+  awk -v want="$want" '
+    /^## 反応・補助ソース/ { sect="reaction"; next }
+    /^## / { if (sect != "reaction") sect="primary" }
+    /^\|/ {
+      n = split($0, a, "|")
+      url = a[n-1]
+      gsub(/^[ \t]+|[ \t]+$/, "", url)
+      if (url ~ /^[a-z0-9.-]+\.[a-z][a-z]+(\/.*)?$/) {
+        sub(/\/.*$/, "", url)
+        if (sect == want) print url
+      }
+    }
+  ' "$file" | sort -u
+}
 
-# DENYLIST ドメイン（DENYLIST.md と同期）
-DENYLIST=(
-  cybernews.com
-  fortune.com
-  theregister.com
-  news.crunchbase.com
-  bloomberg.com
-  markets.financialcontent.com
-)
+# DENYLIST.md の「NGドメイン」セクションのバッククォート囲みドメインを抽出。
+parse_denylist() {
+  local file="$1"
+  [ -f "$file" ] || return 0
+  awk '/^## NGドメイン/{f=1; next} /^## /{f=0} f' "$file" \
+    | grep -oE '`[a-z0-9.-]+\.[a-z][a-z]+`' | tr -d '`' | sort -u
+}
+
+mapfile -t PRIMARY_SOURCES  < <(parse_sources  "$SOURCES_MD" primary)
+mapfile -t REACTION_SOURCES < <(parse_sources  "$SOURCES_MD" reaction)
+mapfile -t DENYLIST         < <(parse_denylist "$DENYLIST_MD")
+
+# 番兵チェック: パース崩れ/ファイル移動を検知したら設定エラーで停止（exit 2）。
+# 黙ってソース定義外を素通しさせない安全装置。
+contains() { local x; for x in "${@:2}"; do [ "$x" = "$1" ] && return 0; done; return 1; }
+if ! contains nikkei.com "${PRIMARY_SOURCES[@]}" \
+   || ! contains thehackernews.com "${PRIMARY_SOURCES[@]}" \
+   || ! contains reddit.com "${REACTION_SOURCES[@]}" \
+   || ! contains bloomberg.com "${DENYLIST[@]}"; then
+  echo "FAIL: ソース定義の読み込みに失敗しました（SOURCES.md / DENYLIST.md の形式・場所を確認）" >&2
+  echo "  読込結果: PRIMARY=${#PRIMARY_SOURCES[@]} REACTION=${#REACTION_SOURCES[@]} DENY=${#DENYLIST[@]}" >&2
+  exit 2
+fi
 
 domain_matches() {
   local domain="$1"
@@ -200,27 +214,6 @@ is_reaction_source() {
   done
   return 1
 }
-
-# -----------------------------------------------------------------------------
-# DENYLIST 同期ずれ検知（WARN のみ・ブロックしない）
-# -----------------------------------------------------------------------------
-# 上の DENYLIST 配列と DENYLIST.md の「NGドメイン」表が乖離していないかを点検する。
-# 完全な単一管理化（check.sh が .md を読む）への第一歩。差異は WARN で可視化する。
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)
-DENYLIST_MD="$SCRIPT_DIR/../DENYLIST.md"
-if [ -f "$DENYLIST_MD" ]; then
-  DENY_MD=$(awk '/^## NGドメイン/{f=1; next} /^## /{f=0} f' "$DENYLIST_MD" \
-    | grep -oE '`[a-z0-9.-]+\.[a-z]{2,}`' | tr -d '`' | sort -u)
-  DENY_SCRIPT=$(printf '%s\n' "${DENYLIST[@]}" | sort -u)
-  if [ -n "$DENY_MD" ]; then
-    while IFS= read -r d; do
-      [ -n "$d" ] && warn "DENYLIST同期ずれ: DENYLIST.md にあるが check.sh 未登録: $d"
-    done < <(comm -23 <(echo "$DENY_MD") <(echo "$DENY_SCRIPT"))
-    while IFS= read -r d; do
-      [ -n "$d" ] && warn "DENYLIST同期ずれ: check.sh にあるが DENYLIST.md 未記載: $d"
-    done < <(comm -13 <(echo "$DENY_MD") <(echo "$DENY_SCRIPT"))
-  fi
-fi
 
 # -----------------------------------------------------------------------------
 # URL 抽出

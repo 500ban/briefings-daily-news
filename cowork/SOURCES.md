@@ -7,6 +7,12 @@
 ここに載っていないソース（例：Cybernews、BleepingComputer、Bloomberg、ITmedia 等）は、
 件数埋めのためであっても採用しない。定義外ソースの混入は CHECKLIST での失格条件とする。
 
+> **注（機械パース対象）**: 本ファイルは `cowork/scripts/check.sh` が直接パースして
+> 許可ドメインを生成する（単一の正）。各テーブルの**最終列（URL列）**からドメインを抽出し、
+> 「## 反応・補助ソース」より前を主要信頼ソース、以降を反応補助ソースとして扱う。
+> 表のレイアウト（最終列＝URL、見出し名）を変える場合は check.sh の `parse_sources` も合わせて確認すること。
+> 読み込みに失敗すると check.sh は exit 2 で停止する（黙って素通ししない）。
+
 ## 共通ルール
 
 - **限定リスト**：本ファイルに記載された主要信頼ソース・反応補助ソース以外は採用しない
@@ -102,7 +108,9 @@
 | Reddit | 利用者・開発者の反応、実務上の困りごと、比較・評判 | reddit.com |
 | GitHub | release / issue / discussion / PR など、開発実態や利用者要望 | github.com |
 | YouTube | 解説動画・レビュー・カンファレンス・デモの反応確認 | youtube.com |
+| YouTube（短縮URL） | youtu.be 形式の共有リンク | youtu.be |
 | X | 速報的な反応、専門家・開発者の短文コメント | x.com |
+| X（旧Twitter） | 旧 twitter.com ドメインの投稿 | twitter.com |
 
 反応補助ソースを掲載する場合:
 - 「コミュニティ反応」「補足」「HNでは」「Redditでは」など、反応であることを明示する
