@@ -1,5 +1,11 @@
 # SELECTION_RULES.md
 
+> **本ファイルは「選定・分類・鮮度・カテゴリ境界」ルールの正本（single source of truth）。**
+> 他ファイル（CLAUDE.md / SKILL.md / SOURCES.md / RUNBOOK.md）は方針の要点のみを記し、
+> 詳細は本ファイルを参照する。選定ルールに齟齬があれば本ファイルを優先する
+> （ただし CLAUDE.md の上位方針・TEMPLATE.md の出力形式とは整合させる）。
+> ソースの限定リストは `SOURCES.md`、出力フォーマットは `TEMPLATE.md` が正本。
+
 ## 基本ルール
 
 - 1週間以上前の記事は除外する
