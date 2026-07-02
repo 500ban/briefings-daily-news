@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace }}">
-    <meta name="theme-color" content="#f4ede3">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f7f9">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1116">
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   </head>
   <body class="{% if page.url == '/' %}page-home{% elsif page.layout == 'post' %}page-post{% else %}page-default{% endif %}">
