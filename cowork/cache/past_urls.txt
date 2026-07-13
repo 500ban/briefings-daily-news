@@ -4,6 +4,7 @@ https://dev.classmethod.jp/articles/20260410-claude-code-yukkuri-data-analytics/
 https://dev.classmethod.jp/articles/20260603-cc-updates-v2-1-165/
 https://dev.classmethod.jp/articles/20260609-cc-updates-v2-1-169/
 https://dev.classmethod.jp/articles/20260708-cc-updates-v2-1-203/
+https://dev.classmethod.jp/articles/20260710-aws-mcp-server-oauth/
 https://dev.classmethod.jp/articles/amazon-bedrock-claude-citations-api-pdf-support-update/
 https://dev.classmethod.jp/articles/amazon-bedrock-claude-opus-4-7/
 https://dev.classmethod.jp/articles/amazon-connect-ai-agent-knowledge-base-document-size-limit-5mb/
@@ -327,6 +328,9 @@ https://news.ycombinator.com/item?id=48600167
 https://news.ycombinator.com/item?id=48610224
 https://news.ycombinator.com/item?id=48675435
 https://news.ycombinator.com/item?id=48762862
+https://news.ycombinator.com/item?id=48878682
+https://news.ycombinator.com/item?id=48882716
+https://news.ycombinator.com/item?id=48883275
 https://newspicks.com/news/16277957/body/
 https://newspicks.com/news/16343626/
 https://newspicks.com/news/16638001/
@@ -334,6 +338,7 @@ https://newspicks.com/news/16670261/
 https://newspicks.com/news/16704145/
 https://newspicks.com/news/16707330/
 https://newspicks.com/news/16905204/
+https://newspicks.com/news/17040904/body/
 https://openai.com/index/academy-courses-applying-ai-at-work/
 https://openai.com/index/accelerating-the-next-phase-ai/
 https://openai.com/index/advanced-account-security/
@@ -430,6 +435,7 @@ https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-
 https://research.google/blog/four-ways-google-research-scientists-have-been-using-empirical-research-assistance/
 https://research.google/blog/from-pixels-to-planning-earth-ai-for-nature-restoration/
 https://research.google/blog/gemini-provides-automated-feedback-for-theoretical-computer-scientists-at-stoc-2026/
+https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/
 https://research.google/blog/google-research-at-the-check-up-from-healthcare-innovation-to-real-world-care-settings/
 https://research.google/blog/improving-the-academic-workflow-introducing-two-ai-agents-for-better-figures-and-peer-review/
 https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/
@@ -696,6 +702,7 @@ https://techcrunch.com/2026/07/08/hot-french-startup-zml-releases-free-product-t
 https://techcrunch.com/2026/07/08/lovable-reportedly-in-talks-to-double-its-valuation-to-13-2b/
 https://techcrunch.com/2026/07/08/sambanova-draws-1b-at-11b-valuation-in-series-f-first-close/
 https://techcrunch.com/2026/07/09/an-ai-agent-startup-just-let-its-agent-run-its-100-million-fundraise/
+https://techcrunch.com/2026/07/09/mercor-is-in-talks-for-a-20b-valuation/
 https://techcrunch.com/2026/07/09/paris-based-ai-voice-startup-gradium-raises-100m-seed-backed-by-nvidia/
 https://techcrunch.com/2026/07/09/popular-open-source-ai-developer-tool-ollama-raises-65m-grows-to-nearly-9m-users/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
@@ -887,6 +894,8 @@ https://thehackernews.com/2026/07/beyondtrust-patches-critical-auth.html
 https://thehackernews.com/2026/07/certcc-warns-of-hidden-admin-backdoor.html
 https://thehackernews.com/2026/07/cisa-adds-4-actively-exploited-adobe.html
 https://thehackernews.com/2026/07/citrix-patches-six-netscaler-flaws.html
+https://thehackernews.com/2026/07/compromised-jscrambler-8140-npm-release.html
+https://thehackernews.com/2026/07/critical-zimbra-flaw-could-let-crafted_0483473395.html
 https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp.html
 https://thehackernews.com/2026/07/fortibleed-credential-theft-linked-to.html
 https://thehackernews.com/2026/07/latest-progress-kemp-loadmaster-pre.html
@@ -897,6 +906,7 @@ https://thehackernews.com/2026/07/new-java-based-quimarat-maas-built-to.html
 https://thehackernews.com/2026/07/new-trojpix-attack-leaks-data-from-air.html
 https://thehackernews.com/2026/07/pamstealer-uses-fake-maccy-sites-and.html
 https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html
+https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html
 https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html
 https://thehackernews.com/2026/07/threat-actors-probe-gitea-docker-flaw.html
 https://thehackernews.com/2026/07/unpatched-flaws-disclosed-in-filesystem.html
@@ -1080,8 +1090,10 @@ https://www.nikkei.com/article/DGXZQOUC121RP0S6A410C2000000/
 https://www.nikkei.com/article/DGXZQOUC276510X20C26A4000000/
 https://www.nikkei.com/article/DGXZQOUC300E00Q6A530C2000000/
 https://www.nikkei.com/article/DGXZQOUF062LM0W6A400C2000000/
+https://www.nikkei.com/article/DGXZQOUF075Y00X00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUF08AWL0Y6A400C2000000/
 https://www.producthunt.com/products/actionkit-by-paragon
+https://www.producthunt.com/products/auriko
 https://www.producthunt.com/products/base44
 https://www.producthunt.com/products/baton-2
 https://www.producthunt.com/products/bluedot-2
@@ -1106,6 +1118,7 @@ https://www.producthunt.com/products/invoke-studio
 https://www.producthunt.com/products/kanwas
 https://www.producthunt.com/products/leni
 https://www.producthunt.com/products/lightfield
+https://www.producthunt.com/products/lispr
 https://www.producthunt.com/products/magicpatterns
 https://www.producthunt.com/products/mai-image-2-5
 https://www.producthunt.com/products/marble-by-world-labs
@@ -1121,6 +1134,7 @@ https://www.producthunt.com/products/second-brain-cloudflare
 https://www.producthunt.com/products/simplai
 https://www.producthunt.com/products/supapin
 https://www.producthunt.com/products/superlog
+https://www.producthunt.com/products/timbal-ai
 https://www.producthunt.com/products/unabyss
 https://www.producthunt.com/products/voiceos
 https://www.producthunt.com/products/voxtral-tts
