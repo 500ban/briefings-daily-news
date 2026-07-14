@@ -1,4 +1,6 @@
+https://asia.nikkei.com/business/tech/semiconductors/china-s-nexchip-has-global-ambitions-as-legacy-chips-thrive-in-ai-s-shadow
 https://asia.nikkei.com/business/technology/artificial-intelligence/alibaba-s-cloud-arm-opens-5th-japan-data-center-adding-new-ai-services
+https://asia.nikkei.com/business/technology/artificial-intelligence/honda-other-japan-companies-pay-workers-to-spearhead-ai-use
 https://asia.nikkei.com/business/technology/ntt-hoped-to-lead-optical-data-networks.-ai-and-nvidia-changed-that
 https://dev.classmethod.jp/articles/20260410-claude-code-yukkuri-data-analytics/
 https://dev.classmethod.jp/articles/20260603-cc-updates-v2-1-165/
@@ -217,6 +219,7 @@ https://forest.watch.impress.co.jp/docs/update/library/2121667.html
 https://forest.watch.impress.co.jp/docs/update/library/2122389.html
 https://forest.watch.impress.co.jp/docs/update/library/2123231.html
 https://forest.watch.impress.co.jp/docs/update/library/2123980.html
+https://forest.watch.impress.co.jp/docs/update/library/2124384.html
 https://leaddev.com/ai/addictive-agentic-coding-has-developers-losing-sleep
 https://leaddev.com/ai/ai-coding-is-addictive-engineers-are-paying-the-price
 https://leaddev.com/ai/ai-coding-made-us-faster-why-did-incidents-increase
@@ -328,7 +331,9 @@ https://news.ycombinator.com/item?id=48600167
 https://news.ycombinator.com/item?id=48610224
 https://news.ycombinator.com/item?id=48675435
 https://news.ycombinator.com/item?id=48762862
+https://news.ycombinator.com/item?id=48809877
 https://news.ycombinator.com/item?id=48878682
+https://news.ycombinator.com/item?id=48881112
 https://news.ycombinator.com/item?id=48882716
 https://news.ycombinator.com/item?id=48883275
 https://newspicks.com/news/16277957/body/
@@ -698,6 +703,7 @@ https://techcrunch.com/2026/07/07/ai-law-startup-norm-raises-120m-hits-unicorn-v
 https://techcrunch.com/2026/07/07/microsoft-joins-ai-cost-cutting-trend-by-relying-more-on-its-own-models/
 https://techcrunch.com/2026/07/07/the-coding-agent-wars-are-spilling-into-the-rest-of-the-office-claude-cowork/
 https://techcrunch.com/2026/07/07/why-the-rise-of-open-source-ai-isnt-hurting-anthropic-yet/
+https://techcrunch.com/2026/07/08/blue-origin-reportedly-raising-10b-at-130b-valuation/
 https://techcrunch.com/2026/07/08/hot-french-startup-zml-releases-free-product-to-speed-inference-across-lots-of-ai-chips/
 https://techcrunch.com/2026/07/08/lovable-reportedly-in-talks-to-double-its-valuation-to-13-2b/
 https://techcrunch.com/2026/07/08/sambanova-draws-1b-at-11b-valuation-in-series-f-first-close/
@@ -889,6 +895,7 @@ https://thehackernews.com/2026/07/15-year-old-ghostlock-flaw-enables-root.html
 https://thehackernews.com/2026/07/16-year-old-linux-kvm-flaw-lets-guest.html
 https://thehackernews.com/2026/07/adobe-patches-7-cvss-100-flaws-in.html
 https://thehackernews.com/2026/07/ai-agent-exploits-langflow-rce-to.html
+https://thehackernews.com/2026/07/ai-coding-agents-found-triggering.html
 https://thehackernews.com/2026/07/ai-generated-browser-ransomware-abuses.html
 https://thehackernews.com/2026/07/beyondtrust-patches-critical-auth.html
 https://thehackernews.com/2026/07/certcc-warns-of-hidden-admin-backdoor.html
@@ -898,6 +905,7 @@ https://thehackernews.com/2026/07/compromised-jscrambler-8140-npm-release.html
 https://thehackernews.com/2026/07/critical-zimbra-flaw-could-let-crafted_0483473395.html
 https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp.html
 https://thehackernews.com/2026/07/fortibleed-credential-theft-linked-to.html
+https://thehackernews.com/2026/07/icagenda-and-balbooa-forms-joomla-flaws.html
 https://thehackernews.com/2026/07/latest-progress-kemp-loadmaster-pre.html
 https://thehackernews.com/2026/07/new-avalon-malware-framework-packs.html
 https://thehackernews.com/2026/07/new-bad-epoll-linux-kernel-flaw-lets.html
@@ -909,6 +917,7 @@ https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html
 https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html
 https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html
 https://thehackernews.com/2026/07/threat-actors-probe-gitea-docker-flaw.html
+https://thehackernews.com/2026/07/threatsday-cloud-bucket-hijacking.html
 https://thehackernews.com/2026/07/unpatched-flaws-disclosed-in-filesystem.html
 https://thehackernews.com/2026/07/unpatched-xring-flaw-in-xquic-lets.html
 https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html
@@ -1083,6 +1092,7 @@ https://www.nikkei.com/article/DGXZQOUC025HX0S6A200C2000000/
 https://www.nikkei.com/article/DGXZQOUC03C0R0T00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUC0472I0U6A600C2000000/
 https://www.nikkei.com/article/DGXZQOUC072B50X00C26A4000000/
+https://www.nikkei.com/article/DGXZQOUC073YU0X00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUC074B90X00C26A4000000/
 https://www.nikkei.com/article/DGXZQOUC081MY0Y6A600C2000000/
 https://www.nikkei.com/article/DGXZQOUC102UZ0Q6A410C2000000/
