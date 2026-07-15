@@ -36,6 +36,7 @@ https://dev.classmethod.jp/articles/claude-platform-on-aws-ga-setup/
 https://dev.classmethod.jp/articles/claude-plugins-official-view-2026-03/
 https://dev.classmethod.jp/articles/claude-science-beta-caffeine/
 https://dev.classmethod.jp/articles/cloud-run-worker-pools-ga/
+https://dev.classmethod.jp/articles/cloudfront-functions-logcustomdata-access-logs/
 https://dev.classmethod.jp/articles/cm-da-news-ml-202604/
 https://dev.classmethod.jp/articles/cm-news-analytics-202605/
 https://dev.classmethod.jp/articles/deploy-claude-agent-sdk-on-agentcore-runtime/
@@ -49,6 +50,7 @@ https://dev.classmethod.jp/articles/github-copilot-model-data-usage-policy-chang
 https://dev.classmethod.jp/articles/google-workspace-studio-multilingual-update/
 https://dev.classmethod.jp/articles/gtc2026-nemoclaw-preview/
 https://dev.classmethod.jp/articles/kiro-endpoint-migration-to-kiro-dev/
+https://dev.classmethod.jp/articles/lambda-java-8-11-17-al2023-runtime-added/
 https://dev.classmethod.jp/articles/modern-data-stack-info-summary-20260429/
 https://dev.classmethod.jp/articles/modern-data-stack-info-summary-20260513/
 https://dev.classmethod.jp/articles/modern-data-stack-info-summary-20260624/
@@ -249,6 +251,7 @@ https://leaddev.com/career-development/the-reality-of-being-an-engineering-manag
 https://leaddev.com/communication/the-2026-engineer-paradox-more-capable-but-more-alone
 https://leaddev.com/leadership/5-uncomfortable-predictions-for-engineering-leaders-in-2026
 https://leaddev.com/leadership/6-software-engineering-buzzwords-you-need-to-stop-using
+https://leaddev.com/leadership/engineering-managers-are-paying-the-price-of-rising-expectations
 https://leaddev.com/leadership/killing-a-project-is-every-engineering-leaders-hardest-call
 https://leaddev.com/leadership/tech-leads-are-overwhelmed-heres-how-to-take-back-control
 https://leaddev.com/management/ai-has-us-asking-does-team-size-still-matter
@@ -336,6 +339,11 @@ https://news.ycombinator.com/item?id=48878682
 https://news.ycombinator.com/item?id=48881112
 https://news.ycombinator.com/item?id=48882716
 https://news.ycombinator.com/item?id=48883275
+https://news.ycombinator.com/item?id=48883305
+https://news.ycombinator.com/item?id=48887276
+https://news.ycombinator.com/item?id=48911998
+https://news.ycombinator.com/item?id=48912004
+https://news.ycombinator.com/item?id=48912188
 https://newspicks.com/news/16277957/body/
 https://newspicks.com/news/16343626/
 https://newspicks.com/news/16638001/
@@ -707,10 +715,13 @@ https://techcrunch.com/2026/07/08/blue-origin-reportedly-raising-10b-at-130b-val
 https://techcrunch.com/2026/07/08/hot-french-startup-zml-releases-free-product-to-speed-inference-across-lots-of-ai-chips/
 https://techcrunch.com/2026/07/08/lovable-reportedly-in-talks-to-double-its-valuation-to-13-2b/
 https://techcrunch.com/2026/07/08/sambanova-draws-1b-at-11b-valuation-in-series-f-first-close/
+https://techcrunch.com/2026/07/08/these-ai-startups-are-growing-revenue-at-faster-and-faster-rates/
 https://techcrunch.com/2026/07/09/an-ai-agent-startup-just-let-its-agent-run-its-100-million-fundraise/
 https://techcrunch.com/2026/07/09/mercor-is-in-talks-for-a-20b-valuation/
 https://techcrunch.com/2026/07/09/paris-based-ai-voice-startup-gradium-raises-100m-seed-backed-by-nvidia/
 https://techcrunch.com/2026/07/09/popular-open-source-ai-developer-tool-ollama-raises-65m-grows-to-nearly-9m-users/
+https://techcrunch.com/2026/07/13/investors-send-general-fusion-soaring-in-debut-as-first-publicly-traded-fusion-company/
+https://techcrunch.com/2026/07/13/satya-nadella-has-issued-a-shocking-warning-to-companies-using-ai/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
 https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html
 https://thehackernews.com/2026/03/cisa-flags-apple-craft-cms-laravel-bugs.html
@@ -906,10 +917,12 @@ https://thehackernews.com/2026/07/critical-zimbra-flaw-could-let-crafted_0483473
 https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp.html
 https://thehackernews.com/2026/07/fortibleed-credential-theft-linked-to.html
 https://thehackernews.com/2026/07/icagenda-and-balbooa-forms-joomla-flaws.html
+https://thehackernews.com/2026/07/injective-labs-github-compromise-pushes.html
 https://thehackernews.com/2026/07/latest-progress-kemp-loadmaster-pre.html
 https://thehackernews.com/2026/07/new-avalon-malware-framework-packs.html
 https://thehackernews.com/2026/07/new-bad-epoll-linux-kernel-flaw-lets.html
 https://thehackernews.com/2026/07/new-chocopoc-rat-targets-vulnerability.html
+https://thehackernews.com/2026/07/new-ghost-phishing-wave-is-breaking.html
 https://thehackernews.com/2026/07/new-java-based-quimarat-maas-built-to.html
 https://thehackernews.com/2026/07/new-trojpix-attack-leaks-data-from-air.html
 https://thehackernews.com/2026/07/pamstealer-uses-fake-maccy-sites-and.html
@@ -972,8 +985,11 @@ https://www.anthropic.com/news/tcs-anthropic-partnership
 https://www.anthropic.com/news/theo-hourmouzis-general-manager-australia-new-zealand
 https://www.anthropic.com/research/agents-in-biology
 https://www.anthropic.com/research/anthropic-institute-agenda
+https://www.anthropic.com/research/claude-plays-robotics
+https://www.anthropic.com/research/claude-values-models-languages
 https://www.anthropic.com/research/glasswing-initial-update
 https://www.anthropic.com/research/making-claude-a-chemist
+https://www.anthropic.com/research/off-switch-dual-use
 https://www.ipa.go.jp/pressrelease/2025/press20260327.html
 https://www.ipa.go.jp/pressrelease/2026/press20260402.html
 https://www.ipa.go.jp/security/10threats/10threats2026.html
@@ -1071,6 +1087,7 @@ https://www.nikkei.com/article/DGXZQOUB0533G0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB059LI0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB081A20Y6A400C2000000/
 https://www.nikkei.com/article/DGXZQOUB084TE0Y6A400C2000000/
+https://www.nikkei.com/article/DGXZQOUB08825TY6A700C2000000/
 https://www.nikkei.com/article/DGXZQOUB092RK0Z00C26A2000000/
 https://www.nikkei.com/article/DGXZQOUB0966P0Z00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB1044B0Q6A710C2000000/
