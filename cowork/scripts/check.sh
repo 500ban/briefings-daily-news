@@ -7,11 +7,13 @@
 #   bash cowork/scripts/check.sh _posts/2026-04-05-briefing.md
 #
 # 検証内容:
-#   0. 構造検証（front matter 日付一致 / サマリー6カテゴリの固定順 / 件数整合 / 鮮度7日以内）
+#   0. 構造検証（front matter 日付一致 / サマリー6カテゴリの固定順 / 件数整合 / 鮮度7日以内
+#      / 📖詳しく読むの200字以内・最大3文）
 #   1. ソース照合（SOURCES.md を直接パースして主要信頼ソース / 反応補助ソースを判定）
 #   2. DENYLIST ドメイン照合（DENYLIST.md を直接パース。読込失敗時は exit 2 で停止）
 #   3. 個別記事URL パターン検証（一覧・ランキング・タグ等を検出）
 #   4. クロス日重複（他の _posts/*.md と URL の重複を検出）
+#   5. 評価語チェック（DENYLIST.md の「NG評価語」をパースして WARN）
 #
 # 出力:
 #   PASS → 全検証合格。exit 0
@@ -132,6 +134,44 @@ else
       warn "公開日マーカーが一部記事で欠落の可能性（記事リンク ${LINK_COUNT} / マーカー ${PUB_COUNT}）"
     fi
   fi
+fi
+
+# 0-5. 📖詳しく読むブロック検証: 本文200字以内・最大3文（TEMPLATE.md「厳守」）
+#      文字数は空白除去後。awk がバイトモードの場合はバイト数/3 で近似する
+#      （ダイジェスト本文はほぼ日本語＝3バイト/字のため。BEGIN の ratio で自動判定）。
+#      文数は「。」の個数で数える。ロケールは環境既定のまま使う
+#      （LC_ALL の明示指定は環境にないロケール名だと絵文字を含む行のマッチが壊れるため避ける）。
+DIGEST_REPORT=$(awk '
+  BEGIN { ratio = (length("あ") == 1) ? 1 : 3 }
+  function emit(  text, chars, sents) {
+    text = body
+    gsub(/[ \t\r]/, "", text)
+    chars = int(length(text) / ratio)
+    sents = gsub(/。/, "。", text)
+    if (chars > 200) printf "CHARS\t%d\t%d\n", start, chars
+    if (sents > 3)   printf "SENT\t%d\t%d\n",  start, sents
+    body = ""
+  }
+  /<details><summary>.*詳しく読む<\/summary>/ {
+    inblk = 1; start = NR; body = $0
+    sub(/.*詳しく読む<\/summary>/, "", body)
+    if (body ~ /<\/details>/) { sub(/<\/details>.*/, "", body); inblk = 0; emit() }
+    next
+  }
+  inblk {
+    line = $0
+    if (line ~ /<\/details>/) { sub(/<\/details>.*/, "", line); body = body line; inblk = 0; emit(); next }
+    body = body line
+  }
+' "$DRAFT")
+if [ -n "$DIGEST_REPORT" ]; then
+  while IFS=$'\t' read -r kind line val; do
+    [ -z "$kind" ] && continue
+    case "$kind" in
+      CHARS) fail "📖詳しく読む 文字数超過(L$line): 約${val}字（上限200字・TEMPLATE.md）" ;;
+      SENT)  fail "📖詳しく読む 文数超過(L$line): ${val}文（上限3文・TEMPLATE.md）" ;;
+    esac
+  done <<< "$DIGEST_REPORT"
 fi
 
 # -----------------------------------------------------------------------------
@@ -377,6 +417,20 @@ if [ -d "$POSTS_DIR" ]; then
   fi
 else
   echo "WARN: _posts ディレクトリが見つかりません: $POSTS_DIR" >&2
+fi
+
+# -----------------------------------------------------------------------------
+# 5. 評価語チェック（WARN）: 事実ベース原則（TEMPLATE.md）に反しやすい表現を検出
+# -----------------------------------------------------------------------------
+# DENYLIST.md の「## NG評価語」セクションのバッククォート囲み語をパースして検出する。
+# 「重大な脆弱性（Critical訳）」「IPAが推奨（帰属あり）」など正当な用例があるため
+# FAIL にはせず WARN にとどめ、保存前に文脈を手動確認する。
+NG_EXPR=$(awk '/^## NG評価語/{f=1; next} /^## /{f=0} f' "$DENYLIST_MD" \
+  | grep -oE '`[^`]+`' | tr -d '`' | paste -sd'|' -)
+if [ -n "$NG_EXPR" ]; then
+  while IFS= read -r hit; do
+    [ -n "$hit" ] && warn "評価語の疑い（文脈を手動確認）: $hit"
+  done < <(grep -nE "$NG_EXPR" "$DRAFT")
 fi
 
 # -----------------------------------------------------------------------------
