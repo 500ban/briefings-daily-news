@@ -17,6 +17,7 @@ https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260331/
 https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260630/
 https://dev.classmethod.jp/articles/aws-summit-japan-2026-session-materials-and-ondemand/
 https://dev.classmethod.jp/articles/aws-transform-model-migration-assessment/
+https://dev.classmethod.jp/articles/aws-waf-dynamic-label-interpolation-bot-signaling-custom-block-page/
 https://dev.classmethod.jp/articles/backlog-webhook-claude-code-routines/
 https://dev.classmethod.jp/articles/bedrock-agentcore-gateway-oauth-mcp/
 https://dev.classmethod.jp/articles/book-review-amazon-bedrock-agentcore-jissen-nyumon/
@@ -42,9 +43,11 @@ https://dev.classmethod.jp/articles/cloudfront-functions-logcustomdata-access-lo
 https://dev.classmethod.jp/articles/cm-da-news-ml-202604/
 https://dev.classmethod.jp/articles/cm-news-analytics-202605/
 https://dev.classmethod.jp/articles/cognito-provisioned-limit-service-quota-increase-load-test/
+https://dev.classmethod.jp/articles/cve-2026-42533-nginx-rce-docker-repro/
 https://dev.classmethod.jp/articles/deploy-claude-agent-sdk-on-agentcore-runtime/
 https://dev.classmethod.jp/articles/documentdb-extended-3-6/
 https://dev.classmethod.jp/articles/ec2-capacity-blocks-for-ml-pricing-update-2026-07/
+https://dev.classmethod.jp/articles/ec2-console-new-connect-ui-2026/
 https://dev.classmethod.jp/articles/floci-one-month-update-41-services/
 https://dev.classmethod.jp/articles/gcn26-day1-opening-keynote-agentic-cloud/
 https://dev.classmethod.jp/articles/gemini-35-flash-released/
@@ -230,6 +233,7 @@ https://forest.watch.impress.co.jp/docs/update/library/2123980.html
 https://forest.watch.impress.co.jp/docs/update/library/2124384.html
 https://forest.watch.impress.co.jp/docs/update/library/2125133.html
 https://forest.watch.impress.co.jp/docs/update/library/2125863.html
+https://forest.watch.impress.co.jp/docs/update/library/2126713.html
 https://leaddev.com/ai/addictive-agentic-coding-has-developers-losing-sleep
 https://leaddev.com/ai/ai-coding-agents-spread-through-peer-pressure-not-mandates
 https://leaddev.com/ai/ai-coding-is-addictive-engineers-are-paying-the-price
@@ -264,6 +268,7 @@ https://leaddev.com/leadership/6-software-engineering-buzzwords-you-need-to-stop
 https://leaddev.com/leadership/engineering-managers-are-paying-the-price-of-rising-expectations
 https://leaddev.com/leadership/killing-a-project-is-every-engineering-leaders-hardest-call
 https://leaddev.com/leadership/tech-leads-are-overwhelmed-heres-how-to-take-back-control
+https://leaddev.com/leadership/the-engineering-leadership-skill-no-title-can-give-you
 https://leaddev.com/management/ai-has-us-asking-does-team-size-still-matter
 https://leaddev.com/reporting/dora-metrics-are-lying-to-you-and-ai-is-making-it-worse
 https://leaddev.com/reporting/is-microsofts-engthrive-framework-immune-to-goodharts-law
@@ -361,6 +366,9 @@ https://news.ycombinator.com/item?id=48924912
 https://news.ycombinator.com/item?id=48926590
 https://news.ycombinator.com/item?id=48926939
 https://news.ycombinator.com/item?id=48937020
+https://news.ycombinator.com/item?id=48998262
+https://news.ycombinator.com/item?id=48998828
+https://news.ycombinator.com/item?id=48999489
 https://newspicks.com/news/16277957/body/
 https://newspicks.com/news/16343626/
 https://newspicks.com/news/16638001/
@@ -369,6 +377,7 @@ https://newspicks.com/news/16704145/
 https://newspicks.com/news/16707330/
 https://newspicks.com/news/16905204/
 https://newspicks.com/news/17040904/body/
+https://openai.com/index/a-scorecard-for-the-ai-age/
 https://openai.com/index/academy-courses-applying-ai-at-work/
 https://openai.com/index/accelerating-the-next-phase-ai/
 https://openai.com/index/advanced-account-security/
@@ -749,7 +758,12 @@ https://techcrunch.com/2026/07/14/david-beckhams-health-drink-startup-im8-takes-
 https://techcrunch.com/2026/07/14/openai-researcher-miles-wang-in-talks-to-launch-ai-drug-discovery-startup-valued-at-2b/
 https://techcrunch.com/2026/07/15/backed-by-60m-in-funding-oak-steps-out-of-stealth-to-fix-the-identity-mess-that-ai-agents-are-making-worse/
 https://techcrunch.com/2026/07/15/indian-ai-coding-startup-emergent-becomes-a-unicorn-just-over-a-year-after-launch/
+https://techcrunch.com/2026/07/16/ultrahumans-former-hardware-vp-raises-5-5m-for-devices-that-control-ai-agents-not-just-record-you/
 https://techcrunch.com/2026/07/17/nuclear-startup-valar-atomics-in-talks-to-raise-new-funding-at-6b-valuation/
+https://techcrunch.com/2026/07/19/nonprofit-current-ai-is-racing-to-build-the-world-wide-web-of-ai-free-for-all/
+https://techcrunch.com/2026/07/20/inference-startup-infinity-raises-15m-from-touring-capital-openai-and-athropic-researchers/
+https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/
+https://techcrunch.com/2026/07/21/gritt-exits-stealth-with-34-million-for-robots-to-build-solar-plants-then-everything-else/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
 https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html
 https://thehackernews.com/2026/03/cisa-flags-apple-craft-cms-laravel-bugs.html
@@ -951,6 +965,7 @@ https://thehackernews.com/2026/07/icagenda-and-balbooa-forms-joomla-flaws.html
 https://thehackernews.com/2026/07/injective-labs-github-compromise-pushes.html
 https://thehackernews.com/2026/07/latest-progress-kemp-loadmaster-pre.html
 https://thehackernews.com/2026/07/microsoft-patches-record-622-flaws.html
+https://thehackernews.com/2026/07/new-7-zip-vulnerability-could-let.html
 https://thehackernews.com/2026/07/new-avalon-malware-framework-packs.html
 https://thehackernews.com/2026/07/new-bad-epoll-linux-kernel-flaw-lets.html
 https://thehackernews.com/2026/07/new-chocopoc-rat-targets-vulnerability.html
@@ -959,7 +974,9 @@ https://thehackernews.com/2026/07/new-java-based-quimarat-maas-built-to.html
 https://thehackernews.com/2026/07/new-nadmesh-botnet-hunts-exposed-ai.html
 https://thehackernews.com/2026/07/new-trojpix-attack-leaks-data-from-air.html
 https://thehackernews.com/2026/07/new-wp2shell-wordpress-core-flaw-lets.html
+https://thehackernews.com/2026/07/openssl-hollowbyte-flaw-could-freeze.html
 https://thehackernews.com/2026/07/pamstealer-uses-fake-maccy-sites-and.html
+https://thehackernews.com/2026/07/researcher-drops-new-windows-zero-day.html
 https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html
 https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html
 https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html
@@ -969,6 +986,7 @@ https://thehackernews.com/2026/07/two-sonicwall-sma-1000-zero-days.html
 https://thehackernews.com/2026/07/unpatched-flaws-disclosed-in-filesystem.html
 https://thehackernews.com/2026/07/unpatched-xring-flaw-in-xquic-lets.html
 https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html
+https://thehackernews.com/2026/07/wordpress-wp2shell-exploitation-grows.html
 https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 https://www.anthropic.com/engineering/managed-agents
 https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack
@@ -1012,6 +1030,7 @@ https://www.anthropic.com/news/introducing-claude-tag
 https://www.anthropic.com/news/kiyoung-choi-representative-director-anthropic-korea
 https://www.anthropic.com/news/milan-office-opening
 https://www.anthropic.com/news/pwc-expanded-partnership
+https://www.anthropic.com/news/rare-disease-research-grants
 https://www.anthropic.com/news/redeploying-fable-5
 https://www.anthropic.com/news/reflect-with-claude
 https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem
@@ -1081,6 +1100,7 @@ https://www.nikkei.com/article/DGXZQOFL301FITQ6A630C2000000/
 https://www.nikkei.com/article/DGXZQOFL301I40Q6A430C2000000/
 https://www.nikkei.com/article/DGXZQOGM014PY0R00C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM061OI0W6A700C2000000/
+https://www.nikkei.com/article/DGXZQOGM159TI0V10C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM265UK0W6A620C2000000/
 https://www.nikkei.com/article/DGXZQOGM310GK0R30C26A5000000/
 https://www.nikkei.com/article/DGXZQOGN0114D0R00C26A5000000/
@@ -1136,9 +1156,11 @@ https://www.nikkei.com/article/DGXZQOUB140JZ0U6A410C2000000/
 https://www.nikkei.com/article/DGXZQOUB1483A0U6A510C2000000/
 https://www.nikkei.com/article/DGXZQOUB160KO0W6A610C2000000/
 https://www.nikkei.com/article/DGXZQOUB175KH0X10C26A7000000/
+https://www.nikkei.com/article/DGXZQOUB178H70X10C26A7000000/
 https://www.nikkei.com/article/DGXZQOUB17C800X10C26A4000000/
 https://www.nikkei.com/article/DGXZQOUB205HD0Q6A520C2000000/
 https://www.nikkei.com/article/DGXZQOUB2116H0R20C26A4000000/
+https://www.nikkei.com/article/DGXZQOUB211EN0R20C26A7000000/
 https://www.nikkei.com/article/DGXZQOUB221MKTS6A520C2000000/
 https://www.nikkei.com/article/DGXZQOUB250GB0V20C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB260DYTW6A520C2000000/
