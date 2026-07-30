@@ -229,8 +229,11 @@ a:focus-visible {
 
 .site-title-compact {
   max-width: none;
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  /* 語中改行を禁止し、常に1行で収まるよう画面幅からフォントサイズを算出
+     （タイトル10文字 + 余白ぶんの除算） */
+  font-size: clamp(1.5rem, calc((100vw - 44px) / 10.5), 2.5rem);
   letter-spacing: -0.04em;
+  word-break: keep-all;
 }
 
 .site-description {
@@ -442,6 +445,7 @@ a:focus-visible {
   font-size: clamp(1.7rem, 3vw, 2.8rem);
   line-height: 1.05;
   letter-spacing: -0.05em;
+  word-break: keep-all;
 }
 
 .feature-brief p {
@@ -570,6 +574,8 @@ a:focus-visible {
   font-size: clamp(2rem, 3.4vw, 3.2rem);
   line-height: 1.08;
   letter-spacing: -0.045em;
+  /* 「デイリーブリーフィング」の語中で折り返さない（改行は日付との間のみ） */
+  word-break: keep-all;
 }
 
 .post-date {
@@ -915,6 +921,12 @@ a:focus-visible {
     font-size: clamp(2.15rem, 11vw, 3.05rem);
   }
 
+  /* コンパクトタイトルは常に1行（上の 11vw 指定を打ち消す） */
+  .site-title-compact {
+    max-width: none;
+    font-size: clamp(1.4rem, calc((100vw - 44px) / 10.5), 2.5rem);
+  }
+
   .site-kicker-home {
     margin-bottom: 14px;
     font-size: 0.82rem;
@@ -967,6 +979,11 @@ a:focus-visible {
   .feature-brief h3,
   .post-header h1 {
     max-width: none;
+  }
+
+  /* keep-all でも「デイリーブリーフィング」(10文字)が1行に収まるサイズに抑える */
+  .post-header h1 {
+    font-size: clamp(1.55rem, 8vw, 2rem);
   }
 
   .archive-months {
