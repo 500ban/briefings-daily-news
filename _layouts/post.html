@@ -14,5 +14,24 @@ layout: default
     <div class="post-body">
       {{ content }}
     </div>
+    <nav class="post-nav" aria-label="前後の号">
+      {% if page.previous %}
+      <a class="post-nav-link post-nav-prev" href="{{ page.previous.url | relative_url }}">
+        <span class="post-nav-label">← 前号</span>
+        <span class="post-nav-date">{{ page.previous.date | date: "%Y-%m-%d" }}</span>
+      </a>
+      {% else %}
+      <span class="post-nav-spacer" aria-hidden="true"></span>
+      {% endif %}
+      <a class="post-nav-home" href="{{ '/' | relative_url }}#archive">一覧</a>
+      {% if page.next %}
+      <a class="post-nav-link post-nav-next" href="{{ page.next.url | relative_url }}">
+        <span class="post-nav-label">次号 →</span>
+        <span class="post-nav-date">{{ page.next.date | date: "%Y-%m-%d" }}</span>
+      </a>
+      {% else %}
+      <span class="post-nav-spacer" aria-hidden="true"></span>
+      {% endif %}
+    </nav>
   </div>
 </article>

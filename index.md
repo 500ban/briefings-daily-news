@@ -31,19 +31,26 @@ title: デイリーブリーフィング
     <p>新しい順に並んでいます。</p>
   </div>
   {% if site.posts.size > 0 %}
-  <ol class="brief-list">
-    {% for post in site.posts %}
-    <li>
-      <a class="brief-item" href="{{ post.url | relative_url }}">
-        <div>
-          <p class="brief-item-date">{{ post.date | date: "%Y-%m-%d" }}</p>
-          <h3>{{ post.title | remove_first: "📅 " }}</h3>
-        </div>
-        <span class="brief-item-arrow" aria-hidden="true">読む</span>
-      </a>
-    </li>
+  {% assign wdays = "日,月,火,水,木,金,土" | split: "," %}
+  {% assign posts_by_month = site.posts | group_by_exp: "post", "post.date | date: '%Y年%-m月'" %}
+  <div class="archive-months">
+    {% for month in posts_by_month %}
+    <section class="archive-month">
+      <h3 class="archive-month-label">{{ month.name }}<span class="archive-month-count">{{ month.items | size }}本</span></h3>
+      <ol class="archive-days">
+        {% for post in month.items %}
+        {% assign w = post.date | date: "%w" | plus: 0 %}
+        <li>
+          <a class="archive-day" href="{{ post.url | relative_url }}" title="{{ post.date | date: '%Y-%m-%d' }} のブリーフィング">
+            <span class="archive-day-num">{{ post.date | date: "%-d" }}</span>
+            <span class="archive-day-dow">{{ wdays[w] }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
     {% endfor %}
-  </ol>
+  </div>
   {% else %}
   <p class="empty-state">まだ公開済みのブリーフィングはありません。最初の公開分がここに並びます。</p>
   {% endif %}

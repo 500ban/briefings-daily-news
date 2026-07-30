@@ -456,51 +456,74 @@ a:focus-visible {
   font-weight: 600;
 }
 
-.brief-list {
+/* ── アーカイブ（月別グループ） ─────────────── */
+
+.archive-months {
+  display: grid;
+  gap: 34px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.archive-month {
+  display: grid;
+  gap: 14px;
+}
+
+.archive-month-label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+}
+
+.archive-month-count {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.archive-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--line-strong);
   list-style: none;
 }
 
-.brief-list li {
-  border-bottom: 1px solid var(--line);
-}
-
-.brief-item {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 18px 0;
-  color: inherit;
+.archive-day {
+  display: grid;
+  place-items: center;
+  gap: 1px;
+  min-width: 62px;
+  padding: 9px 12px 7px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
   text-decoration: none;
 }
 
-.brief-item:hover {
+.archive-day:hover {
+  border-color: var(--accent);
   color: var(--accent-strong);
-  transform: translateX(4px);
+  transform: translateY(-1px);
 }
 
-.brief-item-date {
-  margin: 0 0 8px;
+.archive-day-num {
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.archive-day-dow {
   color: var(--muted);
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.brief-item h3 {
-  margin: 0;
-  font-size: clamp(1.2rem, 2vw, 1.75rem);
-  line-height: 1.12;
-  letter-spacing: -0.04em;
-}
-
-.brief-item-arrow {
-  color: var(--muted);
-  font-size: 0.9rem;
-  white-space: nowrap;
+  font-size: 0.72rem;
+  line-height: 1.3;
 }
 
 .empty-state {
@@ -574,16 +597,23 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
+/* 今日のまとめ: カテゴリごとの小カードにする
+   （details より前の直下 p はまとめ段落のみという TEMPLATE 構造が前提） */
 .post-body > p {
-  max-width: 44rem;
+  max-width: none;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  background: var(--surface);
 }
 
 /* 今日のまとめ: カテゴリ名を独立行のラベルにする */
 .post-body > p > strong:first-child {
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   letter-spacing: 0.02em;
 }
 
@@ -757,6 +787,67 @@ a:focus-visible {
   margin-bottom: 0;
 }
 
+/* ── 前号/次号ナビ ──────────────────────────── */
+
+.post-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 34px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.post-nav-link {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.post-nav-link:hover {
+  color: var(--accent-strong);
+}
+
+.post-nav-link:hover .post-nav-date {
+  color: var(--accent-strong);
+}
+
+.post-nav-next {
+  text-align: right;
+}
+
+.post-nav-date {
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.post-nav-home {
+  flex: none;
+  padding: 9px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.post-nav-home:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.post-nav-spacer {
+  min-width: 62px;
+}
+
 /* ── Footer ─────────────────────────────────── */
 
 .site-footer {
@@ -793,10 +884,6 @@ a:focus-visible {
 
   .site-hero-rail {
     max-width: 34rem;
-  }
-
-  .brief-item {
-    align-items: start;
   }
 }
 
@@ -872,16 +959,33 @@ a:focus-visible {
     padding: 22px 18px;
   }
 
-  .feature-brief-top,
-  .brief-item {
+  .feature-brief-top {
     flex-direction: column;
     align-items: start;
   }
 
   .feature-brief h3,
-  .brief-item h3,
   .post-header h1 {
     max-width: none;
+  }
+
+  .archive-months {
+    gap: 28px;
+  }
+
+  .archive-day {
+    min-width: 54px;
+    padding: 8px 10px 6px;
+  }
+
+  .post-nav {
+    flex-wrap: wrap;
+  }
+
+  .post-nav-home {
+    order: 3;
+    width: 100%;
+    text-align: center;
   }
 
   .post-frame {
