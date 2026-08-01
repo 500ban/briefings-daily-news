@@ -3,6 +3,7 @@ https://asia.nikkei.com/business/technology/artificial-intelligence/alibaba-s-cl
 https://asia.nikkei.com/business/technology/artificial-intelligence/honda-other-japan-companies-pay-workers-to-spearhead-ai-use
 https://asia.nikkei.com/business/technology/ntt-hoped-to-lead-optical-data-networks.-ai-and-nvidia-changed-that
 https://corp.newspicks.com/info/20260728
+https://dev.classmethod.jp/articles/2026-07-29-cognito-unify-auth-methods-single-window-tried/
 https://dev.classmethod.jp/articles/20260410-claude-code-yukkuri-data-analytics/
 https://dev.classmethod.jp/articles/20260603-cc-updates-v2-1-165/
 https://dev.classmethod.jp/articles/20260609-cc-updates-v2-1-169/
@@ -18,6 +19,7 @@ https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260331/
 https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260630/
 https://dev.classmethod.jp/articles/aws-summit-japan-2026-session-materials-and-ondemand/
 https://dev.classmethod.jp/articles/aws-transform-model-migration-assessment/
+https://dev.classmethod.jp/articles/aws-trendcheck-202607/
 https://dev.classmethod.jp/articles/aws-waf-dynamic-label-interpolation-bot-signaling-custom-block-page/
 https://dev.classmethod.jp/articles/backlog-webhook-claude-code-routines/
 https://dev.classmethod.jp/articles/bedrock-agentcore-gateway-oauth-mcp/
@@ -228,6 +230,7 @@ https://forest.watch.impress.co.jp/docs/news/2127492.html
 https://forest.watch.impress.co.jp/docs/news/2127613.html
 https://forest.watch.impress.co.jp/docs/news/2127807.html
 https://forest.watch.impress.co.jp/docs/news/2127822.html
+https://forest.watch.impress.co.jp/docs/news/2128314.html
 https://forest.watch.impress.co.jp/docs/news/2128802.html
 https://forest.watch.impress.co.jp/docs/news/2128870.html
 https://forest.watch.impress.co.jp/docs/review/2120213.html
@@ -254,7 +257,9 @@ https://forest.watch.impress.co.jp/docs/update/library/2125133.html
 https://forest.watch.impress.co.jp/docs/update/library/2125863.html
 https://forest.watch.impress.co.jp/docs/update/library/2126713.html
 https://forest.watch.impress.co.jp/docs/update/library/2127447.html
+https://forest.watch.impress.co.jp/docs/update/library/2128654.html
 https://leaddev.com/ai/addictive-agentic-coding-has-developers-losing-sleep
+https://leaddev.com/ai/ai-coding-agents-kill-team-collaboration
 https://leaddev.com/ai/ai-coding-agents-spread-through-peer-pressure-not-mandates
 https://leaddev.com/ai/ai-coding-is-addictive-engineers-are-paying-the-price
 https://leaddev.com/ai/ai-coding-made-us-faster-why-did-incidents-increase
@@ -293,6 +298,7 @@ https://leaddev.com/leadership/tech-leads-are-overwhelmed-heres-how-to-take-back
 https://leaddev.com/leadership/the-engineering-leadership-skill-no-title-can-give-you
 https://leaddev.com/leadership/the-reality-of-being-a-cto
 https://leaddev.com/management/ai-has-us-asking-does-team-size-still-matter
+https://leaddev.com/management/engineering-managers-have-a-new-job-description
 https://leaddev.com/reporting/dora-metrics-are-lying-to-you-and-ai-is-making-it-worse
 https://leaddev.com/reporting/is-microsofts-engthrive-framework-immune-to-goodharts-law
 https://leaddev.com/reporting/its-time-to-rethink-how-we-measure-engineering-productivity
@@ -406,6 +412,11 @@ https://news.ycombinator.com/item?id=49024620
 https://news.ycombinator.com/item?id=49026511
 https://news.ycombinator.com/item?id=49027355
 https://news.ycombinator.com/item?id=49028120
+https://news.ycombinator.com/item?id=49056316
+https://news.ycombinator.com/item?id=49073834
+https://news.ycombinator.com/item?id=49099143
+https://news.ycombinator.com/item?id=49109721
+https://news.ycombinator.com/item?id=49116839
 https://newspicks.com/news/16277957/body/
 https://newspicks.com/news/16343626/
 https://newspicks.com/news/16638001/
@@ -414,6 +425,7 @@ https://newspicks.com/news/16704145/
 https://newspicks.com/news/16707330/
 https://newspicks.com/news/16905204/
 https://newspicks.com/news/17040904/body/
+https://newspicks.com/news/17169962/body/
 https://openai.com/index/a-scorecard-for-the-ai-age/
 https://openai.com/index/academy-courses-applying-ai-at-work/
 https://openai.com/index/accelerating-the-next-phase-ai/
@@ -448,7 +460,9 @@ https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot/
 https://openai.com/index/gpt-5-6/
 https://openai.com/index/gpt-5-immunology-mystery/
 https://openai.com/index/health-in-chatgpt/
+https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/
 https://openai.com/index/how-news-organizations-are-using-ai/
+https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/
 https://openai.com/index/hugging-face-model-evaluation-security-incident/
 https://openai.com/index/improving-health-intelligence-in-chatgpt/
 https://openai.com/index/industrial-policy-for-the-intelligence-age/
@@ -534,6 +548,7 @@ https://research.google/blog/private-analytics-via-zero-trust-aggregation/
 https://research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/
 https://research.google/blog/research-into-how-ai-can-help-users-understand-skin-conditions/
 https://research.google/blog/safeguarding-cryptocurrency-by-disclosing-quantum-vulnerabilities-responsibly/
+https://research.google/blog/science-one-framework-a-verifiable-autonomous-research-framework-via-chain-of-evidence/
 https://research.google/blog/sensorfm-towards-a-general-intelligence-and-interface-for-wearable-health-data/
 https://research.google/blog/symptomai-towards-a-conversational-ai-agent-for-everyday-symptom-assessment/
 https://research.google/blog/the-next-chapter-in-flood-resilience-open-sourcing-googles-hydrology-framework/
@@ -541,6 +556,7 @@ https://research.google/blog/the-power-of-collaboration-how-we-can-reduce-traffi
 https://research.google/blog/thinking-to-recall-how-reasoning-unlocks-parametric-knowledge-in-llms/
 https://research.google/blog/titans-miras-helping-ai-have-long-term-memory/
 https://research.google/blog/towards-a-quantum-computer-that-learns-from-its-errors/
+https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/
 https://research.google/blog/towards-demystifying-the-creativity-of-diffusion-models/
 https://research.google/blog/towards-developing-future-ready-skills-with-generative-ai/
 https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/
@@ -821,16 +837,22 @@ https://techcrunch.com/2026/07/22/yope-raises-12-3m-to-build-a-private-social-ne
 https://techcrunch.com/2026/07/23/ai-chip-startup-etched-defies-skeptics-hits-10-3b-valuation-from-big-name-investors/
 https://techcrunch.com/2026/07/23/insurance-startup-corgi-reportedly-raised-more-money-at-4b-its-third-round-in-eight-weeks/
 https://techcrunch.com/2026/07/24/anduril-reportedly-in-talks-to-raise-funding-at-100b-valuation-more-than-3x-last-years-mark/
+https://techcrunch.com/2026/07/24/blueskys-ai-assistant-attie-expands-into-an-open-social-research-tool/
 https://techcrunch.com/2026/07/24/sam-altmans-biometric-startup-world-raises-52-5-million-via-crypto-sale/
 https://techcrunch.com/2026/07/25/elon-musks-boring-company-reportedly-raising-funding-at-a-20-billion-valuation/
+https://techcrunch.com/2026/07/25/the-running-list-major-tech-layoffs-in-2026-where-employers-cited-ai/
 https://techcrunch.com/2026/07/27/enigma-raises-70m-to-make-controlling-a-robot-as-easy-as-adjusting-the-volume/
+https://techcrunch.com/2026/07/27/microsoft-launches-its-first-cyber-model-and-a-new-agentic-cybersecurity-system/
+https://techcrunch.com/2026/07/28/cyera-agrees-to-acquire-oasis-security-for-1b-to-safeguard-proliferating-ai-agents/
 https://techcrunch.com/2026/07/28/fish-audio-raises-50m-seed-to-build-ai-voice-models-for-creators-and-enterprises/
 https://techcrunch.com/2026/07/28/mcp-startup-runlayer-accuses-rippling-of-stealing-its-product-idea/
 https://techcrunch.com/2026/07/28/ozlos-sleepbuds-2-build-on-boses-sleep-earbud-legacy/
 https://techcrunch.com/2026/07/29/as-ai-content-floods-the-internet-pangram-raises-9m-to-detect-it/
 https://techcrunch.com/2026/07/29/encore-ai-raises-30m-to-build-ai-agents-that-learn-from-customer-calls/
 https://techcrunch.com/2026/07/29/hint-a-new-ai-startup-co-founded-by-martha-stewart-offers-an-ai-assistant-for-homeowners/
+https://techcrunch.com/2026/07/29/sorry-haters-ferraris-first-ev-is-doing-just-fine/
 https://techcrunch.com/2026/07/29/thinking-machines-co-founder-lilian-weng-left-the-company-citing-health-reasons-then-joined-openai/
+https://techcrunch.com/2026/07/30/okta-buys-ai-security-startup-permiso-source-says-for-about-200m/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
 https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html
 https://thehackernews.com/2026/03/cisa-flags-apple-craft-cms-laravel-bugs.html
@@ -1018,6 +1040,7 @@ https://thehackernews.com/2026/07/adobe-patches-7-cvss-100-flaws-in.html
 https://thehackernews.com/2026/07/ai-agent-exploits-langflow-rce-to.html
 https://thehackernews.com/2026/07/ai-coding-agents-found-triggering.html
 https://thehackernews.com/2026/07/ai-generated-browser-ransomware-abuses.html
+https://thehackernews.com/2026/07/azure-cosmos-db-flaw-exposed-platform.html
 https://thehackernews.com/2026/07/beyondtrust-patches-critical-auth.html
 https://thehackernews.com/2026/07/certcc-warns-of-hidden-admin-backdoor.html
 https://thehackernews.com/2026/07/certighost-exploit-lets-low-privileged.html
@@ -1026,6 +1049,7 @@ https://thehackernews.com/2026/07/check-point-patches-exploited.html
 https://thehackernews.com/2026/07/china-nexus-jadeprox-uses-new-triback.html
 https://thehackernews.com/2026/07/cisa-adds-4-actively-exploited-adobe.html
 https://thehackernews.com/2026/07/cisa-adds-exploited-sharepoint-rce-zero.html
+https://thehackernews.com/2026/07/cisco-fmc-zero-day-actively-exploited.html
 https://thehackernews.com/2026/07/citrix-patches-six-netscaler-flaws.html
 https://thehackernews.com/2026/07/cl0p-affiliates-target-internet-exposed.html
 https://thehackernews.com/2026/07/compromised-jscrambler-8140-npm-release.html
@@ -1037,6 +1061,7 @@ https://thehackernews.com/2026/07/critical-zimbra-flaw-could-let-crafted_0483473
 https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp.html
 https://thehackernews.com/2026/07/fakegit-campaign-uses-7600-github.html
 https://thehackernews.com/2026/07/fortibleed-credential-theft-linked-to.html
+https://thehackernews.com/2026/07/hackers-exploit-anysign4pc-via-hacked.html
 https://thehackernews.com/2026/07/hollowgraph-malware-hides-c2-and-stolen.html
 https://thehackernews.com/2026/07/icagenda-and-balbooa-forms-joomla-flaws.html
 https://thehackernews.com/2026/07/injective-labs-github-compromise-pushes.html
@@ -1061,6 +1086,7 @@ https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html
 https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html
 https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html
 https://thehackernews.com/2026/07/threat-actors-probe-gitea-docker-flaw.html
+https://thehackernews.com/2026/07/threatsday-ai-powered-hacking-370.html
 https://thehackernews.com/2026/07/threatsday-cloud-bucket-hijacking.html
 https://thehackernews.com/2026/07/two-sonicwall-sma-1000-zero-days.html
 https://thehackernews.com/2026/07/unpatched-flaws-disclosed-in-filesystem.html
@@ -1113,6 +1139,7 @@ https://www.anthropic.com/news/hard-questions
 https://www.anthropic.com/news/higher-limits-spacex
 https://www.anthropic.com/news/integrations
 https://www.anthropic.com/news/introducing-claude-tag
+https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals
 https://www.anthropic.com/news/kiyoung-choi-representative-director-anthropic-korea
 https://www.anthropic.com/news/milan-office-opening
 https://www.anthropic.com/news/position-open-weights-models
@@ -1137,6 +1164,7 @@ https://www.ipa.go.jp/pressrelease/2025/press20260327.html
 https://www.ipa.go.jp/pressrelease/2026/press20260402.html
 https://www.ipa.go.jp/security/10threats/10threats2026.html
 https://www.ipa.go.jp/security/anshin/heads-up/alert20260420.html
+https://www.ipa.go.jp/security/anshin/heads-up/alert20260730.html
 https://www.ipa.go.jp/security/economics/mailmag/tradesec_mailmag_20260617.html
 https://www.ipa.go.jp/security/reports/vuln/software/2026q1.html
 https://www.ipa.go.jp/security/security-alert/2025/0311-ms.html
@@ -1192,6 +1220,7 @@ https://www.nikkei.com/article/DGXZQOGM014PY0R00C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM061OI0W6A700C2000000/
 https://www.nikkei.com/article/DGXZQOGM159TI0V10C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM265UK0W6A620C2000000/
+https://www.nikkei.com/article/DGXZQOGM296220Z20C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM310GK0R30C26A5000000/
 https://www.nikkei.com/article/DGXZQOGN0114D0R00C26A5000000/
 https://www.nikkei.com/article/DGXZQOGN01BFE0R00C26A6000000/
@@ -1260,6 +1289,7 @@ https://www.nikkei.com/article/DGXZQOUB260DYTW6A520C2000000/
 https://www.nikkei.com/article/DGXZQOUB276AP0X20C26A4000000/
 https://www.nikkei.com/article/DGXZQOUB281PT0Y6A420C2000000/
 https://www.nikkei.com/article/DGXZQOUB300GP0Q6A330C2000000/
+https://www.nikkei.com/article/DGXZQOUB309KI0Q6A730C2000000/
 https://www.nikkei.com/article/DGXZQOUC025HX0S6A200C2000000/
 https://www.nikkei.com/article/DGXZQOUC03C0R0T00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUC0472I0U6A600C2000000/
