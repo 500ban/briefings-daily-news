@@ -14,6 +14,7 @@ https://dev.classmethod.jp/articles/amazon-bedrock-claude-opus-4-7/
 https://dev.classmethod.jp/articles/amazon-connect-ai-agent-knowledge-base-document-size-limit-5mb/
 https://dev.classmethod.jp/articles/amplify-gen1-eol/
 https://dev.classmethod.jp/articles/aurora-rds-oss-engine-version-timeline-2026-05/
+https://dev.classmethod.jp/articles/aws-cli-session-id-disabled/
 https://dev.classmethod.jp/articles/aws-compute-optimizer-ec2-rds-2026-04/
 https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260331/
 https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260630/
@@ -61,6 +62,7 @@ https://dev.classmethod.jp/articles/github-copilot-model-data-usage-policy-chang
 https://dev.classmethod.jp/articles/google-workspace-studio-multilingual-update/
 https://dev.classmethod.jp/articles/gtc2026-nemoclaw-preview/
 https://dev.classmethod.jp/articles/ios-dev-weekly-changes-20260722/
+https://dev.classmethod.jp/articles/kiro-cli-v3-tangent/
 https://dev.classmethod.jp/articles/kiro-endpoint-migration-to-kiro-dev/
 https://dev.classmethod.jp/articles/lambda-java-8-11-17-al2023-runtime-added/
 https://dev.classmethod.jp/articles/modern-data-stack-info-summary-20260429/
@@ -236,6 +238,8 @@ https://forest.watch.impress.co.jp/docs/news/2127822.html
 https://forest.watch.impress.co.jp/docs/news/2128314.html
 https://forest.watch.impress.co.jp/docs/news/2128802.html
 https://forest.watch.impress.co.jp/docs/news/2128870.html
+https://forest.watch.impress.co.jp/docs/news/2130392.html
+https://forest.watch.impress.co.jp/docs/news/2130424.html
 https://forest.watch.impress.co.jp/docs/review/2120213.html
 https://forest.watch.impress.co.jp/docs/serial/yajiuma/2105125.html
 https://forest.watch.impress.co.jp/docs/serial/yajiuma/2106708.html
@@ -267,6 +271,7 @@ https://leaddev.com/ai/ai-coding-agents-kill-team-collaboration
 https://leaddev.com/ai/ai-coding-agents-spread-through-peer-pressure-not-mandates
 https://leaddev.com/ai/ai-coding-is-addictive-engineers-are-paying-the-price
 https://leaddev.com/ai/ai-coding-made-us-faster-why-did-incidents-increase
+https://leaddev.com/ai/ai-governance-is-now-an-engineering-problem
 https://leaddev.com/ai/ai-models-can-disappear-overnight-is-your-engineering-team-built-to-survive-it
 https://leaddev.com/ai/ai-productivity-is-burning-out-your-best-engineers
 https://leaddev.com/ai/are-amazon-microsoft-and-meta-bankrolling-ai-with-layoffs
@@ -303,6 +308,7 @@ https://leaddev.com/leadership/the-engineering-leadership-skill-no-title-can-giv
 https://leaddev.com/leadership/the-reality-of-being-a-cto
 https://leaddev.com/management/ai-has-us-asking-does-team-size-still-matter
 https://leaddev.com/management/engineering-managers-have-a-new-job-description
+https://leaddev.com/management/your-junior-engineers-dont-need-an-office-they-need-you
 https://leaddev.com/reporting/dora-metrics-are-lying-to-you-and-ai-is-making-it-worse
 https://leaddev.com/reporting/is-microsofts-engthrive-framework-immune-to-goodharts-law
 https://leaddev.com/reporting/its-time-to-rethink-how-we-measure-engineering-productivity
@@ -424,9 +430,13 @@ https://news.ycombinator.com/item?id=49099143
 https://news.ycombinator.com/item?id=49103285
 https://news.ycombinator.com/item?id=49109721
 https://news.ycombinator.com/item?id=49116839
+https://news.ycombinator.com/item?id=49119274
 https://news.ycombinator.com/item?id=49124358
 https://news.ycombinator.com/item?id=49142980
 https://news.ycombinator.com/item?id=49148163
+https://news.ycombinator.com/item?id=49158581
+https://news.ycombinator.com/item?id=49160817
+https://news.ycombinator.com/item?id=49161518
 https://newspicks.com/news/16277957/body/
 https://newspicks.com/news/16343626/
 https://newspicks.com/news/16638001/
@@ -446,6 +456,7 @@ https://openai.com/index/advancing-content-provenance/
 https://openai.com/index/advancing-the-price-performance-frontier-with-gpt-5-6/
 https://openai.com/index/advancing-voice-intelligence-with-new-models-in-the-api/
 https://openai.com/index/adventhealth/
+https://openai.com/index/apple-is-getting-this-wrong/
 https://openai.com/index/axios-developer-tool-compromise/
 https://openai.com/index/building-self-improving-tax-agents-with-codex/
 https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age/
@@ -453,6 +464,7 @@ https://openai.com/index/built-to-benefit-everyone-our-plan/
 https://openai.com/index/chatgpt-for-your-most-ambitious-work/
 https://openai.com/index/chatgpt-memory-dreaming/
 https://openai.com/index/chatgpt-recognize-context-in-sensitive-conversations/
+https://openai.com/index/circles/
 https://openai.com/index/codex-for-almost-everything/
 https://openai.com/index/codex-for-every-role-tool-workflow/
 https://openai.com/index/codex-for-knowledge-work/
@@ -527,6 +539,7 @@ https://openai.com/index/samsung-electronics-chatgpt-codex-deployment/
 https://openai.com/index/scaling-codex-to-enterprises-worldwide/
 https://openai.com/index/scaling-trusted-access-for-cyber-defense/
 https://openai.com/index/strengthening-societal-resilience-with-rosalind-biodefense/
+https://openai.com/index/ten-advances-in-mathematics/
 https://openai.com/index/ten-years/
 https://openai.com/index/testing-ads-in-chatgpt/
 https://openai.com/index/the-next-evolution-of-the-agents-sdk/
@@ -871,6 +884,9 @@ https://techcrunch.com/2026/07/29/thinking-machines-co-founder-lilian-weng-left-
 https://techcrunch.com/2026/07/30/linkedin-adds-a-button-to-report-ai-generated-slop/
 https://techcrunch.com/2026/07/30/meta-says-ai-is-making-it-easier-to-build-new-apps-and-more-are-coming/
 https://techcrunch.com/2026/07/30/okta-buys-ai-security-startup-permiso-source-says-for-about-200m/
+https://techcrunch.com/2026/07/30/synthetic-user-startup-simile-raises-200m-at-2b-valuation-5-months-after-100m-series-a/
+https://techcrunch.com/2026/07/31/smallest-ai-raises-13m-to-build-ultra-fast-voice-ai-that-sounds-genuinely-human/
+https://techcrunch.com/2026/08/04/bending-spoons-to-buy-airtable-for-1-28b/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
 https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html
 https://thehackernews.com/2026/03/cisa-flags-apple-craft-cms-laravel-bugs.html
@@ -1116,6 +1132,11 @@ https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html
 https://thehackernews.com/2026/07/weekly-recap-rogue-ai-agents-check.html
 https://thehackernews.com/2026/07/weekly-recap-wordpress-rce-sonicwall-0.html
 https://thehackernews.com/2026/07/wordpress-wp2shell-exploitation-grows.html
+https://thehackernews.com/2026/08/google-password-manager-attacks-could.html
+https://thehackernews.com/2026/08/inc-ransomware-emerges-as-dominant.html
+https://thehackernews.com/2026/08/keyv-linked-npm-worm-poisons-hundreds.html
+https://thehackernews.com/2026/08/n-able-says-attackers-take-over-n.html
+https://thehackernews.com/2026/08/weekly-recap-rogue-ai-models-88m.html
 https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 https://www.anthropic.com/engineering/managed-agents
 https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack
@@ -1238,6 +1259,7 @@ https://www.nikkei.com/article/DGXZQOFL29BGL0Z20C26A7000000/
 https://www.nikkei.com/article/DGXZQOFL29DFR0Z20C26A5000000/
 https://www.nikkei.com/article/DGXZQOFL301FITQ6A630C2000000/
 https://www.nikkei.com/article/DGXZQOFL301I40Q6A430C2000000/
+https://www.nikkei.com/article/DGXZQOFL311NVTR30C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM014PY0R00C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM061OI0W6A700C2000000/
 https://www.nikkei.com/article/DGXZQOGM159TI0V10C26A7000000/
@@ -1286,6 +1308,7 @@ https://www.nikkei.com/article/DGXZQOUB018Q80R00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB027X90S6A300C2000000/
 https://www.nikkei.com/article/DGXZQOUB02AU60S6A600C2000000/
 https://www.nikkei.com/article/DGXZQOUB02C1LTS6A600C2000000/
+https://www.nikkei.com/article/DGXZQOUB0324OTT00C26A8000000/
 https://www.nikkei.com/article/DGXZQOUB0533G0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB059LI0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB081A20Y6A400C2000000/
@@ -1336,6 +1359,7 @@ https://www.nikkei.com/article/DGXZQOUF075Y00X00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUF08AWL0Y6A400C2000000/
 https://www.producthunt.com/products/actionkit-by-paragon
 https://www.producthunt.com/products/adomate
+https://www.producthunt.com/products/agentsky
 https://www.producthunt.com/products/aura-28
 https://www.producthunt.com/products/auriko
 https://www.producthunt.com/products/base44
@@ -1350,6 +1374,7 @@ https://www.producthunt.com/products/compendium-2
 https://www.producthunt.com/products/context-dev
 https://www.producthunt.com/products/crawlraven
 https://www.producthunt.com/products/crew44
+https://www.producthunt.com/products/ctruh-studio
 https://www.producthunt.com/products/deepseek
 https://www.producthunt.com/products/effects-sdk
 https://www.producthunt.com/products/emdash
@@ -1383,8 +1408,10 @@ https://www.producthunt.com/products/openmolt
 https://www.producthunt.com/products/openyak
 https://www.producthunt.com/products/paradigm-3
 https://www.producthunt.com/products/pipali
+https://www.producthunt.com/products/plethora-3
 https://www.producthunt.com/products/podcastorai
 https://www.producthunt.com/products/pollyreach
+https://www.producthunt.com/products/port22
 https://www.producthunt.com/products/promptql
 https://www.producthunt.com/products/robynn-ai-self-improving-websites
 https://www.producthunt.com/products/second-brain-cloudflare
