@@ -12,10 +12,13 @@ https://dev.classmethod.jp/articles/20260710-aws-mcp-server-oauth/
 https://dev.classmethod.jp/articles/amazon-bedrock-claude-citations-api-pdf-support-update/
 https://dev.classmethod.jp/articles/amazon-bedrock-claude-opus-4-7/
 https://dev.classmethod.jp/articles/amazon-connect-ai-agent-knowledge-base-document-size-limit-5mb/
+https://dev.classmethod.jp/articles/amazon-ecr-200gb-image-layer/
 https://dev.classmethod.jp/articles/amplify-gen1-eol/
 https://dev.classmethod.jp/articles/aurora-rds-oss-engine-version-timeline-2026-05/
 https://dev.classmethod.jp/articles/aws-cli-session-id-disabled/
 https://dev.classmethod.jp/articles/aws-compute-optimizer-ec2-rds-2026-04/
+https://dev.classmethod.jp/articles/aws-devops-agent-github-mcp-pull-request/
+https://dev.classmethod.jp/articles/aws-devops-agent-skill-import-from-github-repository/
 https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260331/
 https://dev.classmethod.jp/articles/aws-service-lifecycle-summary-20260630/
 https://dev.classmethod.jp/articles/aws-summit-japan-2026-session-materials-and-ondemand/
@@ -25,6 +28,7 @@ https://dev.classmethod.jp/articles/aws-waf-dynamic-label-interpolation-bot-sign
 https://dev.classmethod.jp/articles/backlog-webhook-claude-code-routines/
 https://dev.classmethod.jp/articles/bedrock-agentcore-gateway-oauth-mcp/
 https://dev.classmethod.jp/articles/bedrock-claude-opus-5-converse-api/
+https://dev.classmethod.jp/articles/bedrock-nova-2-lite-metal-defect-detection/
 https://dev.classmethod.jp/articles/bedrock-openai-gpt56-terra-luna-price-update/
 https://dev.classmethod.jp/articles/book-review-amazon-bedrock-agentcore-jissen-nyumon/
 https://dev.classmethod.jp/articles/claude-2026-pricing-reform-bucket-system/
@@ -49,6 +53,7 @@ https://dev.classmethod.jp/articles/cloudfront-functions-logcustomdata-access-lo
 https://dev.classmethod.jp/articles/cm-da-news-ml-202604/
 https://dev.classmethod.jp/articles/cm-news-analytics-202605/
 https://dev.classmethod.jp/articles/cognito-provisioned-limit-service-quota-increase-load-test/
+https://dev.classmethod.jp/articles/cursor-meetup-sapporo-202608-kaji-lt/
 https://dev.classmethod.jp/articles/cve-2026-42533-nginx-rce-docker-repro/
 https://dev.classmethod.jp/articles/deploy-claude-agent-sdk-on-agentcore-runtime/
 https://dev.classmethod.jp/articles/documentdb-extended-3-6/
@@ -266,6 +271,7 @@ https://forest.watch.impress.co.jp/docs/update/library/2126713.html
 https://forest.watch.impress.co.jp/docs/update/library/2127447.html
 https://forest.watch.impress.co.jp/docs/update/library/2128654.html
 https://forest.watch.impress.co.jp/docs/update/library/2129057.html
+https://forest.watch.impress.co.jp/docs/update/library/2130535.html
 https://leaddev.com/ai/addictive-agentic-coding-has-developers-losing-sleep
 https://leaddev.com/ai/ai-coding-agents-kill-team-collaboration
 https://leaddev.com/ai/ai-coding-agents-spread-through-peer-pressure-not-mandates
@@ -283,8 +289,10 @@ https://leaddev.com/ai/pr-reviews-were-already-broken-ai-made-it-worse
 https://leaddev.com/ai/squarespace-is-redrawing-the-boundaries-of-platform-engineering
 https://leaddev.com/ai/the-ai-skills-gap-is-real-but-its-not-what-you-think
 https://leaddev.com/ai/the-architecture-gap-your-ai-agent-will-expose
+https://leaddev.com/ai/when-you-should-delegate-to-ai-and-when-you-shouldnt
 https://leaddev.com/ai/why-your-ai-bill-is-bigger-than-it-should-be
 https://leaddev.com/ai/your-ai-agent-just-blamed-the-network-team-now-what
+https://leaddev.com/ai/your-ai-coding-agents-might-need-an-org-chart
 https://leaddev.com/ai/your-ai-coding-budget-just-got-a-lot-more-complicated
 https://leaddev.com/ai/your-llm-inference-benchmark-is-lying-to-you
 https://leaddev.com/career-development/demand-for-engineering-managers-is-surging-in-the-agentic-coding-era
@@ -437,6 +445,9 @@ https://news.ycombinator.com/item?id=49148163
 https://news.ycombinator.com/item?id=49158581
 https://news.ycombinator.com/item?id=49160817
 https://news.ycombinator.com/item?id=49161518
+https://news.ycombinator.com/item?id=49166386
+https://news.ycombinator.com/item?id=49171268
+https://news.ycombinator.com/item?id=49185389
 https://newspicks.com/news/16277957/body/
 https://newspicks.com/news/16343626/
 https://newspicks.com/news/16638001/
@@ -469,6 +480,7 @@ https://openai.com/index/codex-for-almost-everything/
 https://openai.com/index/codex-for-every-role-tool-workflow/
 https://openai.com/index/codex-for-knowledge-work/
 https://openai.com/index/codex-now-generally-available/
+https://openai.com/index/continuous-voice-interaction-with-gpt-live/
 https://openai.com/index/david-velez-robin-vince-join-openai-boards/
 https://openai.com/index/daybreak-securing-the-world/
 https://openai.com/index/dell-codex-enterprise-partnership/
@@ -886,7 +898,13 @@ https://techcrunch.com/2026/07/30/meta-says-ai-is-making-it-easier-to-build-new-
 https://techcrunch.com/2026/07/30/okta-buys-ai-security-startup-permiso-source-says-for-about-200m/
 https://techcrunch.com/2026/07/30/synthetic-user-startup-simile-raises-200m-at-2b-valuation-5-months-after-100m-series-a/
 https://techcrunch.com/2026/07/31/smallest-ai-raises-13m-to-build-ultra-fast-voice-ai-that-sounds-genuinely-human/
+https://techcrunch.com/2026/08/01/sam-altman-is-still-making-the-case-for-parenting-via-chatgpt/
+https://techcrunch.com/2026/08/03/congresss-favorite-ai-tool-chatgpt/
+https://techcrunch.com/2026/08/03/horizon3-hits-2-billion-valuation-with-250m-series-e-as-ai-threats-escalate/
+https://techcrunch.com/2026/08/03/sequoias-shaun-maguire-leads-1b-round-for-nuclear-startup-valar-atomics/
+https://techcrunch.com/2026/08/03/whos-legally-to-blame-for-anthropic-and-openais-autonomous-ai-hacks-its-complicated/
 https://techcrunch.com/2026/08/04/bending-spoons-to-buy-airtable-for-1-28b/
+https://techcrunch.com/2026/08/05/klaviyo-acquires-elias-torres-agency-in-full-circle-reunion-for-tech-founders/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
 https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html
 https://thehackernews.com/2026/03/cisa-flags-apple-craft-cms-laravel-bugs.html
@@ -1132,10 +1150,13 @@ https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html
 https://thehackernews.com/2026/07/weekly-recap-rogue-ai-agents-check.html
 https://thehackernews.com/2026/07/weekly-recap-wordpress-rce-sonicwall-0.html
 https://thehackernews.com/2026/07/wordpress-wp2shell-exploitation-grows.html
+https://thehackernews.com/2026/08/cisa-flags-langflow-rce-tomcat-and-n.html
 https://thehackernews.com/2026/08/google-password-manager-attacks-could.html
 https://thehackernews.com/2026/08/inc-ransomware-emerges-as-dominant.html
 https://thehackernews.com/2026/08/keyv-linked-npm-worm-poisons-hundreds.html
 https://thehackernews.com/2026/08/n-able-says-attackers-take-over-n.html
+https://thehackernews.com/2026/08/new-cpanel-critical-flaw-could-let.html
+https://thehackernews.com/2026/08/open-vsx-removes-77-malicious-evil-twin.html
 https://thehackernews.com/2026/08/weekly-recap-rogue-ai-models-88m.html
 https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 https://www.anthropic.com/engineering/managed-agents
@@ -1224,6 +1245,7 @@ https://www.ipa.go.jp/security/security-alert/2026/alert20260501.html
 https://www.ipa.go.jp/security/security-alert/2026/alert20260508.html
 https://www.ipa.go.jp/security/security-alert/2026/alert20260610.html
 https://www.ipa.go.jp/security/security-alert/2026/alert20260722.html
+https://www.ipa.go.jp/security/support/abuse_email.html
 https://www.nikkei.com/article/DGKKZO95362190R30C26A3TB1000/
 https://www.nikkei.com/article/DGKKZO95383130R00C26A4EE9000/
 https://www.nikkei.com/article/DGKKZO95519030X00C26A4EA1000/
@@ -1268,6 +1290,8 @@ https://www.nikkei.com/article/DGXZQOGM296220Z20C26A7000000/
 https://www.nikkei.com/article/DGXZQOGM310GK0R30C26A5000000/
 https://www.nikkei.com/article/DGXZQOGN0114D0R00C26A5000000/
 https://www.nikkei.com/article/DGXZQOGN01BFE0R00C26A6000000/
+https://www.nikkei.com/article/DGXZQOGN048KE0U6A800C2000000/
+https://www.nikkei.com/article/DGXZQOGN04BXU0U6A800C2000000/
 https://www.nikkei.com/article/DGXZQOGN052IA0V00C26A5000000/
 https://www.nikkei.com/article/DGXZQOGN05CDL0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOGN062QW0W6A500C2000000/
@@ -1354,6 +1378,7 @@ https://www.nikkei.com/article/DGXZQOUC24AU70U6A720C2000000/
 https://www.nikkei.com/article/DGXZQOUC276510X20C26A4000000/
 https://www.nikkei.com/article/DGXZQOUC2777G0X20C26A7000000/
 https://www.nikkei.com/article/DGXZQOUC300E00Q6A530C2000000/
+https://www.nikkei.com/article/DGXZQOUC315AV0R30C26A7000000/
 https://www.nikkei.com/article/DGXZQOUF062LM0W6A400C2000000/
 https://www.nikkei.com/article/DGXZQOUF075Y00X00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUF08AWL0Y6A400C2000000/
@@ -1400,6 +1425,8 @@ https://www.producthunt.com/products/manta-ai
 https://www.producthunt.com/products/marble-by-world-labs
 https://www.producthunt.com/products/memori
 https://www.producthunt.com/products/migma-ai
+https://www.producthunt.com/products/nextdoor-company
+https://www.producthunt.com/products/ngrok-ai-gateway
 https://www.producthunt.com/products/noctiluca
 https://www.producthunt.com/products/open-wearables
 https://www.producthunt.com/products/openbase-2
