@@ -192,14 +192,21 @@ git push origin main
 
 ### Step 6: 実行ログの記録
 
-実行結果をワークスペースフォルダに記録する（VMリセット後も残る）。
+実行結果を `drafts/logs/briefing.log` に記録する。
+
+> **環境差分**: 旧Cowork（クラウドVM）実行では `/sessions/*/mnt/` のマウント先を探す必要があったが、
+> 2026-07-13 以降はローカルの Claude Code スケジュールタスクで実行しているため、
+> リポジトリフォルダ直下の `drafts/logs/briefing.log` にそのまま追記する。
+> （この探索漏れにより 2026-07-13〜08-09 のログが欠落した。実行実績は git log で補完可能）
 
 ```bash
-WORKSPACE=$(ls -d /sessions/*/mnt/デイリーニュース 2>/dev/null | head -1)
-LOG="$WORKSPACE/drafts/logs/briefing.log"
+# ローカル実行（現行）: リポジトリフォルダで直接実行している前提
+LOG="drafts/logs/briefing.log"
 mkdir -p "$(dirname "$LOG")"
 echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 ```
+
+スキップ時は `— SKIPPED (already exists)`、中断時は `— ABORTED (理由)` を記録する。
 
 ## ルール
 
