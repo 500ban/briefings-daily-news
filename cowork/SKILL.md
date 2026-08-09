@@ -1,6 +1,6 @@
 ---
 name: daily-briefing-generator
-description: "Generates a daily news briefing by using last30days as a discovery aid, validating facts against trusted sources across 6 categories (business, AI, new services, domestic tech, dev org & career, security), summarizing them in Japanese, and outputting a structured Markdown file with category summaries and collapsible details. Triggers when asked to create a daily briefing, morning news summary, or news digest."
+description: "Generates a daily news briefing by validating facts against trusted sources across 6 categories (business, AI, new services, domestic tech, dev org & career, security), summarizing them in Japanese, and outputting a structured Markdown file with category summaries and collapsible details. Triggers when asked to create a daily briefing, morning news summary, or news digest."
 ---
 
 # デイリーブリーフィング生成スキル
@@ -8,9 +8,8 @@ description: "Generates a daily news briefing by using last30days as a discovery
 ## 概要
 
 毎朝のニュースブリーフィングを生成するスキル。ローカルの Claude Code スケジュールタスク
-（`daily-news-briefing`、毎朝07:02 JST）から実行される。`last30days-skill` を発見補助に、
-主要信頼ソースで裏取りした記事を6カテゴリに分類・日本語要約し、check.sh の PASS 後に
-`_posts/` へ保存して GitHub へ push する。
+（`daily-news-briefing`、毎朝07:02 JST）から実行される。主要信頼ソースで裏取りした記事を
+6カテゴリに分類・日本語要約し、check.sh の PASS 後に `_posts/` へ保存して GitHub へ push する。
 
 > **旧環境注記**: 2026-07-13 以前の Cowork（クラウドVM）向け手順（clone・トークンURL・マウント探索）は
 > 廃止済み。現環境で使わないこと。旧手順は git 履歴参照（`RUNBOOK.md` 末尾にコマンド記載）。
@@ -23,15 +22,7 @@ description: "Generates a daily news briefing by using last30days as a discovery
 - `git pull --rebase origin main` で最新化する
 - `_posts/` に本日分 `YYYY-MM-DD-briefing.md` が既に存在すれば何もせず終了（二重生成防止。ログに SKIPPED を記録）
 
-### Step 1: last30days による候補トピック発見（補助）
-
-主要信頼ソース検索の前段または並行で `last30days-skill` を使い、コミュニティの反応量・論点から候補を拾う。
-
-- クエリ例 — AI: `AI model releases` `LLM agents` / 新サービス: `Show HN` `Product Hunt developer tools` / セキュリティ: `security vulnerabilities` / 開発組織・キャリア: `engineering management` `developer hiring trends`
-- 反応補助ソースだけで事実を断定しない。通常ニュース採用には Step 1.5 の裏取りが必須
-- 裏取りできないが有用な反応は「コミュニティ反応」として明示掲載してよい
-
-### Step 1.5: 主要信頼ソースでの収集・裏取り（必ずサブエージェントで実行）
+### Step 1: 主要信頼ソースでの収集・裏取り（必ずサブエージェントで実行）
 
 **このステップは、必ず `general-purpose` サブエージェント（Task tool）で実行する。**
 WebSearch の生テキストを親コンテキストに乗せないことが、本リポジトリのトークン
@@ -58,13 +49,14 @@ SOURCES.md に定義されたソースから、本日（YYYY-MM-DD）から直�
 
 サブエージェントの戻り値（表）に対して、親側では以下のみを行う：
 
-1. 表中の URL が `cowork/cache/past_urls.txt` に含まれていれば除外する（`comm -23` を使う。1本ずつの手動 grep 禁止）
+1. 表中の URL が `cowork/cache/past_urls.txt` に含まれていれば除外する（`comm -23` を使う。1本ずつの手動 grep 禁止）。
+   このキャッシュは gitignore 対象のローカル専用ファイルで、check.sh が毎回再生成する（無ければ一度 check.sh を実行して生成）
 2. カテゴリ境界の判断（`SELECTION_RULES.md` 準拠）
 3. 重複トピックを最も情報量の多い1本に絞る
 
 **過去URLとの重複を収集時に手動確認しない**。最終検証は check.sh が担う。
 
-### Step 1.6: WebSearch が使えない時のフォールバック
+### Step 1.5: WebSearch が使えない時のフォールバック
 
 週次レート上限・障害時は、中止する前に Chrome MCP による直接ブラウジングを試みる。
 手順・URL抽出パターン・制約は **`RUNBOOK.md` Step 2.6** を参照。
@@ -114,6 +106,7 @@ git push origin main
 ```
 
 認証は Windows 資格情報マネージャーに保存済みのものを使う。push 後の Jekyll ビルドは GitHub Actions が行う。
+**push 成功後、当日の `drafts/tmp/` 下書きを削除する**（公開済み下書きの残骸を溜めない。gitignore 対象のためローカル削除のみ）。
 
 ### Step 6: 実行ログの記録
 
@@ -130,7 +123,7 @@ echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 - 出力形式・📖詳しく読む・⭐今日の1本: `TEMPLATE.md`
 - 選定・分類・鮮度・カテゴリ境界: `SELECTION_RULES.md`
 - 採用可能ソースの限定リスト: `SOURCES.md`
-- 反応補助ソースは「補足:」「コミュニティ反応:」明示、単独で事実断定しない
+- コミュニティ反応（任意）: Hacker News スレッド等の個別URLで確認し、「補足:」「コミュニティ反応:」明示。単独で事実断定しない
 
 ## 参照ファイル
 

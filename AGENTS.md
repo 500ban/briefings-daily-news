@@ -2,8 +2,8 @@
 
 ## この repo で Codex が守ること
 
-- この repo は Claude Cowork 主体のデイリーブリーフィング運用を前提とする
-- 日々の収集・分類・要約・Markdown 生成・`git push` は Cowork 側の役割として尊重する
+- この repo はローカルの Claude Code スケジュールタスク主体のデイリーブリーフィング運用を前提とする（2026-07-13 に Cowork から移行）
+- 日々の収集・分類・要約・Markdown 生成・`git push` はスケジュールタスク側の役割として尊重する
 - GitHub Actions は Jekyll build / GitHub Pages deploy のみを担当し、ニュース収集主体にしない
 - API ベース設計や RSS パーサー中心の設計へ勝手に書き換えない
 - 今回の基盤整備では scaffold のみを作成し、ニュース収集ロジック・要約ロジック・自動収集スクリプトは実装しない

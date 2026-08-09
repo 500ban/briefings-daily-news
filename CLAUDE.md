@@ -5,7 +5,7 @@
 個人向けデイリーニュースブリーフィングを生成し、GitHub Pages で公開する。
 毎朝の生成はローカルの Claude Code スケジュールタスク（`daily-news-briefing`）が行う：
 
-1. `last30days-skill` で候補発見（補助）→ 主要信頼ソースを Web検索で収集・裏取り
+1. 主要信頼ソースを Web検索で収集・裏取り（サブエージェント実行）
 2. 6カテゴリに分類し日本語で要約 → `_posts/YYYY-MM-DD-briefing.md` に保存
 3. `git commit && git push`（Jekyll ビルドと Pages 反映は GitHub Actions が担当）
 

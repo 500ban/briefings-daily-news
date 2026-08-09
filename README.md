@@ -2,14 +2,14 @@
 
 このリポジトリは、個人向けのデイリーニュースブリーフィングを生成し、GitHub Pages で公開するための土台です。
 
-日々の実行主体は Claude Cowork scheduled task です。Cowork が必要に応じて `last30days-skill` を候補発見・コミュニティ反応確認の補助として使い、既存の主要信頼ソースで事実確認したうえで、6カテゴリに分類し、日本語の Markdown ブリーフィングを生成して `_posts/` に保存し、`git commit && git push` まで担当します。
+日々の実行主体はローカルの Claude Code スケジュールタスク（`daily-news-briefing`、毎朝07:02 JST）です。主要信頼ソースを Web検索で収集・裏取りし、6カテゴリに分類、日本語の Markdown ブリーフィングを生成して `_posts/` に保存し、`git commit && git push` まで担当します（2026-07-13 に Cowork クラウドVM から移行）。
 
 GitHub Actions は push 後の Jekyll build / GitHub Pages deploy だけを担当します。ニュース収集・分類・要約の主体にはしません。
 
 ## この repo の役割分担
 
 - `cowork/`
-  Cowork が参照する運用知識です。`SKILL.md` `SOURCES.md` `TEMPLATE.md` `RUNBOOK.md` と、補助ルールを配置します。
+  生成タスクが参照する運用知識です。`SKILL.md` `SOURCES.md` `TEMPLATE.md` `RUNBOOK.md` と、補助ルールを配置します（ディレクトリ名は Cowork 時代の名残）。
 - `_posts/`
   本番公開するデイリーブリーフィングの保存先です。成果物は `YYYY-MM-DD-briefing.md` で置きます。
 - `drafts/tmp/`
@@ -21,15 +21,14 @@ GitHub Actions は push 後の Jekyll build / GitHub Pages deploy だけを担�
 
 ## 運用イメージ
 
-1. Claude Cowork scheduled task がこのリポジトリを開く
+1. Claude Code スケジュールタスクがこのリポジトリで実行される
 2. `cowork/SKILL.md` `cowork/SOURCES.md` `cowork/TEMPLATE.md` を参照する
-3. `last30days-skill` で候補トピックや反応量を補助的に確認する
-4. 既存の主要信頼ソースを Web検索で収集・裏取りし、6カテゴリに整理する
-5. 日本語の Markdown ブリーフィングを作り、`_posts/YYYY-MM-DD-briefing.md` に保存する
-6. 差分確認後に `git commit && git push` を行う
-7. push を受けて GitHub Actions が Jekyll build と GitHub Pages deploy を行う
+3. 主要信頼ソースを Web検索で収集・裏取りし（サブエージェント実行）、6カテゴリに整理する
+4. 日本語の Markdown ブリーフィングを作り、`cowork/scripts/check.sh` の PASS 後に `_posts/YYYY-MM-DD-briefing.md` に保存する
+5. 差分確認後に `git commit && git push` を行う
+6. push を受けて GitHub Actions が Jekyll build と GitHub Pages deploy を行う
 
-`last30days-skill` はこのリポジトリに vendoring せず、外部 skill として利用します。Reddit / Hacker News / GitHub / YouTube / X などの反応は、通常ニュース本文と混ぜず「補足」または「コミュニティ反応」として扱います。
+Reddit / Hacker News / GitHub / YouTube / X などの反応は、通常ニュース本文と混ぜず「補足」または「コミュニティ反応」として扱います。
 
 ## 参照優先順
 

@@ -14,11 +14,8 @@
 
 ## 実行前提
 
-- このリポジトリはローカルに clone 済みである
-- Claude Desktop / Cowork が起動している
-- scheduled task がこのリポジトリを対象に実行される
-- GitHub Pages 公開用の Git リポジトリとして正しく初期化されている
-- push 可能な Git 設定が済んでいる
+- ローカルの Claude Code スケジュールタスク（`daily-news-briefing`）がこのリポジトリフォルダで実行される
+- push 可能な Git 設定が済んでいる（認証は Windows 資格情報マネージャー）
 
 ---
 
@@ -53,26 +50,11 @@
 
 ---
 
-### 2. last30days で候補トピックを発見する（補助）
+### 2. コミュニティ反応の確認（任意・補助）
 
-利用可能な環境では、`last30days-skill` を発見エンジンとして使い、直近30日の反応量・現場感・新しい論点を拾う。
-
-基本方針:
-- `last30days-skill` は主要信頼ソースを置き換えない
-- Reddit / Hacker News / GitHub / YouTube / X などは、候補発見と反応確認のために使う
-- 有料APIキーやブラウザトークンを必須にしない。無料・低設定で使える範囲を優先する
-- 反応補助ソースだけで通常ニュース本文の事実を断定しない
-
-カテゴリ別の例:
-- AI: `AI model releases`, `AI coding tools`, `LLM agents`
-- 新サービス: `developer tools launched`, `Product Hunt developer tools`, `Show HN`
-- セキュリティ: `security vulnerabilities`, `supply chain attacks`
-- 開発組織・キャリア: `engineering management`, `engineering career AI`, `developer hiring trends`
-
-扱い:
-- 裏取りできた候補は通常ニュースとして採用候補にする
-- 裏取りできないが有用な反応は「コミュニティ反応」または「補足」として扱う
-- 裏取りできず、反応としても薄いものは採用しない
+> 旧 `last30days-skill`（Cowork環境の外部skill）は移行後利用不可のため廃止（2026-08-09）。
+> 反応確認は主要信頼ソースを兼ねる Hacker News の該当スレッドで行い、
+> Reddit / YouTube / X は個別URLを確認できる場合のみ「補足:」として使う。
 
 ---
 
@@ -104,10 +86,9 @@ WebSearch がレート上限・障害などで使えない場合は、収集を�
 
 #### 優先順位
 
-1. **Chrome MCP（`mcp__Claude_in_Chrome__*`）** — 最優先のフォールバック
-2. `mcp__workspace__web_fetch` — 会話に URL が出現済みの場合のみ使える補助
-3. `last30days-skill` — 候補トピック発見のための補助
-4. それでも候補が集まらない場合のみ、`drafts/tmp/` で止め、`drafts/logs/briefing.log` に `ABORTED` を記録する
+1. **Chrome MCP（`mcp__claude-in-chrome__*`）** — 最優先のフォールバック
+2. WebFetch — 個別記事URLの公開日・内容確認の補助
+3. それでも候補が集まらない場合のみ、`drafts/tmp/` で止め、`drafts/logs/briefing.log` に `ABORTED` を記録する
 
 #### Chrome MCP フォールバック手順
 
@@ -254,7 +235,7 @@ WebSearch がレート上限・障害などで使えない場合は、収集を�
 push 後は GitHub Actions が起動し、Jekyll をビルドして GitHub Pages に反映する。
 
 この Runbook では、公開処理そのものは GitHub Actions 側に委ねる。
-Cowork の役割は、調査・要約・Markdown 生成・git push まで。
+生成タスクの役割は、調査・要約・Markdown 生成・git push まで。
 
 ---
 
