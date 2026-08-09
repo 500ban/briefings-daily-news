@@ -2,62 +2,25 @@
 
 ## このリポジトリの目的
 
-このリポジトリは、個人向けのデイリーニュースブリーフィングを生成し、
-GitHub Pages で公開するためのものです。
+個人向けデイリーニュースブリーフィングを生成し、GitHub Pages で公開する。
+毎朝の生成はローカルの Claude Code スケジュールタスク（`daily-news-briefing`）が行う：
 
-このリポジトリでは、Claude Cowork が主体となって以下を行います。
+1. `last30days-skill` で候補発見（補助）→ 主要信頼ソースを Web検索で収集・裏取り
+2. 6カテゴリに分類し日本語で要約 → `_posts/YYYY-MM-DD-briefing.md` に保存
+3. `git commit && git push`（Jekyll ビルドと Pages 反映は GitHub Actions が担当）
 
-1. 必要に応じて `last30days-skill` で候補トピックとコミュニティ反応を発見する
-2. 主要信頼ソースの最新記事を Web検索で収集・裏取りする
-3. 6カテゴリに分類する
-4. 日本語で要約する
-5. Jekyll 用の Markdown ファイルを `_posts/` に保存する
-6. `git commit && git push` する
-
-GitHub Actions は、push 後に Jekyll をビルドし、GitHub Pages に反映するためだけに使います。
-ニュース収集・要約・分類は GitHub Actions では行いません。
-
----
+ニュース収集・要約・分類を GitHub Actions では行わない。
 
 ## 最優先ルール
 
-- 毎日のブリーフィング生成は `cowork/SKILL.md` に従う
-- ソース定義は `cowork/SOURCES.md` を参照する
-- 出力フォーマットは `cowork/TEMPLATE.md` を参照する
-- 最終生成先は必ず `_posts/YYYY-MM-DD-briefing.md` とする
-- 作業中の一時ファイルは必要に応じて `drafts/tmp/` を使ってよい
-- 公開対象を壊さないことを優先する
-- 不完全なファイルを `_posts/` に保存しない
+- 毎日のブリーフィング生成は `cowork/SKILL.md` のワークフローに従う
+- **正本の分担**: 選定・分類・鮮度・カテゴリ境界＝`cowork/SELECTION_RULES.md` /
+  ソース限定リスト＝`cowork/SOURCES.md` / 出力形式（📖詳しく読む・⭐今日の1本含む）＝`cowork/TEMPLATE.md`
+- 下書きは `drafts/tmp/`、`cowork/scripts/check.sh` の **PASS 後のみ** `_posts/` へ保存する
+- 不完全なファイルを `_posts/` に置かない。公開対象を壊さないことを最優先する
 - ルールに迷ったら、推測で独自仕様を増やさず既存ファイルを優先する
 
----
-
-## ブリーフィング生成の基本方針
-
-- 主要信頼ソースを追う
-- `last30days-skill` は発見エンジンとして補助利用し、主要信頼ソースの置き換えにはしない
-- 初期方針として、取得は Cowork の Web検索で統一する
-- Web検索が利用できない場合（週次レート上限・障害など）は、Chrome MCP（`mcp__Claude_in_Chrome__*`）にフォールバックする。手順は `cowork/RUNBOOK.md` の Step 2.6 と `cowork/SKILL.md` の Step 1.6 を参照する
-- Reddit / Hacker News / GitHub / YouTube / X などの反応補助ソースは、通常ニュース本文と分けて「補足」「コミュニティ反応」として扱う
-- 反応補助ソースだけで未確認の事実を断定しない
-- 英語ソースも日本語で要約する
-- 英語ソースの記事には「📖 詳しく読む」折り畳みで詳細な日本語ダイジェストを付ける（詳細は `cowork/TEMPLATE.md` 参照）
-- 事実ベースで簡潔に書く
-- 全文転載はしない（詳細要約も全文翻訳ではなく要点の再構成とする）
-- 各記事には必ず元記事リンクを付ける
-- 同じ話題の重複記事は最も情報量の多い1本に絞る
-- 1週間以上前の古い記事は除外する
-- AI関連ニュースは基本的に「AI最新動向」に入れる
-- ただし AI × ビジネス（業界動向・規制・大型資金調達など）は「ビジネス・経済」にも含めてよい
-- 各カテゴリの最小件数を満たせない場合、無理に埋めず「本日の更新なし」とする
-
-> ※ 上記の選定・分類・鮮度・カテゴリ境界の**詳細な正本は `cowork/SELECTION_RULES.md`**。本ファイルは上位方針を示し、選定の細目で齟齬があれば SELECTION_RULES を優先する。
-
----
-
-## カテゴリ
-
-カテゴリ順は固定です。
+## カテゴリ（順序固定）
 
 1. ビジネス・経済
 2. AI最新動向
@@ -66,55 +29,33 @@ GitHub Actions は、push 後に Jekyll をビルドし、GitHub Pages に反映
 5. 開発組織・キャリア
 6. セキュリティ
 
----
+AI関連は原則「AI最新動向」、AI×ビジネス（資金調達・規制等）は「ビジネス・経済」でもよい（二重掲載不可）。
+件数レンジは上限目安。満たせない場合は無理に埋めず「本日の更新なし」とする。
 
-## 書き方ルール
+## 生成の基本原則
 
-- 全文日本語
-- 見出しは具体的に書く
-- 要約は1〜2文を基本にする
-- 意見や推測は避け、事実ベースで書く
-- `cowork/TEMPLATE.md` の構造を崩さない
-- カテゴリに該当記事がない場合は、まとめに「本日の更新なし」と記載し、details セクションは省略する
+- 全文日本語・事実ベース・1記事1〜2文要約・元記事リンクと `<!-- pub:YYYY-MM-DD -->` マーカー必須
+- 反応補助ソース（HN/Reddit/GitHub/YouTube/X）は「補足:」「コミュニティ反応:」明示。単独で事実を断定しない
+- 全文転載しない。1週間より古い記事・過去掲載URLは採用しない
+- 詳細な選定・記述ルールは正本ファイル参照（本ファイルに再掲しない）
 
----
+## ファイル・Git運用
 
-## ファイル操作ルール
-
-- 公開用記事は `_posts/` に保存する
-- ファイル名は `YYYY-MM-DD-briefing.md`
-- front matter は `cowork/TEMPLATE.md` に従う
-- 既存記事を上書きする場合は、対象日付をよく確認する
-- 不要なファイル削除は行わない
-- レイアウトや GitHub Actions ファイルは、明示的な依頼がない限り変更しない
-
----
-
-## Git運用ルール
-
-- ブリーフィング生成後に差分を確認する
-- 問題がなければ `git add` する
-- commit message は `YYYY-MM-DD briefing` を基本とする
-- push まで行う
-- エラーがある場合は中途半端な commit / push をしない
-
----
+- 公開記事は `_posts/YYYY-MM-DD-briefing.md` のみ。既存記事の上書きは日付をよく確認する
+- レイアウト・GitHub Actions ファイルは明示的な依頼がない限り変更しない。不要なファイル削除はしない
+- commit message は `YYYY-MM-DD briefing`。check.sh 未通過・エラー時は中途半端な commit/push をしない
 
 ## 参照ファイル
 
-- `cowork/SKILL.md`
-- `cowork/SOURCES.md`
-- `cowork/TEMPLATE.md`
-- `cowork/RUNBOOK.md`
-- `cowork/SELECTION_RULES.md`
-- `cowork/CHECKLIST.md`
+- `cowork/SKILL.md` — ワークフロー
+- `cowork/SOURCES.md` — ソース定義（check.sh のパース元）
+- `cowork/TEMPLATE.md` — 出力テンプレート
+- `cowork/SELECTION_RULES.md` — 選定・分類の正本
+- `cowork/CHECKLIST.md` — 保存前の人手判断
+- `cowork/RUNBOOK.md` — フォールバック・障害時・旧環境アーカイブ
 
----
+## 避けること
 
-## このリポジトリで避けること
-
-- GitHub Actions をニュース収集主体にしない
-- API 実装を前提に設計を書き換えない
-- `_posts/` に未完成原稿を直接置かない
-- 既存のカテゴリ順やテンプレートを勝手に変えない
-- 有料記事の全文や長文転載をしない
+- GitHub Actions をニュース収集主体にしない / API 実装前提に設計を書き換えない
+- `_posts/` に未完成原稿を置かない / カテゴリ順・テンプレートを勝手に変えない
+- 有料記事の全文・長文転載をしない

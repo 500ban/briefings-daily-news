@@ -1,19 +1,14 @@
 # RUNBOOK.md
 
-## 目的
+## 目的と位置づけ
 
-この Runbook は、Claude Cowork が毎朝のデイリーブリーフィングを安定して生成し、
-`_posts/` に保存して `git push` するための実行手順をまとめたものです。
+デイリーブリーフィング生成の**フォールバック手順・障害時対応・旧環境アーカイブ**をまとめたファイル。
 
-このファイルは、実行時の具体的な進め方を定義します。
-記事のカテゴリやテンプレートの仕様そのものは、以下を参照してください。
-
-- `cowork/SKILL.md`
-- `cowork/SOURCES.md`
-- `cowork/TEMPLATE.md`
-- `cowork/SELECTION_RULES.md`
-- `cowork/CHECKLIST.md`
-- `cowork/RUNBOOK.md`
+> **毎朝の通常フローの正本は `cowork/SKILL.md`。本ファイルを毎朝通読する必要はない。**
+> 参照するのは以下の場合のみ:
+> - WebSearch が使えない → Step 2.6（Chrome MCP フォールバック）
+> - 実行が失敗・中断した → 「失敗時の扱い」
+> - 旧Cowork VM環境の手順を確認したい → 末尾アーカイブ
 
 ---
 
@@ -149,26 +144,8 @@ WebSearch がレート上限・障害などで使えない場合は、収集を�
 
 ### 3. 6カテゴリに分類する
 
-カテゴリ順は固定。
-
-1. ビジネス・経済
-2. AI最新動向
-3. 新サービス・ローンチ
-4. 国内技術・ツール
-5. 開発組織・キャリア
-6. セキュリティ
-
-件数目安:
-- ビジネス・経済: 3〜5本
-- AI最新動向: 2〜4本
-- 新サービス・ローンチ: 3〜5本
-- 国内技術・ツール: 2〜4本
-- 開発組織・キャリア: 1〜2本（更新があれば）
-- セキュリティ: 2〜4本
-
-補足:
-- カテゴリ振り分け（AI集約・AI×ビジネス境界・資金調達の扱い等）は `SELECTION_RULES.md`（正本）に従う
-- 該当が薄い記事を無理に入れない
+カテゴリ順・件数レンジは `SOURCES.md`、振り分け境界は `SELECTION_RULES.md`（正本）に従う。
+本ファイルには再掲しない（過去にレンジ改訂時の同期漏れが発生したため）。該当が薄い記事を無理に入れない。
 
 ---
 
@@ -341,3 +318,30 @@ Cowork の役割は、調査・要約・Markdown 生成・git push まで。
 3. 主要信頼ソースで事実を確認する
 4. 事実ベースで簡潔に書く
 5. 無理に埋めない
+
+---
+
+## 旧Cowork VM環境の手順アーカイブ（参考・現環境では使わない）
+
+2026-07-13 以前のクラウドVM実行時に必要だった手順。ローカル Claude Code 移行により廃止。
+
+### 旧Step 0: /tmp/work/ への shallow clone
+
+マウント先へのgit操作がロックファイル制約で失敗するため、`/tmp/work/` で作業していた。
+
+```bash
+WORKSPACE=$(ls -d /sessions/*/mnt/デイリーニュース 2>/dev/null | head -1)
+ENV_FILE="$WORKSPACE/.env"
+[ -f "$ENV_FILE" ] && export $(grep -v '^#' "$ENV_FILE" | xargs)
+WORK="/tmp/work/briefings-dairy-news"
+if [ -d "$WORK/.git" ]; then cd "$WORK" && git pull --rebase origin main
+else rm -rf "$WORK" && git clone --depth 1 --branch main \
+  "https://${GITHUB_TOKEN}@github.com/500ban/briefings-dairy-news.git" "$WORK" && cd "$WORK"
+fi
+```
+
+### 旧Step 5/6: トークン付きpushとマウント先へのログ書き込み
+
+push は clone 時のトークン付きURLで実行。実行ログは `$WORKSPACE/drafts/logs/briefing.log`
+（`/sessions/*/mnt/` 探索で解決）に書いていた。この探索がローカル環境で失敗し、
+2026-07-13〜08-09 のログ欠落の原因となった（現行は `drafts/logs/briefing.log` に直接追記）。

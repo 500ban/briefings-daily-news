@@ -1,93 +1,27 @@
-# CHECKLIST.md
+# CHECKLIST.md — 保存前チェック（人手判断のみ）
 
-最終保存前に、以下をすべて確認する。1つでも失敗があれば `_posts/` 保存・`git add`・`commit`・`push` を行わない。
+最終保存前の確認リスト。1つでも失敗があれば `_posts/` 保存・commit・push をしない。
 
-## 0. 機械検証スクリプトを最初に実行する（★必須）
+> **2026-08-09 再編**: 機械検証できる項目（ソース照合・DENYLIST・個別記事URL・鮮度・
+> 件数整合・クロス日重複・📖字数/文数・評価語）は `cowork/scripts/check.sh` に完全移管した。
+> 本ファイルは check.sh が検知できない人手判断だけを残す。旧全文は git 履歴を参照。
 
-`cowork/scripts/check.sh` で以下を一括検証できる：
-- 主要信頼ソース / 反応補助ソース照合（SOURCES.md）
-- 反応補助ソースの別枠許可と手動確認警告
-- DENYLIST ドメイン・パターン照合
-- 個別記事URL パターン検証
-- クロス日重複（他の `_posts/*.md` との URL 突き合わせ）
+## 0. まず check.sh を実行する（★必須）
 
 ```bash
 bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 ```
 
-`PASS` が出るまで `_posts/` に保存しない。`FAIL:` の各行が具体的な違反箇所。
+- `PASS` が出るまで先に進まない。`FAIL:` の各行が違反箇所
+- check.sh で担保される項目を手動で再確認しない（トークン浪費）
 
-**以下の B〜E 項目はこのスクリプトが自動検証する。人間（またはモデル）が手動で確認するのは A・D・F・G・H・I の人手判断が必要な項目**に限定できる。
+## 1. 人手判断項目
 
-## A. ファイル・構造
-
-- [ ] ファイル名が `YYYY-MM-DD-briefing.md` になっている
-- [ ] `_posts/` に置く正式版と `drafts/tmp/` の下書きが混同していない
-- [ ] front matter がある（`title` `date` `layout`）
-- [ ] 6カテゴリ順が固定順になっている（ビジネス → AI → 新サービス → 国内技術 → 開発組織・キャリア → セキュリティ）
-- [ ] `## 🎯 今日のまとめ` セクションがある
-- [ ] `<details markdown="block">` の構造が壊れていない
-- [ ] `<details>` の `summary` に書いた件数カウント（例：「3件」）が実際の記事数と一致している
-- [ ] 0件カテゴリはまとめに `本日の更新なし` と書き、details セクションを**省略**している
-
-## B. ソース照合（SOURCES.md）
-
-- [ ] 通常ニュース本文のURLドメインが `cowork/SOURCES.md` の主要信頼ソースに含まれる
-  - 主要信頼ソース: `nikkei.com`, `newspicks.com`, `techcrunch.com`, `openai.com`, `research.google`, `anthropic.com`, `news.ycombinator.com`, `producthunt.com`, `dev.classmethod.jp`, `forest.watch.impress.co.jp`, `publickey1.jp`, `leaddev.com`, `infoq.com`, `thehackernews.com`, `ipa.go.jp`
-- [ ] 反応補助ソースは、反応欄・補足欄に限って使われている
-  - 反応補助ソース: `reddit.com`, `github.com`, `youtube.com`, `youtu.be`, `x.com`, `twitter.com`
-- [ ] `cowork/DENYLIST.md` に記載のNGドメインが**含まれていない**
-  - 既知NG: `cybernews.com`, `fortune.com`, `theregister.com`, `news.crunchbase.com`, `bloomberg.com`, `markets.financialcontent.com`
-- [ ] 類似ドメイン（例: `reuters.com` に対する `markets.financialcontent.com`）を誤認して採用していない
-
-## C. 個別記事URL検証
-
-- [ ] すべてのURLが**個別記事URL**である。以下のパターンは**不可**：
-  - `anthropic.com/news`（末尾スラッシュ有無問わず、個別スラグなし）
-  - `openai.com/blog`、`openai.com/news`（個別スラグなし）
-  - `producthunt.com/leaderboard/*`（ランキングページ）
-  - `reddit.com/r/{subreddit}` のような一覧ページ（`/comments/` のないもの）
-  - `github.com/{owner}/{repo}` のようなリポジトリトップ（issue / discussion / pull / release / commit 等の個別ページではないもの）
-  - `youtube.com/@channel`, `youtube.com/channel/*`, `youtube.com/results*`（個別動画ではないもの）
-  - `x.com/{user}`, `twitter.com/{user}`（個別投稿ではないもの）
-  - `*/tag/*`, `*/category/*`, `*/topics/*`, `*/search?*`, `*/?s=*`
-  - `news.ycombinator.com`, `/news`, `/newest`（`/item?id=...` のないもの）
-  - ドメイン直下（例: `https://techcrunch.com/`）
-- [ ] OKパターン例: `anthropic.com/news/{slug}`, `openai.com/index/{slug}`, `techcrunch.com/YYYY/MM/DD/{slug}/`, `news.ycombinator.com/item?id={id}`, `reddit.com/r/{subreddit}/comments/{id}/{slug}`, `github.com/{owner}/{repo}/issues/{id}`, `youtube.com/watch?v={id}`, `x.com/{user}/status/{id}`
-
-## D. 鮮度（7日以内）
-
-- [ ] すべての記事の公開日が、実行日から**7日以内**
-- [ ] 公開日を確認できない記事は含まれていない
-
-## E. クロス日重複チェック（★最重要 / check.sh が自動検証）
-
-- [ ] `cowork/scripts/check.sh` が `PASS` を返している（クロス日重複を含む全項目）
-- [ ] 同一トピックを別ソースで繰り返していない（情報量の多い1本に絞られている ※手動判断）
-
-## F. 記述品質
-
-- [ ] 全記事に元記事リンクがある
-- [ ] 通常ニュース本文には主要信頼ソースまたは公式情報のリンクがある
-- [ ] 見出しが具体的で、日本語として自然（「〇〇について」のような曖昧見出しはNG）
-- [ ] 要約が1〜2文で事実ベース（推測・意見なし）
-- [ ] 全文転載になっていない
-
-## G. カテゴリ境界
-
-- [ ] 資金調達・IPO・M&A は **ビジネス・経済** に分類されている（新サービス・ローンチではない）
-- [ ] 「新サービス・ローンチ」は**製品・サービスの新規公開**に限定されている
-- [ ] AI × ビジネスは AI最新動向 か ビジネス・経済のどちらか一方のみ（二重掲載なし）
-
-## H. 差分・公開基盤
-
-- [ ] 意図しないファイル差分が混ざっていない
-- [ ] レイアウト・GitHub Actions・`cowork/*` など公開基盤ファイルを誤って変更していない
-
-## I. コミュニティ反応（last30days 補助利用時）
-
-- [ ] `last30days-skill` は候補発見・反応確認の補助として使われており、主要信頼ソースの置き換えになっていない
-- [ ] 反応補助ソースだけで事実主張を書いていない
-- [ ] コミュニティ反応は `補足:` または `コミュニティ反応:` として通常ニュース本文から区別されている
-- [ ] 反応補助ソースには、Reddit / HN / GitHub / YouTube / X などの出典種別が分かるリンク名が付いている
-- [ ] `cowork/scripts/check.sh` の `WARN: 反応補助ソース` が出た場合、該当URLが反応欄・補足欄として妥当か手動確認した
+- [ ] まとめ本文と `<details>` の記事が一致している（片方だけに出てくる記事がない）
+- [ ] 「⭐ 今日の1本」がその日の最重要記事で、いずれかのカテゴリ details に存在する
+- [ ] 同一トピックが1本に絞られている（カテゴリをまたぐ実質重複を含む。例: 月例パッチのベンダー報道とIPA注意喚起）
+- [ ] カテゴリ境界が `SELECTION_RULES.md` 準拠（資金調達→📰、製品ローンチ→🚀、AI企業提携→🤖）
+- [ ] 見出しが具体的で、要約が事実ベース1〜2文（推測・評価語なし）
+- [ ] `WARN: 反応補助ソース` → 該当URLが「補足:」「コミュニティ反応:」として妥当か確認した
+- [ ] `WARN: 評価語の疑い` → 文脈が正当（Critical訳・帰属付き引用など）か確認した
+- [ ] 意図しないファイル差分がなく、レイアウト・GitHub Actions・`cowork/*` を誤変更していない
