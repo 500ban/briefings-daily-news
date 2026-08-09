@@ -24,7 +24,7 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 - [ ] ファイル名が `YYYY-MM-DD-briefing.md` になっている
 - [ ] `_posts/` に置く正式版と `drafts/tmp/` の下書きが混同していない
 - [ ] front matter がある（`title` `date` `layout`）
-- [ ] 6カテゴリ順が固定順になっている（ビジネス → AI → 新サービス → 国内技術 → EM/PM → セキュリティ）
+- [ ] 6カテゴリ順が固定順になっている（ビジネス → AI → 新サービス → 国内技術 → 開発組織・キャリア → セキュリティ）
 - [ ] `## 🎯 今日のまとめ` セクションがある
 - [ ] `<details markdown="block">` の構造が壊れていない
 - [ ] `<details>` の `summary` に書いた件数カウント（例：「3件」）が実際の記事数と一致している
@@ -33,7 +33,7 @@ bash cowork/scripts/check.sh drafts/tmp/YYYY-MM-DD-briefing.md
 ## B. ソース照合（SOURCES.md）
 
 - [ ] 通常ニュース本文のURLドメインが `cowork/SOURCES.md` の主要信頼ソースに含まれる
-  - 主要信頼ソース: `nikkei.com`, `newspicks.com`, `reuters.com`, `techcrunch.com`, `openai.com`, `research.google`, `anthropic.com`, `news.ycombinator.com`, `producthunt.com`, `dev.classmethod.jp`, `forest.watch.impress.co.jp`, `leaddev.com`, `thehackernews.com`, `ipa.go.jp`
+  - 主要信頼ソース: `nikkei.com`, `newspicks.com`, `techcrunch.com`, `openai.com`, `research.google`, `anthropic.com`, `news.ycombinator.com`, `producthunt.com`, `dev.classmethod.jp`, `forest.watch.impress.co.jp`, `publickey1.jp`, `leaddev.com`, `infoq.com`, `thehackernews.com`, `ipa.go.jp`
 - [ ] 反応補助ソースは、反応欄・補足欄に限って使われている
   - 反応補助ソース: `reddit.com`, `github.com`, `youtube.com`, `youtu.be`, `x.com`, `twitter.com`
 - [ ] `cowork/DENYLIST.md` に記載のNGドメインが**含まれていない**

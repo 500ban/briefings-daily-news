@@ -18,7 +18,7 @@ title: デイリーブリーフィング
       <span class="feature-chip">最新</span>
     </div>
     <h3>{{ latest_post.title | remove_first: "📅 " }}</h3>
-    <p>AI、ビジネス、国内技術、EM/PM、セキュリティまで、固定6カテゴリで追えます。</p>
+    <p>AI、ビジネス、国内技術、開発組織・キャリア、セキュリティまで、固定6カテゴリで追えます。</p>
     <span class="feature-link">最新号を開く</span>
   </a>
 </section>

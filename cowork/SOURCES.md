@@ -43,8 +43,9 @@
 |-------|------|------------|-----|
 | 日経新聞 | JP | `site:nikkei.com 経済 OR 企業 OR 政治` | nikkei.com |
 | NewsPicks | JP | `site:newspicks.com 最新` | newspicks.com |
-| Reuters | EN | `site:reuters.com business OR economy` | reuters.com |
 | TechCrunch | EN | `site:techcrunch.com funding OR acquisition` | techcrunch.com |
+
+> Reuters は2026-08-09に削除（クローラ拒否により直近30本で採用実績ゼロ。AP Newsも同様に取得不可のため代替なし。海外ビジネスは TechCrunch と日経（英語版含む）で担う）
 
 対象トピック：国内経済、海外経済、産業・企業動向、政治・規制・法律
 
@@ -76,16 +77,22 @@
 |-------|------|------------|-----|
 | DevelopersIO | JP | `site:dev.classmethod.jp` | dev.classmethod.jp |
 | 窓の杜 | JP | `site:forest.watch.impress.co.jp` | forest.watch.impress.co.jp |
+| Publickey | JP | `site:publickey1.jp` | publickey1.jp |
 
-対象トピック：国内で話題の技術記事・ハウツー、新しいソフトウェア・ツールの紹介・レビュー
+対象トピック：国内で話題の技術記事・ハウツー、新しいソフトウェア・ツールの紹介・レビュー、企業IT・クラウドの国内向けニュース
 
-## 📋 EM/PM（1〜2本、更新があれば）
+## 📋 開発組織・キャリア（1〜2本、更新があれば）
+
+> 2026-08-09に「EM/PM」から拡張（LeadDev単独では15/30日が更新なしだったため）
 
 | ソース | 言語 | 検索クエリ例 | URL |
 |-------|------|------------|-----|
 | LeadDev | EN | `site:leaddev.com` | leaddev.com |
+| InfoQ | EN | `site:infoq.com culture OR leadership OR career OR hiring` | infoq.com |
 
-対象トピック：ピープルマネジメント・組織論、プロダクト戦略・フレームワーク
+対象トピック：ピープルマネジメント・組織論、プロダクト戦略・フレームワーク、エンジニア採用・キャリア・評価の動向、AI時代の開発者スキル・働き方
+
+※ InfoQ は本カテゴリの趣旨（組織・リーダーシップ・キャリア）に合う記事に限って使う。技術リリース系のInfoQ記事は、他カテゴリの件数埋めに流用しない。
 
 ## 🔒 セキュリティ（2〜3本）
 

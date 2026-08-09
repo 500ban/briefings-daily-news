@@ -63,7 +63,7 @@ GitHub Actions は、push 後に Jekyll をビルドし、GitHub Pages に反映
 2. AI最新動向
 3. 新サービス・ローンチ
 4. 国内技術・ツール
-5. EM/PM
+5. 開発組織・キャリア
 6. セキュリティ
 
 ---

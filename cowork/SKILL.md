@@ -1,6 +1,6 @@
 ---
 name: daily-briefing-generator
-description: "Generates a daily news briefing by using last30days as a discovery aid, validating facts against trusted sources across 6 categories (business, AI, new services, domestic tech, EM/PM, security), summarizing them in Japanese, and outputting a structured Markdown file with category summaries and collapsible details. Triggers when asked to create a daily briefing, morning news summary, or news digest."
+description: "Generates a daily news briefing by using last30days as a discovery aid, validating facts against trusted sources across 6 categories (business, AI, new services, domestic tech, dev org & career, security), summarizing them in Japanese, and outputting a structured Markdown file with category summaries and collapsible details. Triggers when asked to create a daily briefing, morning news summary, or news digest."
 ---
 
 # デイリーブリーフィング生成スキル
@@ -57,13 +57,13 @@ fi
 目的:
 - 公式ニュースや検索結果だけでは見えにくい、開発者・利用者コミュニティの反応量を把握する
 - Reddit / Hacker News / GitHub / YouTube / X などで直近30日に議論されている論点を発見する
-- 新サービス、AIツール、セキュリティ、EM/PM などで「実務上役に立つ」候補を増やす
+- 新サービス、AIツール、セキュリティ、開発組織・キャリアなどで「実務上役に立つ」候補を増やす
 
 例:
 - AI: `AI model releases`, `AI coding tools`, `LLM agents`
 - 新サービス: `developer tools launched`, `Product Hunt developer tools`, `Show HN`
 - セキュリティ: `security vulnerabilities`, `supply chain attacks`
-- EM/PM: `engineering management`, `product management AI`
+- 開発組織・キャリア: `engineering management`, `engineering career AI`, `developer hiring trends`
 
 注意:
 - `last30days-skill` の結果は「発見・反応確認」のために使う
@@ -132,7 +132,7 @@ Chrome MCP 経由で完走した場合のログは `briefing — SUCCESS (via Ch
 | 🤖 AI最新動向 | 3〜5本 |
 | 🚀 新サービス・ローンチ | 3〜5本 |
 | 🇯🇵 国内技術・ツール | 2〜3本 |
-| 📋 EM/PM | 1〜2本（更新があれば） |
+| 📋 開発組織・キャリア | 1〜2本（更新があれば） |
 | 🔒 セキュリティ | 2〜3本 |
 
 ### Step 3: 要約・整形

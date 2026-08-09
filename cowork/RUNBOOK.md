@@ -72,7 +72,7 @@
 - AI: `AI model releases`, `AI coding tools`, `LLM agents`
 - 新サービス: `developer tools launched`, `Product Hunt developer tools`, `Show HN`
 - セキュリティ: `security vulnerabilities`, `supply chain attacks`
-- EM/PM: `engineering management`, `product management AI`
+- 開発組織・キャリア: `engineering management`, `engineering career AI`, `developer hiring trends`
 
 扱い:
 - 裏取りできた候補は通常ニュースとして採用候補にする
@@ -155,7 +155,7 @@ WebSearch がレート上限・障害などで使えない場合は、収集を�
 2. AI最新動向
 3. 新サービス・ローンチ
 4. 国内技術・ツール
-5. EM/PM
+5. 開発組織・キャリア
 6. セキュリティ
 
 件数目安:
@@ -163,7 +163,7 @@ WebSearch がレート上限・障害などで使えない場合は、収集を�
 - AI最新動向: 3〜5本
 - 新サービス・ローンチ: 3〜5本
 - 国内技術・ツール: 2〜3本
-- EM/PM: 1〜2本（更新があれば）
+- 開発組織・キャリア: 1〜2本（更新があれば）
 - セキュリティ: 2〜3本
 
 補足:
