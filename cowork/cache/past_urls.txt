@@ -9,6 +9,9 @@ https://dev.classmethod.jp/articles/20260603-cc-updates-v2-1-165/
 https://dev.classmethod.jp/articles/20260609-cc-updates-v2-1-169/
 https://dev.classmethod.jp/articles/20260708-cc-updates-v2-1-203/
 https://dev.classmethod.jp/articles/20260710-aws-mcp-server-oauth/
+https://dev.classmethod.jp/articles/20260809-amazon-quick-mds/
+https://dev.classmethod.jp/articles/agentcore-runtime-instances/
+https://dev.classmethod.jp/articles/ai-bpr-workshop-internal-camp/
 https://dev.classmethod.jp/articles/amazon-bedrock-claude-citations-api-pdf-support-update/
 https://dev.classmethod.jp/articles/amazon-bedrock-claude-opus-4-7/
 https://dev.classmethod.jp/articles/amazon-connect-ai-agent-knowledge-base-document-size-limit-5mb/
@@ -81,6 +84,7 @@ https://dev.classmethod.jp/articles/shoma-node-js-26-1-0-released/
 https://dev.classmethod.jp/articles/snowflake-coco-desktop-ga-new-features-operations/
 https://dev.classmethod.jp/articles/snowflake-dbt-projects-2026-may-updates-dbt-fusion/
 https://dev.classmethod.jp/articles/snowflake-latest-info-202607/
+https://dev.classmethod.jp/articles/ssm-agent-downdrade-kensho/
 https://dev.classmethod.jp/articles/try-promptfoo/
 https://dev.classmethod.jp/articles/use-devops-agent-via-remote-mcp-server/
 https://dev.classmethod.jp/articles/vp-policy-store-alias/
@@ -245,6 +249,7 @@ https://forest.watch.impress.co.jp/docs/news/2128802.html
 https://forest.watch.impress.co.jp/docs/news/2128870.html
 https://forest.watch.impress.co.jp/docs/news/2130392.html
 https://forest.watch.impress.co.jp/docs/news/2130424.html
+https://forest.watch.impress.co.jp/docs/news/2130787.html
 https://forest.watch.impress.co.jp/docs/review/2120213.html
 https://forest.watch.impress.co.jp/docs/serial/yajiuma/2105125.html
 https://forest.watch.impress.co.jp/docs/serial/yajiuma/2106708.html
@@ -272,6 +277,7 @@ https://forest.watch.impress.co.jp/docs/update/library/2127447.html
 https://forest.watch.impress.co.jp/docs/update/library/2128654.html
 https://forest.watch.impress.co.jp/docs/update/library/2129057.html
 https://forest.watch.impress.co.jp/docs/update/library/2130535.html
+https://forest.watch.impress.co.jp/docs/update/library/2131324.html
 https://leaddev.com/ai/addictive-agentic-coding-has-developers-losing-sleep
 https://leaddev.com/ai/ai-coding-agents-kill-team-collaboration
 https://leaddev.com/ai/ai-coding-agents-spread-through-peer-pressure-not-mandates
@@ -501,6 +507,7 @@ https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/
 https://openai.com/index/how-news-organizations-are-using-ai/
 https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/
 https://openai.com/index/hugging-face-model-evaluation-security-incident/
+https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt/
 https://openai.com/index/improving-health-intelligence-in-chatgpt/
 https://openai.com/index/industrial-policy-for-the-intelligence-age/
 https://openai.com/index/introducing-apps-in-chatgpt/
@@ -544,6 +551,7 @@ https://openai.com/index/people-first-ai-fund/
 https://openai.com/index/personal-finance-chatgpt/
 https://openai.com/index/previewing-gpt-5-6-sol/
 https://openai.com/index/ramp/
+https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/
 https://openai.com/index/running-codex-safely/
 https://openai.com/index/safety-alignment-long-horizon-models/
 https://openai.com/index/safety-bug-bounty/
@@ -899,12 +907,17 @@ https://techcrunch.com/2026/07/30/okta-buys-ai-security-startup-permiso-source-s
 https://techcrunch.com/2026/07/30/synthetic-user-startup-simile-raises-200m-at-2b-valuation-5-months-after-100m-series-a/
 https://techcrunch.com/2026/07/31/smallest-ai-raises-13m-to-build-ultra-fast-voice-ai-that-sounds-genuinely-human/
 https://techcrunch.com/2026/08/01/sam-altman-is-still-making-the-case-for-parenting-via-chatgpt/
+https://techcrunch.com/2026/08/03/a-marc-benioff-backed-startup-thinks-ai-can-solve-the-ai-deployment-problem/
 https://techcrunch.com/2026/08/03/congresss-favorite-ai-tool-chatgpt/
 https://techcrunch.com/2026/08/03/horizon3-hits-2-billion-valuation-with-250m-series-e-as-ai-threats-escalate/
 https://techcrunch.com/2026/08/03/sequoias-shaun-maguire-leads-1b-round-for-nuclear-startup-valar-atomics/
 https://techcrunch.com/2026/08/03/whos-legally-to-blame-for-anthropic-and-openais-autonomous-ai-hacks-its-complicated/
 https://techcrunch.com/2026/08/04/bending-spoons-to-buy-airtable-for-1-28b/
 https://techcrunch.com/2026/08/05/klaviyo-acquires-elias-torres-agency-in-full-circle-reunion-for-tech-founders/
+https://techcrunch.com/2026/08/05/moove-raises-250m-to-become-the-backbone-of-the-robotaxi-industry/
+https://techcrunch.com/2026/08/05/robinhood-to-list-a-fund-that-lets-anyone-back-y-combinator-startups/
+https://techcrunch.com/2026/08/06/naive-raises-28-5m-to-automate-the-grunt-work-of-setting-up-and-running-a-company/
+https://techcrunch.com/2026/08/08/openai-acquires-presentation-startup-nextslide/
 https://thehackernews.com/2026/03/apple-fixes-webkit-vulnerability.html
 https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html
 https://thehackernews.com/2026/03/cisa-flags-apple-craft-cms-laravel-bugs.html
@@ -1150,12 +1163,17 @@ https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html
 https://thehackernews.com/2026/07/weekly-recap-rogue-ai-agents-check.html
 https://thehackernews.com/2026/07/weekly-recap-wordpress-rce-sonicwall-0.html
 https://thehackernews.com/2026/07/wordpress-wp2shell-exploitation-grows.html
+https://thehackernews.com/2026/08/18-year-old-linux-sctp-flaw-could-let.html
+https://thehackernews.com/2026/08/ai-recommendation-poisoning-how-ask-ai.html
+https://thehackernews.com/2026/08/aws-google-and-vercel-patch-agent-flaws.html
+https://thehackernews.com/2026/08/cisa-adds-exploited-n-able-n-central.html
 https://thehackernews.com/2026/08/cisa-flags-langflow-rce-tomcat-and-n.html
 https://thehackernews.com/2026/08/google-password-manager-attacks-could.html
 https://thehackernews.com/2026/08/inc-ransomware-emerges-as-dominant.html
 https://thehackernews.com/2026/08/keyv-linked-npm-worm-poisons-hundreds.html
 https://thehackernews.com/2026/08/n-able-says-attackers-take-over-n.html
 https://thehackernews.com/2026/08/new-cpanel-critical-flaw-could-let.html
+https://thehackernews.com/2026/08/new-wordpress-pre-auth-xss-could-lead.html
 https://thehackernews.com/2026/08/open-vsx-removes-77-malicious-evil-twin.html
 https://thehackernews.com/2026/08/weekly-recap-rogue-ai-models-88m.html
 https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
@@ -1200,6 +1218,7 @@ https://www.anthropic.com/news/gates-foundation-partnership
 https://www.anthropic.com/news/google-broadcom-partnership-compute
 https://www.anthropic.com/news/hard-questions
 https://www.anthropic.com/news/higher-limits-spacex
+https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards
 https://www.anthropic.com/news/integrations
 https://www.anthropic.com/news/introducing-claude-tag
 https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals
@@ -1216,6 +1235,7 @@ https://www.anthropic.com/news/services-track-partner-hub
 https://www.anthropic.com/news/snowflake-anthropic-expanded-partnership
 https://www.anthropic.com/news/tcs-anthropic-partnership
 https://www.anthropic.com/news/theo-hourmouzis-general-manager-australia-new-zealand
+https://www.anthropic.com/news/tino-cuellar
 https://www.anthropic.com/research/agents-in-biology
 https://www.anthropic.com/research/anthropic-institute-agenda
 https://www.anthropic.com/research/claude-plays-robotics
@@ -1333,6 +1353,7 @@ https://www.nikkei.com/article/DGXZQOUB027X90S6A300C2000000/
 https://www.nikkei.com/article/DGXZQOUB02AU60S6A600C2000000/
 https://www.nikkei.com/article/DGXZQOUB02C1LTS6A600C2000000/
 https://www.nikkei.com/article/DGXZQOUB0324OTT00C26A8000000/
+https://www.nikkei.com/article/DGXZQOUB046OB0U6A800C2000000/
 https://www.nikkei.com/article/DGXZQOUB0533G0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB059LI0V00C26A6000000/
 https://www.nikkei.com/article/DGXZQOUB081A20Y6A400C2000000/
@@ -1379,12 +1400,15 @@ https://www.nikkei.com/article/DGXZQOUC276510X20C26A4000000/
 https://www.nikkei.com/article/DGXZQOUC2777G0X20C26A7000000/
 https://www.nikkei.com/article/DGXZQOUC300E00Q6A530C2000000/
 https://www.nikkei.com/article/DGXZQOUC315AV0R30C26A7000000/
+https://www.nikkei.com/article/DGXZQOUF0324E0T00C26A8000000/
 https://www.nikkei.com/article/DGXZQOUF062LM0W6A400C2000000/
 https://www.nikkei.com/article/DGXZQOUF075Y00X00C26A7000000/
 https://www.nikkei.com/article/DGXZQOUF08AWL0Y6A400C2000000/
 https://www.producthunt.com/products/actionkit-by-paragon
 https://www.producthunt.com/products/adomate
 https://www.producthunt.com/products/agentsky
+https://www.producthunt.com/products/annotate-8
+https://www.producthunt.com/products/atlaso
 https://www.producthunt.com/products/aura-28
 https://www.producthunt.com/products/auriko
 https://www.producthunt.com/products/base44
@@ -1408,6 +1432,7 @@ https://www.producthunt.com/products/fluentdb-2
 https://www.producthunt.com/products/framer
 https://www.producthunt.com/products/fundraisly
 https://www.producthunt.com/products/genpire-ai
+https://www.producthunt.com/products/hey-noah
 https://www.producthunt.com/products/honen
 https://www.producthunt.com/products/humalike-2
 https://www.producthunt.com/products/hyprnote
@@ -1415,6 +1440,7 @@ https://www.producthunt.com/products/imgcmd
 https://www.producthunt.com/products/invoke-studio
 https://www.producthunt.com/products/kanwas
 https://www.producthunt.com/products/kastra
+https://www.producthunt.com/products/keystroke-2
 https://www.producthunt.com/products/leni
 https://www.producthunt.com/products/lightfield
 https://www.producthunt.com/products/lispr
@@ -1455,5 +1481,6 @@ https://www.producthunt.com/products/voxtral-tts
 https://www.producthunt.com/products/webhound
 https://www.producthunt.com/products/whatcable
 https://www.producthunt.com/products/wispr-flow
+https://www.producthunt.com/products/wisprflow
 https://www.producthunt.com/products/yansu
 https://www.producthunt.com/products/zro
