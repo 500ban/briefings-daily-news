@@ -12,9 +12,8 @@ description: "Generates a daily news briefing by using last30days as a discovery
 主要信頼ソースで裏取りした記事を6カテゴリに分類・日本語要約し、check.sh の PASS 後に
 `_posts/` へ保存して GitHub へ push する。
 
-> **旧環境注記**: 2026-07-13 以前は Cowork（クラウドVM）で実行しており、
-> `/tmp/work/` への clone・`GITHUB_TOKEN` 付きURL・`/sessions/*/mnt/` 探索が必要だった。
-> これらの手順は廃止済み（アーカイブは `RUNBOOK.md` 末尾）。現環境で使わないこと。
+> **旧環境注記**: 2026-07-13 以前の Cowork（クラウドVM）向け手順（clone・トークンURL・マウント探索）は
+> 廃止済み。現環境で使わないこと。旧手順は git 履歴参照（`RUNBOOK.md` 末尾にコマンド記載）。
 
 ## ワークフロー
 

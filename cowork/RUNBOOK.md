@@ -8,7 +8,7 @@
 > 参照するのは以下の場合のみ:
 > - WebSearch が使えない → Step 2.6（Chrome MCP フォールバック）
 > - 実行が失敗・中断した → 「失敗時の扱い」
-> - 旧Cowork VM環境の手順を確認したい → 末尾アーカイブ
+> - 旧Cowork VM環境の手順を確認したい → 末尾の git 履歴参照コマンド
 
 ---
 
@@ -321,27 +321,12 @@ Cowork の役割は、調査・要約・Markdown 生成・git push まで。
 
 ---
 
-## 旧Cowork VM環境の手順アーカイブ（参考・現環境では使わない）
+## 旧Cowork VM環境の手順（2026-07-13廃止）
 
-2026-07-13 以前のクラウドVM実行時に必要だった手順。ローカル Claude Code 移行により廃止。
-
-### 旧Step 0: /tmp/work/ への shallow clone
-
-マウント先へのgit操作がロックファイル制約で失敗するため、`/tmp/work/` で作業していた。
+git履歴に完全に残っているため本ファイルには再掲しない。参照する場合:
 
 ```bash
-WORKSPACE=$(ls -d /sessions/*/mnt/デイリーニュース 2>/dev/null | head -1)
-ENV_FILE="$WORKSPACE/.env"
-[ -f "$ENV_FILE" ] && export $(grep -v '^#' "$ENV_FILE" | xargs)
-WORK="/tmp/work/briefings-dairy-news"
-if [ -d "$WORK/.git" ]; then cd "$WORK" && git pull --rebase origin main
-else rm -rf "$WORK" && git clone --depth 1 --branch main \
-  "https://${GITHUB_TOKEN}@github.com/500ban/briefings-dairy-news.git" "$WORK" && cd "$WORK"
-fi
+git show 7a52a5d:cowork/SKILL.md   # VM手順（/tmp/work clone・GITHUB_TOKEN・マウント探索）を含む最終版
 ```
 
-### 旧Step 5/6: トークン付きpushとマウント先へのログ書き込み
-
-push は clone 時のトークン付きURLで実行。実行ログは `$WORKSPACE/drafts/logs/briefing.log`
-（`/sessions/*/mnt/` 探索で解決）に書いていた。この探索がローカル環境で失敗し、
-2026-07-13〜08-09 のログ欠落の原因となった（現行は `drafts/logs/briefing.log` に直接追記）。
+なお `/sessions/*/mnt/` 探索がローカル環境で失敗することが、2026-07-13〜08-09 のログ欠落の原因だった。
