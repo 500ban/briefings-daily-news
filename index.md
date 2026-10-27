@@ -9,7 +9,7 @@ title: デイリーブリーフィング
 {% if latest_post %}
 {% assign d = latest_post.date | date: "%Y-%m-%d" %}
 {% assign w = latest_post.date | date: "%w" | plus: 0 %}
-{% assign pick_path = "/assets/img/picks/" | append: d | append: ".webp" %}
+{% assign pick_path = "/assets/img/picks/" | append: d | append: ".jpg" %}
 {% assign pick_img = site.static_files | where: "path", pick_path | first %}
 <article class="post post-home">
   <div class="post-frame">

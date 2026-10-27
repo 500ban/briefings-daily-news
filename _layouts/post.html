@@ -5,7 +5,7 @@ layout: default
 {% assign wdays = "日,月,火,水,木,金,土" | split: "," %}
 {% assign d = page.date | date: "%Y-%m-%d" %}
 {% assign w = page.date | date: "%w" | plus: 0 %}
-{% assign pick_path = "/assets/img/picks/" | append: d | append: ".webp" %}
+{% assign pick_path = "/assets/img/picks/" | append: d | append: ".jpg" %}
 {% assign pick_img = site.static_files | where: "path", pick_path | first %}
 <article class="post">
   <div class="post-frame">

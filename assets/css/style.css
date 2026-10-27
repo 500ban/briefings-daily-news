@@ -1111,7 +1111,7 @@ a:focus-visible {
   font-weight: 500;
 }
 
-/* ── 今日の1本イメージ枠（assets/img/picks/YYYY-MM-DD.webp があれば表示） ── */
+/* ── 今日の1本イメージ枠（assets/img/picks/YYYY-MM-DD.jpg があれば表示） ── */
 
 .pick-figure {
   margin: 0 0 20px;
