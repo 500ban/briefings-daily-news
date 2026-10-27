@@ -2,15 +2,20 @@
 layout: default
 ---
 
+{% assign wdays = "日,月,火,水,木,金,土" | split: "," %}
+{% assign d = page.date | date: "%Y-%m-%d" %}
+{% assign w = page.date | date: "%w" | plus: 0 %}
+{% assign pick_path = "/assets/img/picks/" | append: d | append: ".webp" %}
+{% assign pick_img = site.static_files | where: "path", pick_path | first %}
 <article class="post">
   <div class="post-frame">
-    <header class="post-header">
-      <p class="post-kicker">デイリー号</p>
-      <h1>{{ page.title | remove_first: "📅 " }}</h1>
-      <p class="post-date">
-        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
-      </p>
+    <header class="post-header post-header-compact">
+      <p class="post-kicker">デイリーブリーフィング</p>
+      <h1 class="post-title-date">{{ d }}<span class="post-title-wday">（{{ wdays[w] }}）</span></h1>
     </header>
+    {% if pick_img %}
+    <figure class="pick-figure"><img src="{{ pick_path | relative_url }}" alt="今日の1本のイメージ" loading="lazy"></figure>
+    {% endif %}
     <div class="post-body">
       {{ content }}
     </div>

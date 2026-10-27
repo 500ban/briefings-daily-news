@@ -32,46 +32,13 @@
             <button class="theme-toggle" type="button" id="theme-toggle" aria-label="ライト/ダーク切替" title="ライト/ダーク切替">☾</button>
           </div>
         </div>
-        {% if page.url == '/' %}
-        <div class="site-hero">
-          <div class="site-hero-copy">
-            <p class="site-kicker site-kicker-home">AI・ビジネス・技術を毎日ひとまとめに</p>
-            <h1 class="site-title site-title-home">
-              <span class="site-title-line">デイリー</span>
-              <span class="site-title-line">ブリーフィング</span>
-            </h1>
-            <p class="site-description site-description-home">Claude Code が生成する個人向けニュースブリーフィング</p>
-            <div class="site-hero-actions">
-              {% if latest_post %}
-              <a class="button button-primary" href="{{ latest_post.url | relative_url }}">最新号を読む</a>
-              {% endif %}
-              <a class="button button-secondary" href="#archive">一覧を見る</a>
-            </div>
-          </div>
-          <div class="site-hero-rail">
-            <p class="hero-rail-label">カテゴリ</p>
-            <ul class="hero-topics">
-              <li>ビジネス・経済</li>
-              <li>AI最新動向</li>
-              <li>新サービス・ローンチ</li>
-              <li>国内技術・ツール</li>
-              <li>開発組織・キャリア</li>
-              <li>セキュリティ</li>
-            </ul>
-            {% if latest_post %}
-            <p class="hero-issue-date">最新号: {{ latest_post.date | date: "%Y-%m-%d" }}</p>
-            {% else %}
-            <p class="hero-issue-date">初回公開を準備中です。</p>
-            {% endif %}
-          </div>
-        </div>
-        {% else %}
+        {% unless page.url == '/' or page.layout == 'post' %}
         <div class="site-intro">
           <p class="site-kicker">Personal Daily News Briefing</p>
           <p class="site-title site-title-compact"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></p>
           <p class="site-description">{{ site.description }}</p>
         </div>
-        {% endif %}
+        {% endunless %}
       </div>
     </header>
     <main class="site-main">
@@ -106,6 +73,37 @@
           render();
         });
         render();
+      })();
+    </script>
+    <script>
+      (function () {
+        var paras = document.querySelectorAll(".post-body > p");
+        for (var i = 0; i < paras.length; i++) {
+          var p = paras[i];
+          var s = p.querySelector(":scope > strong");
+          if (!s || s !== p.firstElementChild || s.textContent.trim().indexOf("⭐") !== 0) continue;
+          p.classList.add("today-pick");
+          var body = document.createElement("div");
+          body.className = "today-pick-body";
+          var n = s.nextSibling;
+          while (n) {
+            var next = n.nextSibling;
+            if ((n.nodeName === "BR" || (n.nodeType === 3 && !n.textContent.trim())) && !body.hasChildNodes()) p.removeChild(n);
+            else body.appendChild(n);
+            n = next;
+          }
+          p.appendChild(body);
+          if (body.childNodes.length === 1 && body.firstChild.nodeType === 3) {
+            var txt = body.textContent.trim();
+            var k = txt.indexOf(" — ");
+            if (k > 0) {
+              body.textContent = "";
+              var t = document.createElement("span"); t.className = "today-pick-title"; t.textContent = txt.slice(0, k);
+              var r = document.createElement("span"); r.className = "today-pick-reason"; r.textContent = txt.slice(k + 3);
+              body.appendChild(t); body.appendChild(r);
+            }
+          }
+        }
       })();
     </script>
   </body>
