@@ -95,12 +95,25 @@ bash cowork/scripts/check.sh drafts/tmp/$(date +%Y-%m-%d)-briefing.md
 `FAIL` があれば修正して再実行。**`PASS` 後のみ** `_posts/YYYY-MM-DD-briefing.md` へ保存する。
 機械検証で担保される項目を手動で再確認しない（`CHECKLIST.md` は人手判断項目のみ）。
 
+### Step 4.6: ヒーロー画像（新聞一面イラスト）
+
+check.sh PASS 後、`_posts/` に保存した本文から当日の画像を作る（タスクは止めない。失敗は画像なしで続行）。
+
+```bash
+pwsh -NoProfile -File cowork/scripts/gen-paper-image.ps1 -Post _posts/${TODAY}-briefing.md   || pwsh -NoProfile -File cowork/scripts/render-card.ps1 -Post _posts/${TODAY}-briefing.md -Style paper -Out assets/img/picks/${TODAY}.jpg
+```
+
+- 1段目: Codex CLI の画像生成で「デイリーブリーフィング」一面風イラスト（⭐見出し・要約を原文指定、約90秒）
+- 2段目: Codex 不可時は HTML→Edge ヘッドレス描画の新聞風カード（2秒・決定的）
+- 出力 `assets/img/picks/YYYY-MM-DD.jpg` はレイアウトが自動で拾う。画像はイラスト扱いで、本文テキストが正
+
 ### Step 5: git commit & push
 
 ```bash
 git pull --rebase origin main
 TODAY=$(date +%Y-%m-%d)
 git add "_posts/${TODAY}-briefing.md"
+[ -f "assets/img/picks/${TODAY}.jpg" ] && git add "assets/img/picks/${TODAY}.jpg"
 git commit -m "${TODAY} briefing"
 git push origin main
 ```

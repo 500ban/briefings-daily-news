@@ -1119,10 +1119,22 @@ a:focus-visible {
 
 .pick-figure img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 72vh;
   height: auto;
+  margin: 0 auto;
   border: 1px solid var(--line);
   border-radius: 14px;
+  box-shadow: var(--shadow-card);
+  cursor: zoom-in;
+}
+
+.pick-figure figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
 }
 
 /* ── ⭐ 今日の1本（ヒーローカード。JS が .today-pick を付与） ── */
@@ -1172,4 +1184,76 @@ a:focus-visible {
     margin-bottom: 18px;
     padding-bottom: 14px;
   }
+}
+
+/* ── ヘッダーロゴ ───────────────────────────── */
+
+.site-brand-logo {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── 画像の拡大表示（ライトボックス） ───────── */
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(8, 11, 16, 0.92);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox-scroll {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 56px 12px 24px;
+}
+
+.lightbox-scroll img {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.lightbox-close,
+.lightbox-open {
+  position: absolute;
+  top: 12px;
+  z-index: 51;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lightbox-close {
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.lightbox-open {
+  left: 12px;
 }

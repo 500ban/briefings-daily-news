@@ -18,7 +18,7 @@ title: デイリーブリーフィング
       <h1 class="post-title-date"><a href="{{ latest_post.url | relative_url }}">{{ d }}<span class="post-title-wday">（{{ wdays[w] }}）</span></a></h1>
     </header>
     {% if pick_img %}
-    <figure class="pick-figure"><img src="{{ pick_path | relative_url }}" alt="今日の1本のイメージ" loading="lazy"></figure>
+    <figure class="pick-figure"><img src="{{ pick_path | relative_url }}" alt="今日の紙面イラスト"><figcaption>今日の紙面（AI生成イラスト・本文は下記が正）— タップで拡大</figcaption></figure>
     {% endif %}
     <div class="post-body">
 {{ latest_post.content }}

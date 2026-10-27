@@ -14,6 +14,8 @@
         } catch (e) {}
       })();
     </script>
+    <link rel="icon" type="image/png" href="{{ '/assets/img/logo.png' | relative_url }}">
+    <link rel="apple-touch-icon" href="{{ '/assets/img/logo-180.png' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   </head>
   <body class="{% if page.url == '/' %}page-home{% elsif page.layout == 'post' %}page-post{% else %}page-default{% endif %}">
@@ -22,7 +24,7 @@
       <div class="site-shell">
         <div class="site-header-bar">
           <a class="site-brand" href="{{ '/' | relative_url }}">
-            <span class="site-brand-mark">DB</span>
+            <img class="site-brand-logo" src="{{ '/assets/img/logo.png' | relative_url }}" alt="DB" width="38" height="38">
             <span class="site-brand-text">デイリーブリーフィング</span>
           </a>
           <div class="site-header-actions">
@@ -104,6 +106,28 @@
             }
           }
         }
+      })();
+    </script>
+    <div class="lightbox" id="lightbox" hidden>
+      <button class="lightbox-close" type="button" id="lightbox-close" aria-label="閉じる">×</button>
+      <a class="lightbox-open" id="lightbox-open" href="#" target="_blank" rel="noopener">新しいタブで開く ↗</a>
+      <div class="lightbox-scroll"><img id="lightbox-img" alt=""></div>
+    </div>
+    <script>
+      (function () {
+        var box = document.getElementById("lightbox");
+        var img = document.getElementById("lightbox-img");
+        var open = document.getElementById("lightbox-open");
+        function close() { box.hidden = true; document.body.classList.remove("no-scroll"); }
+        document.querySelectorAll(".pick-figure img").forEach(function (el) {
+          el.addEventListener("click", function () {
+            img.src = el.currentSrc || el.src; open.href = img.src;
+            box.hidden = false; document.body.classList.add("no-scroll");
+          });
+        });
+        document.getElementById("lightbox-close").addEventListener("click", close);
+        box.addEventListener("click", function (e) { if (e.target === box || e.target.classList.contains("lightbox-scroll")) close(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden) close(); });
       })();
     </script>
   </body>
