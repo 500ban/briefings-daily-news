@@ -118,6 +118,13 @@ echo "[$(date '+%Y-%m-%d %H:%M JST')] ${TODAY} briefing — SUCCESS" >> "$LOG"
 
 スキップ時は `— SKIPPED (already exists)`、中断時は `— ABORTED (理由)`。ログは gitignore 対象で commit 不要。
 
+### Step 7: 通知（⭐今日の1本をカレンダーへ）
+
+push 成功後、Google カレンダー連携で当日 07:30 JST の予定「⭐ 今日の1本: 見出し」を作成する
+（説明に選定理由・記事URL・ブリーフィングURL。ポップアップ通知0分、予定は「空き時間」扱い）。
+サイトを能動的に開かなくても⭐がスマホに届く導線。連携が使えない場合は中断せず、ログに `(no-calendar)` を付記する。
+詳細パラメータはスケジュールタスク側 SKILL（`daily-news-briefing`）を正とする。
+
 ## ルール（正本への参照）
 
 - 出力形式・📖詳しく読む・⭐今日の1本: `TEMPLATE.md`
