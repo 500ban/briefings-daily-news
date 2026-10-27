@@ -16,7 +16,8 @@ param(
   [string]$Out = "",
   [int]$TimeoutSec = 300,
   [int]$Width = 1024,
-  [int]$Quality = 82
+  [int]$Quality = 82,
+  [switch]$DryRun
 )
 $ErrorActionPreference = "Stop"
 function Fail($m) { Write-Host "gen-paper-image: FAIL - $m"; exit 1 }
@@ -67,15 +68,49 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 if (-not $pickTitle) { Fail "today's pick not found in post" }
 
 # First sentence of each category, trimmed, skipping the pick's own category and empty days.
+function TrimEnding($frag) {
+  # drop conjunctive / particle endings so the fragment reads as 体言止め (2 passes:
+  # e.g. 「準備していると報」→「準備している」→「準備」)
+  $endings = '(と報告|と報|と発表|と述べ|と説明|と指摘|している|しており|ており|ている|いる|になった|となった|なった|であり|であるが|しながら|ながら|したが|だが|ので|ため|つつ|から|より|され|して|受けて|受け|向けて|向け|通じて|通じ|踏まえて|踏まえ|含めて|含め|加えて|加え|巡り|めぐり|対して|対し|伴い|応じて|応じ|超えて|超え|続けて|続け|進めて|進め|広げて|広げ|始めて|始め|求めて|求め|認めて|認め|高めて|高め|強めて|強め|迎えて|迎え|控えて|控え|備えて|備え|変えて|変え|与えて|与え|抑えて|抑え|整えて|整え|据えて|据え|する|なる|ある|し|て|が|で|に|を|と|へ|は|も|の)$'
+  $t = $frag
+  for ($n = 0; $n -lt 2; $n++) { $t = [regex]::Replace($t, $endings, '') }
+  return $t.TrimEnd('、', ' ', '・', '：', '/', '／')
+}
+function CleanCut($frag, $full) {
+  # never end inside 「」, inside an ASCII phrase (incl. "AWS Lambda"), a katakana run, or a kanji compound
+  $open = $frag.LastIndexOf("「"); $close = $frag.LastIndexOf("」")
+  if ($open -gt $close) { $frag = $frag.Substring(0, $open) }
+  if ($frag.Length -gt 0 -and $frag.Length -lt $full.Length) {
+    $last = $frag[$frag.Length - 1]; $next = $full[$frag.Length]
+    $ascii = '[-A-Za-z0-9.]'; $asciiRun = '[-A-Za-z0-9. ]'; $kata = '[゠-ヿ]'; $kanji = '[一-鿿]'
+    $nextIsAscii = ($next -match $ascii) -or ($next -eq ' ' -and $full.Length -gt $frag.Length + 1 -and $full[$frag.Length + 1] -match $ascii)
+    $pat = $null
+    if ($last -match $ascii -and $nextIsAscii) { $pat = $asciiRun }
+    elseif ($last -match $kata -and $next -match $kata) { $pat = $kata }
+    elseif ($last -match $kanji -and $next -match $kanji) { $pat = $kanji }
+    if ($pat) {
+      $i = $frag.Length - 1
+      while ($i -ge 0 -and $frag[$i] -match $pat) { $i-- }
+      if ($i -ge 6) { $frag = $frag.Substring(0, $i + 1) }
+    }
+  }
+  return $frag
+}
 function FirstSentence($s, $max) {
-  # first sentence; if still long, cut at the last clause boundary (、) within $max - no ellipsis, so the image has no "..." artifacts
+  # Headline for a lower box: first sentence, shortened to ~$max chars, ending as 体言止め.
+  # Candidates: (a) cut at the last clause boundary (、) (b) hard cut at $max, both cleaned
+  # (no cut inside 「」 / ASCII word / katakana run) and trimmed; prefer (a) if >= 18 chars remain.
   $s = [string]$s
   $k = $s.IndexOf("。"); if ($k -gt 0) { $s = $s.Substring(0, $k) }
-  if ($s.Length -gt $max) {
-    $cut = $s.Substring(0, $max).LastIndexOf("、")
-    $s = if ($cut -ge 12) { $s.Substring(0, $cut) } else { $s.Substring(0, $max) }
-  }
-  return $s
+  if ($s.Length -le $max) { return $s }
+  $hard = $s.Substring(0, $max)
+  $cands = @()
+  $cut = $hard.LastIndexOf("、")
+  if ($cut -ge 12) { $cands += (TrimEnding (CleanCut $s.Substring(0, $cut) $s)) }
+  $cands += (TrimEnding (CleanCut $hard $s))
+  foreach ($c in $cands) { if ($c.Length -ge 18) { return $c } }
+  foreach ($c in $cands) { if ($c.Length -ge 8) { return $c } }
+  return $hard
 }
 $boxes = @()
 foreach ($c in $cats) {
@@ -96,6 +131,12 @@ $prompt = "Create ONE image with the built-in image generation (imagegen) capabi
   "No brand logos, no real people, no photographs, no watermark. " +
   "Do not try to copy or move the file; the default save location is fine. Reply with only the absolute path of the saved PNG."
 $prompt = ($prompt -replace '"', "'") -replace '[\r\n]+', ' '
+
+if ($DryRun) {
+  Write-Host "pick : $pickTitle"
+  foreach ($b in $boxes) { Write-Host "box  : $b" }
+  exit 0
+}
 
 # ---- run codex (node + JS entry; npm shim cannot be launched by Start-Process) --
 $genRoot = Join-Path $env:USERPROFILE '.codex\generated_images'
