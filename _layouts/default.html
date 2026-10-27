@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title and page.title != site.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace }}">
-    <meta name="theme-color" content="#0c1018">
+    <meta name="theme-color" content="#f6f7f9">
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   </head>
   <body class="{% if page.url == '/' %}page-home{% elsif page.layout == 'post' %}page-post{% else %}page-default{% endif %}">
@@ -17,9 +25,12 @@
             <span class="site-brand-mark">DB</span>
             <span class="site-brand-text">デイリーブリーフィング</span>
           </a>
-          {% if page.layout == 'post' %}
-          <a class="site-header-link" href="{{ '/' | relative_url }}">一覧へ戻る</a>
-          {% endif %}
+          <div class="site-header-actions">
+            {% if page.layout == 'post' %}
+            <a class="site-header-link" href="{{ '/' | relative_url }}">一覧へ戻る</a>
+            {% endif %}
+            <button class="theme-toggle" type="button" id="theme-toggle" aria-label="ライト/ダーク切替" title="ライト/ダーク切替">☾</button>
+          </div>
         </div>
         {% if page.url == '/' %}
         <div class="site-hero">
@@ -74,5 +85,28 @@
         <p>Published with Jekyll and GitHub Pages.</p>
       </div>
     </footer>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var btn = document.getElementById("theme-toggle");
+        var meta = document.querySelector('meta[name="theme-color"]');
+        function current() {
+          return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+        }
+        function render() {
+          var dark = current() === "dark";
+          btn.textContent = dark ? "☀" : "☾";
+          btn.setAttribute("aria-label", dark ? "ライトに切替" : "ダークに切替");
+          if (meta) meta.setAttribute("content", dark ? "#0c1018" : "#f6f7f9");
+        }
+        btn.addEventListener("click", function () {
+          var next = current() === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", next);
+          try { localStorage.setItem("theme", next); } catch (e) {}
+          render();
+        });
+        render();
+      })();
+    </script>
   </body>
 </html>

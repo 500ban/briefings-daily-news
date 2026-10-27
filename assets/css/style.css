@@ -1,8 +1,32 @@
 /* ============================================================
-   デイリーブリーフィング — Tech Dark (ダーク固定・ティール)
+   デイリーブリーフィング — Light default / Dark toggle
+   常にライト既定。ダークはヘッダーの ☾ トグルで選んだ時だけ（localStorage に記憶）
    ============================================================ */
 
 :root {
+  --bg: #f6f7f9;
+  --bg-strong: #eef0f4;
+  --surface: #ffffff;
+  --surface-2: #f2f4f8;
+  --ink: #1a1d23;
+  --muted: #5b6472;
+  --line: rgba(26, 29, 35, 0.1);
+  --line-strong: rgba(26, 29, 35, 0.18);
+  --accent: #2563eb;
+  --accent-strong: #1d4ed8;
+  --accent-soft: #e8efff;
+  --accent-ring: rgba(37, 99, 235, 0.35);
+  --on-accent: #ffffff;
+  --shadow-soft: 0 18px 48px rgba(26, 29, 35, 0.07);
+  --shadow-card: 0 8px 24px rgba(26, 29, 35, 0.05);
+  --page-width: 1120px;
+  --text-width: 760px;
+  --font-mono: "SFMono-Regular", ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+  color-scheme: light;
+}
+
+/* ダーク（テックダーク・ティール）: トグルで明示的に選んだ時のみ */
+:root[data-theme="dark"] {
   --bg: #0c1018;
   --bg-strong: #080b10;
   --surface: #121826;
@@ -15,11 +39,10 @@
   --accent-strong: #7ee8d8;
   --accent-soft: rgba(79, 216, 196, 0.12);
   --accent-ring: rgba(79, 216, 196, 0.4);
+  --on-accent: #0c1018;
   --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.45);
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.32);
-  --page-width: 1120px;
-  --text-width: 760px;
-  --font-mono: "SFMono-Regular", ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+  color-scheme: dark;
 }
 
 * {
@@ -166,6 +189,33 @@ a:focus-visible {
   color: var(--accent-strong);
 }
 
+.site-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
 /* ── Hero (home) ────────────────────────────── */
 
 .site-hero {
@@ -265,13 +315,13 @@ a:focus-visible {
 
 .button-primary {
   background: var(--accent);
-  color: #0c1018;
+  color: var(--on-accent);
   box-shadow: var(--shadow-card);
 }
 
 .button-primary:hover {
   background: var(--accent-strong);
-  color: #0c1018;
+  color: var(--on-accent);
   transform: translateY(-1px);
 }
 
