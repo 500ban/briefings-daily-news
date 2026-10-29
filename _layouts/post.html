@@ -14,7 +14,7 @@ layout: default
       <h1 class="post-title-date">{{ d }}<span class="post-title-wday">（{{ wdays[w] }}）</span></h1>
     </header>
     {% if pick_img %}
-    <figure class="pick-figure"><img src="{{ pick_path | relative_url }}" alt="今日の紙面イラスト"><figcaption>今日の紙面（AI生成イラスト・本文は下記が正）— タップで拡大</figcaption></figure>
+    <figure class="pick-figure"><img src="{{ pick_path | relative_url }}" alt="今日の紙面（AI生成）"><figcaption>今日の紙面（AI生成・記事本文は下記が正）— タップで拡大</figcaption></figure>
     {% endif %}
     <div class="post-body">
       {{ content }}

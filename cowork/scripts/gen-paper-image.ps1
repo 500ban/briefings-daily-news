@@ -116,19 +116,22 @@ $boxes = @()
 foreach ($c in $cats) {
   if (-not $c.text -or $c.text -eq "本日の更新なし") { continue }
   if ($pickCat -and $pickCat.Contains($c.label)) { continue }
-  $boxes += ($c.label + "：" + (FirstSentence $c.text 42))
+  $boxes += ($c.label + "：" + (FirstSentence $c.text 36))
   if ($boxes.Count -ge 4) { break }
 }
 $boxText = ($boxes | ForEach-Object { "<<" + $_ + ">>" }) -join " "
 
 # ---- prompt ----------------------------------------------------------------
-$prompt = "Create ONE image with the built-in image generation (imagegen) capability: the front page of a Japanese newspaper, portrait 1024x1536, for a personal daily tech news briefing. " +
-  "Masthead text exactly: デイリーブリーフィング. Date line exactly: $jpDate. " +
-  "Style: cream newsprint paper, black ink typography, vermilion (朱色) accent for labels and rules, flat editorial illustrations with simple geometric icons, clean newspaper grid with thin rules. " +
-  "Main story block labeled 今日の1本: headline exactly 「$pickTitle」 and subhead exactly: $pickReason Include a simple diagram or illustration that visualizes this story symbolically (e.g., a 3-step flow). " +
-  "Lower section: short news boxes with these exact Japanese texts as their headlines (the << >> markers only delimit the texts; never draw them or any quotation marks around headlines): $boxText Each box may have a small flat illustration. " +
-  "Render all Japanese text exactly as given, legibly. Use ONLY the provided text; do not invent additional headlines, facts, names, or numbers. " +
-  "No brand logos, no real people, no photographs, no watermark. " +
+$prompt = "Create ONE image with the built-in image generation (imagegen) capability: a realistic scan of the front page (一面) of a Japanese national morning broadsheet newspaper (全国紙の朝刊), portrait 1024x1536, filling the whole frame edge to edge. " +
+  "It must look like a real printed newspaper page, NOT an infographic, poster, or web card: traditional Japanese newspaper layout with vertical writing (縦書き) read right-to-left, a dense grid of many narrow text columns (段組) separated by thin hairline rules, headlines in bold Mincho (明朝体) newspaper type of varying sizes, and a lot of small body text. " +
+  "Body text must be rendered as tiny unreadable greeked newsprint texture (fine grey lines of pseudo-characters), never as readable sentences. " +
+  "Masthead (題字) exactly: デイリーブリーフィング, written vertically inside a bordered box at the top-right corner, with the date exactly: $jpDate in small type beneath it. " +
+  "Top story at the upper right, next to the masthead, with a small kicker label 今日の1本 above a large multi-line vertical headline that reads exactly: $pickTitle and a smaller vertical sub-headline (袖見出し) exactly: $pickReason " +
+  "Place ONE small monochrome halftone-style illustration or simple line chart related to the top story inside its columns, with a thin caption rule; no large icons, no cartoon illustrations, no clip art. " +
+  "The lower and left parts of the page carry smaller articles, each with its own vertical headline using these exact Japanese texts (the << >> markers only delimit the texts; never draw them or any quotation marks): $boxText " +
+  "Colors: off-white/grey newsprint paper with faint fibre texture and slight ink spread; black ink only, except the masthead box may use a single muted vermilion (朱) accent. No other colors. " +
+  "Render every Japanese headline exactly as given and legibly; Latin letters and numerals inside vertical text may be rotated or set 縦中横. Use ONLY the provided texts for anything readable; do not invent other headlines, facts, names, or numbers; advertisements or other blocks must be greeked, not readable. " +
+  "No brand logos, no real people, no photographs, no watermark, no border frame around the image. " +
   "Do not try to copy or move the file; the default save location is fine. Reply with only the absolute path of the saved PNG."
 $prompt = ($prompt -replace '"', "'") -replace '[\r\n]+', ' '
 

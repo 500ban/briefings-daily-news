@@ -103,7 +103,7 @@ check.sh PASS 後、`_posts/` に保存した本文から当日の画像を作�
 pwsh -NoProfile -File cowork/scripts/gen-paper-image.ps1 -Post _posts/${TODAY}-briefing.md   || pwsh -NoProfile -File cowork/scripts/render-card.ps1 -Post _posts/${TODAY}-briefing.md -Style paper -Out assets/img/picks/${TODAY}.jpg
 ```
 
-- 1段目: Codex CLI の画像生成で「デイリーブリーフィング」一面風イラスト（⭐見出し・要約を原文指定、約90秒）
+- 1段目: Codex CLI の画像生成で「デイリーブリーフィング」全国紙朝刊の一面風（縦書き・段組・題字、⭐見出し・要約を原文指定、約150秒）
 - 2段目: Codex 不可時は HTML→Edge ヘッドレス描画の新聞風カード（2秒・決定的）
 - 出力 `assets/img/picks/YYYY-MM-DD.jpg` はレイアウトが自動で拾う。画像はイラスト扱いで、本文テキストが正
 
