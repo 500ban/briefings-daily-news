@@ -100,12 +100,12 @@ bash cowork/scripts/check.sh drafts/tmp/$(date +%Y-%m-%d)-briefing.md
 check.sh PASS 後、`_posts/` に保存した本文から当日の画像を作る（タスクは止めない。失敗は画像なしで続行）。
 
 ```bash
-pwsh -NoProfile -File cowork/scripts/gen-paper-image.ps1 -Post _posts/${TODAY}-briefing.md   || pwsh -NoProfile -File cowork/scripts/render-card.ps1 -Post _posts/${TODAY}-briefing.md -Style paper -Out assets/img/picks/${TODAY}.jpg
+pwsh -NoProfile -File cowork/scripts/render-card.ps1 -Post _posts/${TODAY}-briefing.md -Style paper -Out assets/img/picks/${TODAY}.jpg
 ```
 
-- 1段目: Codex CLI の画像生成で「デイリーブリーフィング」全国紙朝刊の一面風（縦書き・段組・題字、⭐見出し・要約を原文指定、約150秒）
-- 2段目: Codex 不可時は HTML→Edge ヘッドレス描画の新聞風カード（2秒・決定的）
-- 出力 `assets/img/picks/YYYY-MM-DD.jpg` はレイアウトが自動で拾う。画像はイラスト扱いで、本文テキストが正
+- HTML→Edge ヘッドレス描画で全国紙朝刊の一面（縦書き右起こし・段組・題字・きょうの紙面）。読める文字は本文由来のみ（⭐・各カテゴリ要約・記事見出し/要約/📖）、段末と広告欄はグリーク（質感）。約10秒・決定的
+- `gen-paper-image.ps1`（Codex CLI 画像生成版）は ChatGPT Plus 契約中のみ使える。2026-11-01 以降は未使用（再契約時に `gen-paper-image.ps1 || render-card.ps1` の順に戻す）
+- 出力 `assets/img/picks/YYYY-MM-DD.jpg` はレイアウトが自動で拾う。画像は表紙扱いで、本文テキストが正
 
 ### Step 5: git commit & push
 

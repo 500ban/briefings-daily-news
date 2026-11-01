@@ -6,7 +6,7 @@
 # Usage:
 #   pwsh -NoProfile -File cowork/scripts/render-card.ps1 -Post _posts/2026-10-27-briefing.md -Style slide -Out assets/img/picks/2026-10-27.jpg
 #   -Style slide : pop dashboard look (navy, colorful category cards, emoji icons)
-#   -Style paper : Japanese newspaper front page (masthead, ears, vertical lead, 3 columns)
+#   -Style paper : 全国紙朝刊の一面 (portrait 1024x1536, 縦書き・段組・題字; real post text, greeked filler)
 #   -Logo        : optional PNG shown in the slide header (default: assets/img/logo.png if present)
 # Exit 0 on success, 1 on failure (caller continues without image).
 
@@ -15,14 +15,22 @@ param(
   [ValidateSet("slide", "paper")][string]$Style = "slide",
   [Parameter(Mandatory = $true)][string]$Out,
   [string]$Logo = "assets/img/logo.png",
-  [int]$Width = 1600,
-  [int]$Height = 900,
-  [int]$JpegWidth = 1280,
-  [int]$JpegQuality = 86
+  [int]$Width = 0,
+  [int]$Height = 0,
+  [int]$JpegWidth = 0,
+  [int]$JpegQuality = 86,
+  [int]$Scale = 0
 )
 $ErrorActionPreference = "Stop"
 function Fail($m) { Write-Host "render-card: FAIL - $m"; exit 1 }
 if (-not (Test-Path $Post)) { Fail "post not found: $Post" }
+. (Join-Path $PSScriptRoot 'paper-text.ps1')
+# per-style defaults (slide: 16:9 dashboard; paper: portrait page rendered at 2x for crisp small type)
+if ($Style -eq "paper") {
+  if (-not $Width) { $Width = 1024 }; if (-not $Height) { $Height = 1536 }; if (-not $JpegWidth) { $JpegWidth = 1024 }; if (-not $Scale) { $Scale = 2 }
+} else {
+  if (-not $Width) { $Width = 1600 }; if (-not $Height) { $Height = 900 }; if (-not $JpegWidth) { $JpegWidth = 1280 }; if (-not $Scale) { $Scale = 1 }
+}
 $edge = @("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", "C:/Program Files/Microsoft/Edge/Application/msedge.exe") | Where-Object { Test-Path $_ } | Select-Object -First 1
 if (-not $edge) { Fail "msedge.exe not found" }
 
@@ -65,7 +73,23 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
   foreach ($c in $cats) { if ($t -eq ("**" + $c.key + "**")) { $c.text = (NextText $i) } }
 }
 if (-not $pickTitle) { $pickTitle = "$dateStr デイリーブリーフィング" }
-foreach ($c in $cats) { if (-not $c.text) { $c.text = "本日の更新なし" } }
+foreach ($c in $cats) { if (-not $c.text) { $c.text = "本日の更新なし" }; $c.count = 0; $c.articles = @() }
+# per-category article list from the <details> blocks (title / summary / 📖 digest) - used as body text
+$cur = $null; $inDigest = $false; $art = $null
+for ($i = 0; $i -lt $lines.Count; $i++) {
+  $t = $lines[$i].Trim()
+  if ($t -match '^<summary>(.+?)（(\d+)件）</summary>$') {
+    $cur = $null; $art = $null
+    foreach ($c in $cats) { if ($Matches[1] -eq $c.key) { $cur = $c; $c.count = [int]$Matches[2] } }
+    continue
+  }
+  if (-not $cur) { continue }
+  if ($t -like '<details><summary>📖*') { $inDigest = $true; continue }
+  if ($t -eq '</details>') { if ($inDigest) { $inDigest = $false } else { $cur = $null; $art = $null }; continue }
+  if ($t -match '^- \*\*(.+?)\*\*') { $art = @{ title = $Matches[1]; summary = ""; digest = "" }; $cur.articles += $art; continue }
+  if (-not $art -or $t -eq "" -or $t.StartsWith("→") -or $t.StartsWith("<")) { continue }
+  if ($inDigest) { $art.digest += $t } else { $art.summary += $t }
+}
 function Esc($s) { [System.Net.WebUtility]::HtmlEncode([string]$s) }
 
 $logoTag = ""
@@ -113,44 +137,118 @@ body{width:1600px;height:900px;overflow:hidden;color:#eef3fb;font-family:"Yu Got
   $pickCatTag = if ($pickCat) { '<span class="cat">' + (Esc $pickCat) + '</span>' } else { "" }
   $html = $html.Replace("{{LOGO}}", $logoTag).Replace("{{DATE}}", $dateStr).Replace("{{WDAY}}", $wday).Replace("{{PICKCAT}}", $pickCatTag).Replace("{{PICKTITLE}}", (Esc $pickTitle)).Replace("{{PICKREASON}}", (Esc $pickReason)).Replace("{{CARDS}}", $cards)
 } else {
-  $cols = ""
-  foreach ($c in $cats) {
-    $cols += '<section class="st"><h3><span class="tag">' + (Esc $c.short) + '</span>' + (Esc $c.label) + '</h3><p>' + (Esc $c.text) + '</p></section>'
+  # ---- paper: 全国紙朝刊の一面 (縦書き右起こし・段組・題字) --------------------
+  # Readable text = post text only (⭐, category summaries, article titles/summaries/📖).
+  # Column tails and ads are greeked filler (random characters, low contrast) for texture.
+  $rnd = [System.Random]::new([int]$dt.ToString("yyyyMMdd"))
+  $pool = "国会議員政府経済市場企業技術開発発表報告社会地域対応確認調査結果影響可能性必要今後方針説明指摘関係者協議計画実施予定来年度前年比増加減少投資事業製品利用者環境安全対策課題世界各国日本東京大阪情報通信産業研究機関大学連携強化推進改革制度見直検討導入拡大縮小改善向上維持管理運営支援提供開始終了期間時間午前午後朝夕昨日今日明日週間月間年間のにはをがとでもたしてないるかられうこすまんきつくさりあおよえみねほわけせそちぬふむめゆろ"
+  function Greek($n) {
+    $sb = New-Object Text.StringBuilder
+    $run = 0; $len = $rnd.Next(14, 30)
+    while ($sb.Length -lt $n) {
+      [void]$sb.Append($pool[$rnd.Next($pool.Length)]); $run++
+      if ($run -ge $len) { [void]$sb.Append("。"); $run = 0; $len = $rnd.Next(14, 30) }
+      elseif ($run % 9 -eq 0 -and $rnd.Next(3) -eq 0) { [void]$sb.Append("、") }
+    }
+    return $sb.ToString()
   }
-  $jpDate = $dt.ToString("yyyy年M月d日") + "（" + $wday + "曜日）"
+  function Clean($s) { (([string]$s) -replace '\*\*', '') -replace '\[([^\]]+)\]\([^)]+\)', '$1' }
+  function Tcy($escaped) { [regex]::Replace($escaped, '(?<![0-9A-Za-z.])([0-9]{1,2})(?![0-9A-Za-z.])', '<span class="tcy">$1</span>') }
+  function Txt($s) { Tcy (Esc (Clean $s)) }
+  function BodyHtml($c, $first, $greekLen) {
+    $h = '<p class="ld">' + (Txt $c.text) + '</p>'
+    $arts = @($c.articles)
+    if ($first) {
+      # put the article that matches today's pick first (longest common prefix >= 4 chars)
+      $best = $null; $bestLen = 3
+      foreach ($a in $arts) { $n = 0; while ($n -lt $a.title.Length -and $n -lt $first.Length -and $a.title[$n] -eq $first[$n]) { $n++ }; if ($n -gt $bestLen) { $bestLen = $n; $best = $a } }
+      if ($best) { $arts = @($best) + @($arts | Where-Object { $_ -ne $best }) }
+    }
+    foreach ($a in $arts) { $h += '<h4>' + (Txt $a.title) + '</h4><p>' + (Txt ($a.summary + $a.digest)) + '</p>' }
+    $h += '<p class="greek">' + (Greek $greekLen) + '</p>'
+    return $h
+  }
+  $pick = $cats | Where-Object { $pickCat -and $pickCat.Contains($_.label) } | Select-Object -First 1
+  $leadBody = if ($pick) { BodyHtml $pick $pickTitle 900 } else { '<p class="ld">' + (Txt $pickReason) + '</p><p class="greek">' + (Greek 900) + '</p>' }
+  $h1 = if ($pickTitle.Length -le 20) { 60 } elseif ($pickTitle.Length -le 32) { 52 } elseif ($pickTitle.Length -le 44) { 46 } else { 40 }
+  # きょうの紙面: two categories per vertical line (e.g. 経済4本　ＡＩ3本)
+  $items = @(); foreach ($c in $cats) { $items += (Esc $c.short) + $(if ($c.count -gt 0) { (Tcy ([string]$c.count)) + '本' } else { 'なし' }) }
+  $index = ""; for ($k = 0; $k -lt $items.Count; $k += 2) { $index += '<span>' + (($items[$k..($k + 1)]) -join '　') + '</span>' }
+  # lower stories: up to 4 categories (page width allows ~5 lines per 段 each), skipping the pick's and empty ones
+  $stories = ""; $n = 0
+  foreach ($c in $cats) {
+    if ($c.text -eq "本日の更新なし" -or ($pick -and $c.key -eq $pick.key)) { continue }
+    $stories += '<section class="st"><div class="sh v"><span class="tag">' + (Esc $c.label) + '</span><h2 class="h2">' + (Txt (FirstSentence $c.text 30)) + '</h2></div><div class="sb v">' + (BodyHtml $c $null 500) + '</div></section>'
+    $n++; if ($n -ge 4) { break }
+  }
+  $h2 = 28
+  $ads = ""; foreach ($k in 1..3) { $ads += '<div class="ad"><div class="t"></div><div class="b"></div></div>' }
+  $colm = '<b>編集室から</b><p>この紙面は当日の本文から自動で組版したものです。記事の正本はこの下の本文と「詳しく読む」をご覧ください。</p><p class="greek">' + (Greek 400) + '</p>'
+  $jpDate = $dt.ToString("yyyy年M月d日") + "<br>（" + $wday + "曜日）"
   $html = @'
 <!doctype html><html lang="ja"><meta charset="utf-8"><style>
-*{box-sizing:border-box;margin:0}
-body{position:relative;width:1600px;height:900px;overflow:hidden;color:#17130f;font-family:"Yu Mincho","游明朝",serif;
- background:#f3ecdd;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0 1px,transparent 1px 3px),radial-gradient(1200px 700px at 50% 20%,rgba(255,255,255,.55),transparent 70%)}
-.wrap{padding:26px 54px 22px}
-.mast{display:grid;grid-template-columns:230px 1fr 230px;align-items:center;gap:18px;padding-bottom:10px;border-bottom:4px double #17130f}
-.ear{border:2px solid #17130f;padding:8px 10px;font-size:15px;line-height:1.55;font-family:"Yu Gothic UI",sans-serif}
-.ear b{display:block;font-size:17px}
-.title{text-align:center;font-family:"Yu Mincho Demibold","Yu Mincho",serif;font-weight:900;font-size:66px;letter-spacing:.14em;line-height:1.1}
-.sub{text-align:center;font-family:"Yu Gothic UI",sans-serif;font-size:14px;letter-spacing:.3em;color:#4a4036;margin-top:6px}
-.lead{display:grid;grid-template-columns:64px 1fr;gap:26px;align-items:stretch;padding:18px 0 16px;border-bottom:1px solid #17130f}
-.kick{display:inline-block;background:#17130f;color:#f3ecdd;font-family:"Yu Gothic UI",sans-serif;font-weight:700;font-size:16px;letter-spacing:.2em;padding:4px 12px;margin-bottom:10px}
-.h1{font-family:"Yu Mincho Demibold","Yu Mincho",serif;font-weight:900;font-size:50px;line-height:1.28;letter-spacing:.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.vkick{writing-mode:vertical-rl;text-orientation:upright;background:#17130f;color:#f3ecdd;font-family:"Yu Mincho Demibold","Yu Mincho",serif;font-weight:900;font-size:26px;letter-spacing:.25em;padding:16px 10px;display:flex;align-items:center;justify-content:center}
-.leadp{font-size:21px;line-height:1.7;margin-top:12px;color:#2a241e;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.body{column-count:3;column-gap:34px;column-rule:1px solid #17130f;padding-top:16px;height:505px}
-.st{break-inside:avoid;margin-bottom:22px}
-.st h3{font-family:"Yu Gothic UI",sans-serif;font-size:19px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.tag{display:inline-block;border:1.5px solid #17130f;padding:1px 6px;font-size:15px;letter-spacing:.1em}
-.st p{font-size:20.5px;line-height:1.75;text-align:justify;text-justify:inter-character;line-break:strict;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
-.folio{position:absolute;left:54px;right:54px;bottom:16px;border-top:1px solid #17130f;padding-top:6px;display:flex;justify-content:space-between;font-family:"Yu Gothic UI",sans-serif;font-size:13px;letter-spacing:.14em;color:#4a4036}
-</style><body><div class="wrap">
-<div class="mast">
- <div class="ear"><b>第{{ISSUE}}号</b>{{JPDATE}}<br>毎朝7時 自動発行</div>
- <div><div class="title">デイリーブリーフィング</div><div class="sub">AI・ビジネス・技術 ― 主要ソースから毎朝要約</div></div>
- <div class="ear"><b>本日の紙面</b>今日の1本／経済／AI／新製品／国内／組織／安全</div>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1024px;height:1536px;overflow:hidden}
+body{position:relative;color:#1b1713;font-family:"Yu Mincho","Noto Serif JP",serif;background:#ece7dc;
+ background-image:radial-gradient(1100px 900px at 30% 10%,rgba(255,255,255,.45),transparent 70%),repeating-linear-gradient(0deg,rgba(0,0,0,.022) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.015) 0 1px,transparent 1px 5px)}
+.v{writing-mode:vertical-rl;text-orientation:mixed}
+.tcy{text-combine-upright:all}
+.hd{font-family:"Noto Serif JP","Yu Mincho",serif;font-weight:900}
+.go{font-family:"BIZ UDGothic","Yu Gothic",sans-serif}
+.page{position:absolute;left:30px;top:26px;width:964px;height:1484px;display:flex;flex-direction:column}
+.top{height:700px;display:flex;flex-direction:row-reverse;gap:16px}
+.mast{flex:none;width:120px;display:flex;flex-direction:column;align-items:center}
+.mast .box{width:120px;height:560px;border:4px double #1b1713;padding:18px 0;display:flex;justify-content:center;
+ background:repeating-linear-gradient(45deg,rgba(176,52,36,.26) 0 1px,transparent 1px 4px),repeating-linear-gradient(-45deg,rgba(176,52,36,.18) 0 1px,transparent 1px 4px)}
+.mast .box span{font-size:42px;line-height:1;letter-spacing:.02em}
+.mast .dt{margin-top:10px;height:130px;font-size:12.5px;letter-spacing:.06em;line-height:1.4}
+.lead{flex:1;min-width:0;display:flex;flex-direction:row-reverse;gap:14px}
+.hl{flex:none;height:100%}
+.kick{display:block;inline-size:max-content;background:#1b1713;color:#ece7dc;font-weight:700;font-size:17px;letter-spacing:.25em;padding:14px 6px;margin-left:14px}
+.h1{font-size:{{H1SIZE}}px;line-height:1.2;letter-spacing:.03em;margin-left:14px}
+.sub{font-family:"Noto Serif JP","Yu Mincho",serif;font-weight:700;font-size:23px;line-height:1.45;letter-spacing:.02em;color:#2a2520;margin-left:12px}
+.body,.sb{column-gap:18px;column-rule:1px solid #bdb5a8;column-fill:auto;overflow:hidden;letter-spacing:.03em}
+.body{flex:1;min-width:0;height:100%;column-count:3;font-size:13.5px;line-height:1.6}
+.body h4,.sb h4{font-family:"Noto Serif JP","Yu Mincho",serif;font-weight:700;font-size:17px;line-height:1.3;margin-left:10px;margin-right:4px}
+.body p,.sb p{margin-left:6px;text-indent:1em}
+.ld{font-weight:700}
+.greek{color:#7a7268;opacity:.36;filter:blur(.45px)}
+.left{flex:none;width:124px;display:flex;flex-direction:column;gap:12px}
+.idx{height:210px;border:1.5px solid #1b1713;padding:10px 8px;font-size:14px;line-height:1.5;letter-spacing:.06em;overflow:hidden}
+.idx b{display:block;inline-size:max-content;background:#1b1713;color:#ece7dc;padding:8px 3px;margin-left:8px;letter-spacing:.2em}
+.idx > span{display:block}
+.colm{flex:1;min-height:0;border-top:1px solid #1b1713;padding-top:8px;font-size:13px;line-height:1.6;overflow:hidden}
+.colm b{display:block;inline-size:max-content;border:1.5px solid #1b1713;padding:6px 3px;margin-left:8px;letter-spacing:.2em;font-weight:700}
+.colm p{margin-left:5px;text-indent:1em}
+.rule{border-top:2px solid #1b1713;margin-top:12px}
+.low{height:540px;display:flex;flex-direction:row-reverse;padding-top:12px}
+.st{flex:1;min-width:0;display:flex;flex-direction:row-reverse;gap:10px;padding:0 12px;border-right:1px solid #1b1713}
+.st:first-child{border-right:0}
+.sh{flex:none;height:100%}
+.tag{display:block;inline-size:max-content;border:1.5px solid #1b1713;font-size:13px;letter-spacing:.2em;padding:8px 3px;margin-left:10px}
+.h2{font-size:{{H2SIZE}}px;line-height:1.2;letter-spacing:.03em;margin-left:10px}
+.sb{flex:1;min-width:0;height:100%;column-count:2;font-size:13px;line-height:1.6}
+.ads{height:150px;margin-top:12px;border-top:3px double #1b1713;padding-top:10px;display:flex;flex-direction:row-reverse;gap:14px}
+.ad{flex:1;border:1px solid #8f877b;padding:10px;display:flex;flex-direction:row-reverse;gap:10px;overflow:hidden}
+.ad .t{width:22px;background:repeating-linear-gradient(180deg,#9a9286 0 14px,transparent 14px 18px);opacity:.55}
+.ad .b{flex:1;min-width:0;background:repeating-linear-gradient(90deg,#b5ada0 0 1.5px,transparent 1.5px 7px),repeating-linear-gradient(180deg,transparent 0 46%,#ece7dc 46% 54%);opacity:.6}
+.folio{margin-top:8px;border-top:1px solid #1b1713;padding-top:5px;display:flex;justify-content:space-between;font-size:12px;letter-spacing:.14em;color:#4a443c}
+</style><body><div class="page">
+<div class="top">
+ <div class="mast"><div class="box"><span class="v hd">デイリーブリーフィング</span></div><div class="dt v go">{{JPDATE}}<br>第{{ISSUE}}号</div></div>
+ <div class="lead">
+  <div class="hl v"><span class="kick go">今日の1本</span><h1 class="h1 hd">{{PICKTITLE}}</h1><p class="sub">{{PICKREASON}}</p></div>
+  <div class="body v">{{LEADBODY}}</div>
+ </div>
+ <div class="left"><div class="idx v go"><b>きょうの紙面</b>{{INDEX}}</div><div class="colm v">{{COLM}}</div></div>
 </div>
-<div class="lead"><div class="vkick">今日の一本</div><div><div class="h1">{{PICKTITLE}}</div><p class="leadp">{{PICKREASON}}</p></div></div>
-<div class="body">{{COLS}}</div>
-</div><div class="folio"><span>デイリーブリーフィング　{{DATE}}</span><span>一面</span></div></body></html>
+<div class="rule"></div>
+<div class="low">{{STORIES}}</div>
+<div class="ads">{{ADS}}</div>
+<div class="folio go"><span>デイリーブリーフィング　{{DATE}}　毎朝7時 自動発行</span><span>一面</span></div>
+</div></body></html>
 '@
-  $html = $html.Replace("{{ISSUE}}", [string]$issue).Replace("{{JPDATE}}", $jpDate).Replace("{{PICKTITLE}}", (Esc $pickTitle)).Replace("{{PICKREASON}}", (Esc $pickReason)).Replace("{{COLS}}", $cols).Replace("{{DATE}}", $dateStr)
+  $html = $html.Replace("{{H1SIZE}}", [string]$h1).Replace("{{H2SIZE}}", [string]$h2).Replace("{{ISSUE}}", (Tcy ([string]$issue))).Replace("{{JPDATE}}", (Tcy $jpDate)).Replace("{{PICKTITLE}}", (Txt $pickTitle)).Replace("{{PICKREASON}}", (Txt $pickReason)).Replace("{{LEADBODY}}", $leadBody).Replace("{{INDEX}}", $index).Replace("{{COLM}}", $colm).Replace("{{STORIES}}", $stories).Replace("{{ADS}}", $ads).Replace("{{DATE}}", $dateStr)
 }
 
 # ---- render --------------------------------------------------------------
@@ -162,10 +260,16 @@ $pngPath = Join-Path $work "card.png"
 Remove-Item $pngPath -ErrorAction SilentlyContinue
 $fileUrl = "file:///" + ($htmlPath -replace '\\', '/')
 # -Wait also waits for Edge child processes (the renderer writes the PNG); WaitForExit() alone returns too early.
-$edgeArgs = @("--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run", "--no-default-browser-check", "--user-data-dir=$work/profile", "--force-device-scale-factor=1", "--window-size=$Width,$Height", "--screenshot=$pngPath", $fileUrl)
+$edgeArgs = @("--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run", "--no-default-browser-check", "--user-data-dir=$work/profile", "--force-device-scale-factor=$Scale", "--window-size=$Width,$Height", "--screenshot=$pngPath", $fileUrl)
 $job = Start-Job -ScriptBlock { param($e, $a) Start-Process -FilePath $e -ArgumentList $a -NoNewWindow -Wait } -ArgumentList $edge, $edgeArgs
 if (-not (Wait-Job $job -Timeout 90)) { Stop-Job $job; Remove-Job $job -Force; Fail "edge timed out" }
 Remove-Job $job -Force
+# at 2x scale the renderer may still be writing the PNG after the main process exits: wait for a stable file
+$deadline = (Get-Date).AddSeconds(30); $prev = -1
+while ((Get-Date) -lt $deadline) {
+  if (Test-Path $pngPath) { $len = (Get-Item $pngPath).Length; if ($len -gt 0 -and $len -eq $prev) { break }; $prev = $len }
+  Start-Sleep -Milliseconds 500
+}
 if (-not (Test-Path $pngPath)) { Fail "edge produced no screenshot" }
 
 $dir = Split-Path $Out -Parent
