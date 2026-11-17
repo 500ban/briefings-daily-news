@@ -12,7 +12,7 @@
 #   1. ソース照合（SOURCES.md を直接パースして主要信頼ソース / 反応補助ソースを判定）
 #   2. DENYLIST ドメイン照合（DENYLIST.md を直接パース。読込失敗時は exit 2 で停止）
 #   3. 個別記事URL パターン検証（一覧・ランキング・タグ等を検出）
-#   4. クロス日重複（他の _posts/*.md と URL の重複を検出）
+#   4. クロス日重複（他の _posts/*.md と URL の重複を検出。末尾の「/」の有無は区別しない）
 #   5. 評価語チェック（DENYLIST.md の「NG評価語」をパースして WARN）
 #
 # 出力:
@@ -399,21 +399,26 @@ fi
 POSTS_DIR="$REPO_ROOT/_posts"
 
 if [ -d "$POSTS_DIR" ]; then
-  # 自分自身のファイル名を除外してURLを集める
-  POSTED=$(
+  # 自分自身のファイル名を除外してURLを集める。
+  # 比較は末尾の「/」を落とした形で行う（同じ記事が「…/wallet」と「…/wallet/」で
+  # 別URL扱いになり重複を見逃した事例があるため。2026-11-17）。
+  # 「?」以降は落とさない（HN の item?id= や YouTube の watch?v= は記事の識別子）。
+  POSTED_NORM=$(
     find "$POSTS_DIR" -type f -name "*.md" ! -name "${TODAY}-briefing.md" 2>/dev/null \
       | xargs -r grep -hoE 'https?://[^)[:space:]]+' 2>/dev/null \
       | sed 's/[.,;]*$//' \
+      | sed -E 's:/+$::' \
       | sort -u
   )
 
-  if [ -n "$POSTED" ]; then
-    DUPES=$(comm -12 <(echo "$URLS") <(echo "$POSTED"))
-    if [ -n "$DUPES" ]; then
-      while IFS= read -r u; do
-        [ -n "$u" ] && fail "クロス日重複(過去の_postsと同一URL): $u"
-      done <<< "$DUPES"
-    fi
+  if [ -n "$POSTED_NORM" ]; then
+    while IFS= read -r u; do
+      [ -z "$u" ] && continue
+      n=$(printf '%s\n' "$u" | sed -E 's:/+$::')
+      if grep -qxF -- "$n" <<< "$POSTED_NORM"; then
+        fail "クロス日重複(過去の_postsと同一URL。末尾の/の有無は区別しない): $u"
+      fi
+    done <<< "$URLS"
   fi
 else
   echo "WARN: _posts ディレクトリが見つかりません: $POSTS_DIR" >&2
@@ -439,12 +444,19 @@ fi
 # PASS / FAIL に関係なく、_posts 配下の URL を `cowork/cache/past_urls.txt` に
 # 常時保存しておく。Cowork の Step 1.5 サブエージェントが、収集した候補から
 # このファイルにあるURLを `comm -23` で除外できるようにするための事前計算。
+# `comm -23` は文字列の完全一致なので、末尾「/」の有無だけが違う候補も落とせるよう、
+# 「?」「#」を含まないURLは末尾「/」あり・なしの両方の形を入れておく。
 if [ -d "$POSTS_DIR" ]; then
   CACHE_DIR="$REPO_ROOT/cowork/cache"
   mkdir -p "$CACHE_DIR"
   find "$POSTS_DIR" -type f -name "*.md" 2>/dev/null \
     | xargs -r grep -hoE 'https?://[^)[:space:]]+' 2>/dev/null \
     | sed 's/[.,;]*$//' \
+    | awk '
+        { print }
+        /[?#]/ { next }
+        { u = $0; sub(/\/+$/, "", u); print u; print u "/" }
+      ' \
     | sort -u > "$CACHE_DIR/past_urls.txt"
 fi
 
