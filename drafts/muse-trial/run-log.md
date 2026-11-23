@@ -152,3 +152,76 @@
   - サブエージェント4件の最終結果がハンドオフで届かず、セッションファイルから全文を抽出して回収した（11-18・11-20と同様）
   - セキュリティ担当サブエージェントが The Hacker News を 0件と報告したが、実際には 11-19/11-20 公開の記事が存在したため、親側で補足検索して THN 2件（Ruby 7件の脆弱性、Linux KVM CVE-2026-99312）を採用した。ソース別候補数の The Hacker News は補足検索の結果を記載した
   - AI最新動向・開発組織・キャリアは候補が重複・既出のみで「本日の更新なし」とした。OpenAI Blog の唯一の候補は 11-18 トライアル版との重複、Google Research Blog の候補は 2026-11-20 公式版と同一URLだった。Anthropic Blog・Hacker News(AI)・LeadDev・InfoQ・Publickey は候補0件
+
+## 2026-11-22
+
+- 開始 / 終了(JST): 06:30 / 07:27
+- push したコミット: （なし。ブリーフィングと run-log はローカルクローンに保存済み）
+- 完走: いいえ（06:55 JST までの push に間に合わなかった。理由は「困ったこと」欄を参照）
+- 人の操作・承認: 0回（GitHub コネクタの書き込み承認は要求されたが、未決定のままタイムアウト）
+- check.sh: 1回実行。1回目の結果 PASS、最終結果 PASS
+- ソース別の候補数(7日以内 / うち2日以内):
+  - 日経新聞: 2 / 2
+  - NewsPicks: 1 / 0
+  - TechCrunch: 2 / 0
+  - OpenAI Blog: 4 / 1
+  - Google Research Blog: 1 / 1
+  - Anthropic Blog: 0 / 0
+  - Hacker News(AI): 2 / 2
+  - Hacker News(Show HN / Launch HN): 3 / 2
+  - Product Hunt: 2 / 0
+  - DevelopersIO: 3 / 3
+  - 窓の杜: 2 / 2
+  - Publickey: 0 / 0
+  - LeadDev: 0 / 0
+  - InfoQ: 0 / 0
+  - The Hacker News: 4 / 4
+  - IPA: 1 / 1
+- 過去との重複で落とした候補: TechCrunch「アンソロピック、ナスダック上場で初値111.50ドル」（11-19、11-21トライアル版の終値97.17ドルと同一出来事。鮮度ルールでも不採用）、TechCrunch「アンソロピックの7人の創業者がIPOで計約19.5億ドルを現金化」（11-19、同一IPO出来事。鮮度ルールでも不採用）、NewsPicks「孫正義氏、アンソロピックへの出資見送りを『僕の失敗』と明かす」（11-19、同一IPO出来事。鮮度ルールでも不採用）、OpenAI Blog「GPT-6.2 AstraとSol」（11-17、11-18トライアル版と同一URL）、DevelopersIO「EC2 Graviton5 T9g」（11-20、11-20/11-21版と同一URL）、DevelopersIO「PHPセキュリティリリース AL2023」（11-20、11-21トライアル版のIPA PHP注意喚起と同一出来事）、窓の杜「Windows 11プレビューパッチ」（11-20、11-20/11-21版と同一URL）、The Hacker News「Cisco Expressway」（11-20、11-21トライアル版と同一URL）、The Hacker News「Linux KVM CVE-2026-99312」（11-20、11-21トライアル版と同一URL）、IPA「PHPの複数の脆弱性について注意喚起」（11-20、11-21トライアル版と同一URL）
+- 鮮度ルールで落とした候補: OpenAI Blog「Performance Factory」（11-19）、OpenAI Blog「チップ設計」（11-18）、Google Research Blog「Antigravity /teamwork」（11-13、7日超）、Hacker News「Axonnic」（11-18）、Product Hunt「S.Space」「Vanira」（11-18）はいずれも各欄に2日以内候補があるため不採用
+- 続報として採用したもの: 日経「アンソロピックのIPO調達額、グリーンシュー行使で約935億ドルに」— 11-21トライアル版の上場初日終値97.17ドルに続き、グリーンシュー全額行使で調達総額が約935億ドルとなり史上最大のIPOとなったことが新しい展開。The Hacker News「CISA、悪用確認済みの脆弱性4件をKEVに追加」— 11-21トライアル版のCisco Expressway単独の悪用報道に続き、CISAがVMware vCenterなど4件をKEVに追加し11月23日までの対応を求めたことが新しい展開
+- ⭐の次点と、選ばなかった理由: アンソロピックのIPO調達総額約935億ドル — 史上最大のIPOだが、GPGMEの方が即時の更新対応が必要なため
+- 使ったトークン量(分かれば): 不明
+- 困ったこと・手順どおりにできなかったこと:
+  - 06:55 までの push に間に合わず未完走。GitHub コネクタ create_or_update_file の書き込み承認を 06:37:57 JST に要求したが、実行中にサービスが再起動して呼び出しが中断され、承認は未決定のまま 07:25:22 JST にタイムアウトした（47分経過）。承認要求自体は出ていたが、再起動で実行セッションが失われたため書き込みは実行されず、リモートにブリーフィングファイルが作成されていないことを get_file_contents で確認済み。ブリーフィングと run-log はローカルクローンに保存済み
+  - サブエージェント4件は全件ハンドオフで結果が届いた（11-21と異なりセッションファイルからの回収は不要だった）
+  - Signal のスクリーンショット制限記事は HN の投稿が見つからず、signal.org は SOURCES.md の許可リスト外のため採用を見送った（AI欄は3本）
+  - Frostbite・Zeus・Onlook の HN 投稿日は UTC→JST の換算で確認し、サブエージェント報告の 11-21 ではなく 11-20 を pub マーカーに使った（Zeus は 2026-11-20T00:51:52Z = JST 11-20 09:51）
+  - 開発組織・キャリアは LeadDev・InfoQ とも候補0件で「本日の更新なし」とした
+
+## 2026-11-23
+
+- 開始 / 終了(JST): 06:30 / 07:44（push 呼び出しが承認待ちのまま60分のタイムアウトで終了。ブリーフィングは未 push のまま）
+- push したコミット: なし（GitHub コネクタの書き込み承認が未決定のまま、push 呼び出しが60分のタイムアウトで終了。リモートにファイルは作成されていないことを 07:54 に get_file_contents で確認済み）
+- 完走: いいえ（06:55 JST までの push に間に合わなかった。GitHub コネクタの書き込み承認が未決定のため）
+- 人の操作・承認: 0回（GitHub コネクタの書き込み承認を 06:44 頃に要求したが、未決定のまま 07:44 にタイムアウト）
+- check.sh: 1回実行。1回目の結果 PASS、最終結果 PASS
+- ソース別の候補数(7日以内 / うち2日以内):
+  - 日経新聞: 3 / 2
+  - NewsPicks: 2 / 0
+  - TechCrunch: 6 / 4
+  - OpenAI Blog: 2 / 1
+  - Google Research Blog: 1 / 0
+  - Anthropic Blog: 0 / 0
+  - Hacker News(AI): 8 / 5
+  - Hacker News(Show HN / Launch HN): 7 / 6
+  - Product Hunt: 4 / 0
+  - DevelopersIO: 2 / 1
+  - 窓の杜: 1 / 0
+  - Publickey: 0 / 0
+  - LeadDev: 2 / 0
+  - InfoQ: 0 / 0
+  - The Hacker News: 2 / 2
+  - IPA: 3 / 0
+- 過去との重複で落とした候補: TechCrunch「Everful、4850万ドルを調達」（11-19、2026-11-20公式版と同一出来事）、TechCrunch「Payhawk、2.8億ドルを調達」（11-18、11-21トライアル版と同一URL）、OpenAI Blog「GPT-6.2 AstraとSol」（11-17、11-18トライアル版と同一URL）、Google Research Blog「DuplexのGemini統合」（11-20、11-22トライアル版と同一出来事）、Hacker News「GPT-6.2発表スレッド」（11-17、同一出来事）、Hacker News「Simple BenchでGPT-6.2が振るわず」（11-21、GPT-6.2と同一出来事）、Hacker News「Anthropic上場2日目のAI株売り」（11-20、11-21公式版の米国株急落と同一出来事）、Hacker News「リーマン予想のLean形式証明を認定」（11-21、11-22公式版と同一出来事）、Hacker News「Dettato」（11-20、11-20公式版と同一URL）、DevelopersIO「PHPセキュリティリリース AL2023」（11-20、11-21トライアル版のIPA PHP注意喚起と同一出来事）、窓の杜「11月18日の更新ソフト」（11-18、11-21トライアル版の同シリーズと同一企画）、The Hacker News「GPGMEの重大な脆弱性」（11-21、11-22トライアル版と同一URL）、IPA「PHPの複数の脆弱性」（11-20、11-21トライアル版と同一URL）、IPA「NGINXの複数の脆弱性」（11-19、11-21トライアル版と同一URL）、IPA「PHPセキュリティリリース事前告知」（11-19、同一出来事）、日経「Anthropicの数学者がリーマン予想の証明と主張」（11-22、11-22公式版と同一出来事）、Hacker News「FBI、犯罪情報データベースへの侵入疑惑を調査」（11-21、11-22公式版と同一出来事）、TechCrunch「二つのNvidia」（11-21、NVIDIA CEO退任と同一出来事の分析記事のため不採用）
+- 鮮度ルールで落とした候補: Product Hunt「Creatify Max」（11-17）、「Okatazuke」（11-18）、「Loquela」（11-17）はいずれもローンチ欄に2日以内候補があるため不採用、Hacker News「PTP: プロンプト復元論文」（11-19、AI欄に2日以内候補があるため不採用）、NewsPicks「7〜9月期実質GDP速報値」（11-16、7日境界のため不採用）、Product Hunt「Corpulate」（11-16、7日境界かつコンサルティングサービスのため不採用）
+- 続報として採用したもの: なし
+- ⭐の次点と、選ばなかった理由: Signalのスクリーンショット制限 — OS統合AIによる画面スキャンへの対抗で実務影響が大きいが、CVSS 9.8で修正版未提供のMONAI Labelの方が即時の対応必要性が高いため
+- 使ったトークン量(分かれば): 不明
+- 困ったこと・手順どおりにできなかったこと:
+  - 06:55 までの push に間に合わず未完走。GitHub コネクタ create_or_update_file の書き込み承認を 06:44 頃に要求したが、未決定のまま push 呼び出しが 07:44 に60分のタイムアウトで終了した。ブリーフィングと run-log はローカルクローンに保存済み。リモートに 2026-11-23-briefing-muse.md が作成されていないことを 07:54 に get_file_contents で確認済み
+  - 1回目の収集で2日以内（11-21〜11-23）の候補が0本だったため、親側の判断で11-21〜11-23限定の追加スイープをサブエージェント2人に実施した。結果、Signal・OpenAIパープレキシティ・小島秀夫・ClawDOS・Zero C#・Muru・AWS Agent Registry・MONAI Labelの8本（全採用記事のうち2日以内は8/11本）を確保できた。OpenAI Blogのパープレキシティ記事はTechCrunch記事経由で確認し、ソース別候補数に計上した
+  - セキュリティ担当サブエージェントの最終結果がハンドオフで届かず、英語追加スイープの最終結果もハンドオフで届かなかったため、セッションファイルから全文を抽出して回収した（11-21と同様）
+  - HNの投稿日はUTC→JSTで換算し、Zero C#はサブエージェント報告の11-21ではなく11-22（2026-11-21T15:39Z = JST 11-22 00:39）をpubマーカーに使った。ClawDOSはJST 11-21 14:38、MuruはJST 11-22 18:57で報告通り
+  - 11-22のrun-logに「Signalの記事は採用を見送った」とあったが、本日はTechCrunchの一次ソース記事として検証のうえ採用した（signal.orgではなくtechcrunch.comのリンクを使用）
+  - Anthropic Blog・Publickey・InfoQは候補0件
