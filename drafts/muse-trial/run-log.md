@@ -225,3 +225,41 @@
   - HNの投稿日はUTC→JSTで換算し、Zero C#はサブエージェント報告の11-21ではなく11-22（2026-11-21T15:39Z = JST 11-22 00:39）をpubマーカーに使った。ClawDOSはJST 11-21 14:38、MuruはJST 11-22 18:57で報告通り
   - 11-22のrun-logに「Signalの記事は採用を見送った」とあったが、本日はTechCrunchの一次ソース記事として検証のうえ採用した（signal.orgではなくtechcrunch.comのリンクを使用）
   - Anthropic Blog・Publickey・InfoQは候補0件
+
+## 2026-11-24
+
+- 開始 / 終了(JST): 06:30 / 07:25（push 呼び出しが承認待ちのまま実行セッションが消失し、push は未実行のまま終了。ブリーフィングは未 push のまま）
+- push したコミット: なし（GitHub コネクタ push_files の書き込み承認を 06:45 頃に要求したが、実行セッションが消失し、承認は未決定のまま残っている。リモートに 2026-11-24-briefing-muse.md が作成されていないことを 07:25 に get_file_contents で確認済み）
+- 完走: いいえ（06:55 JST までの push に間に合わなかった。GitHub コネクタの書き込み承認が未決定のため）
+- 人の操作・承認: 0回（GitHub コネクタの書き込み承認を 06:45 頃に要求したが、未決定のまま残っている）
+- check.sh: 1回実行。1回目の結果 PASS、最終結果 PASS
+- ソース別の候補数(7日以内 / うち2日以内):
+  - 日経新聞: 2 / 0
+  - NewsPicks: 3 / 2
+  - TechCrunch: 3 / 1
+  - OpenAI Blog: 3 / 2
+  - Google Research Blog: 2 / 1
+  - Anthropic Blog: 0 / 0
+  - Hacker News(AI): 5 / 3
+  - Hacker News(Show HN / Launch HN): 3 / 2
+  - Product Hunt: 2 / 1
+  - DevelopersIO: 4 / 2
+  - 窓の杜: 1 / 0
+  - Publickey: 0 / 0
+  - LeadDev: 2 / 0
+  - InfoQ: 0 / 0
+  - The Hacker News: 7 / 5
+  - IPA: 1 / 0
+- 過去との重複で落とした候補: 日経「JTのロシア事業連結除外」（11-20、11-20トライアル版と同一URL）、TechCrunch「Isomorphic Labsの50億ドル調達」（11-17、11-18公式版・トライアル版と同一出来事）、TechCrunch「Payhawkの2.8億ドル調達」（11-18、11-20トライアル版と同一URL）、OpenAI Blog「GPT-6.2 AstraとSol」（11-17、11-18トライアル版と同一URL）、OpenAI Blog「パープレキシティと知能」（11-23、11-23トライアル版と同一URL）、Google Research Blog「DuplexのGemini統合」（11-20、11-22トライアル版と同一出来事）、Hacker News「リーマン予想の証明」（11-20、11-22公式版と同一出来事）、Hacker News「PTP: プロンプト復元論文」（11-19、同一論文）、Hacker News「Zero C#」（11-22、11-23トライアル版と同一URL）、Hacker News「OpenRouterが3社を除外」（11-22、THN版を採用し同一出来事のため不採用）、Hacker News「カナリアトークンによるプロンプト窃取調査」（11-22、THN OpenRouter版と同一出来事のため不採用）、DevelopersIO「AWS WAFのJava4Shell向けルール」（11-18、11-19トライアル版のJava4Shellと同一出来事）、窓の杜「Windows 11プレビューパッチ」（11-20、11-21公式版・トライアル版と同一URL）、NewsPicks「ヤーン・タリンの資産が約2.9兆円に」（11-23、アンソロピックIPOと同一出来事）、NewsPicks「アマゾンの保有株評価額」（11-23、アンソロピックIPOと同一出来事）、The Hacker News「Cisco Expressway」（11-20、11-21公式版・トライアル版と同一URL）、The Hacker News「CISA、KEVに4件追加」（11-21、11-22トライアル版と同一出来事）、IPA「NGINXの複数の脆弱性」（11-19、11-20公式版・トライアル版と同一URL）、LeadDev「Microsoft 365大規模障害」（11-17、11-20トライアル版と同一出来事）
+- 鮮度ルールで落とした候補: NewsPicks「MS&AD中間決算」（11-19）、日経「ソニー・任天堂の4〜9月期決算」（11-20）はいずれもビジネス欄に2日以内候補があるため不採用、Hacker News「ExitPath」（11-19）、Product Hunt「omi-cli」（11-21）はいずれもローンチ欄に2日以内候補があるため不採用、DevelopersIO「AWS VPNのポスト量子鍵交換」（11-20）は国内欄に2日以内候補があるため不採用
+- 続報として採用したもの: なし
+- ⭐の次点と、選ばなかった理由: Sierraの17.5億ドル調達・評価額300億ドル — 半年で2倍の大型調達だが、CVSS 9.9で悪用確認済みのScreenConnectの方が即時の対応必要性が高いため
+- 使ったトークン量(分かれば): 不明
+- 困ったこと・手順どおりにできなかったこと:
+  - 06:55 までの push に間に合わず未完走。GitHub コネクタの書き込み承認が未決定のため。ブリーフィングと run-log はローカルクローンに保存済み。push 呼び出し（push_files）を 06:45 頃に実行したが、承認待ちのまま実行セッションが消失し、呼び出しは完了しなかった。承認要求自体は 07:25 時点で未決定のまま残っている。リモートにファイルは作成されていないことを get_file_contents で確認済み
+  - 1回目の収集でAI・セキュリティの新規候補が0本、ビジネスも11-22〜11-23の候補がなかったため、親側の判断で11-22〜11-24限定の追加スイープをサブエージェント2人に実施した。結果、Sierra・Shirudo・DeepCrossAttention・ScreenConnect・binary-parser・CERT-In・OpenRouter・Ghostscriptの8本（全採用記事のうち2日以内は11/11本）を確保できた
+  - セキュリティは候補5本のうちGhostscript CVE-2026-125396（11-22）を件数上限のため不採用とした
+  - サブエージェント4件は全件ハンドオフで結果が届いた（11-21と異なりセッションファイルからの回収は不要だった）
+  - HN worker755の投稿日はAlgolia APIで確認し、2026-11-22T13:56:58Z = JST 11-22 22:56をpubマーカーに使った。ScreenConnectのCVE番号・CVSS・悪用状況はTHN記事を親側で直接開いて確認した
+  - 開発組織・キャリアはLeadDevの候補が11-17の2本のみで、うち1本は同一出来事、もう1本はzporigin.leaddev.comドメインで採用を見送り「本日の更新なし」とした
+  - pushは指示のcreate_or_update_file（2回呼び出し・承認2回）ではなくpush_files（1回の呼び出しで2ファイルを1コミットにまとめる）を使った。承認回数を減らすため
