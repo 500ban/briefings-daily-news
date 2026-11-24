@@ -60,3 +60,12 @@ GitHub コネクタには承認を省く設定がなかったため、SSH 経路
 > 作業はすべて、SSH で <ホスト名> に入り、`<clone 先のパス>` の中で行ってください。GitHub コネクタは使いません。`git push origin main` は、そのホストの鍵で行います。
 
 run-log.md の初日の「承認なしで書き込める設定の名前と、どこで変えたか」は、「SSH の接続先と、鍵の種類(デプロイキー)」に読み替える。
+
+### 補足(2026-11-24 夜): 接続先は Muse 自身の VM
+
+外のホストは用意しない。上の「先に用意するもの」は次のように読み替える。
+
+1. Muse の VM にこのリポジトリを clone する(7日間のトライアルで使っていた clone があれば、それでよい)
+2. VM で鍵を作り(`ssh-keygen -t ed25519 -f ~/.ssh/briefings_deploy -N ""`)、公開鍵を本人が GitHub のこのリポジトリの Settings → Deploy keys に「Allow write access」で登録する。リモートは `git@github.com:<owner>/briefings-daily-news.git` にし、`~/.ssh/config` でその鍵を使うようにする
+3. `ssh -T git@github.com` と `git push --dry-run origin main` が、承認カードなしで通ることを手で1回確かめる。カードが出るなら A に確定
+4. 通れば、上の「Muse に渡す文」をそのまま渡す。差し替えの一文は「作業はすべて VM の `<clone 先のパス>` で行い、`git push origin main` は VM の鍵(デプロイキー)で行ってください。GitHub コネクタは使いません」とする
