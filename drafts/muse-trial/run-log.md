@@ -305,3 +305,39 @@
   - ローカル clone に未 push の 11/24 分ブリーフィングと run-log 変更が残っており、最初の `git pull --rebase` が失敗した。リモートに同一内容があることを確認してからローカルの未コミット変更を破棄し、pull し直した（リモートの内容は失われていない）
   - 最初の `git commit` がローカルの git ユーザー設定なしで失敗した（unable to auto-detect email address）。リポジトリの既存コミットと同じ著者（500ban <i.iniwa.daitokuji@gmail.com>）をローカル設定してから commit し直した。push 自体はその後の1回で成功した
   - （追記・push 後）ビジネス・AI担当サブエージェントの最終結果が push 後に届いた。同表の内容：日経新聞 5本（11/25が3本、11/24が2本）、TechCrunch 7日以内2本（Decart、CrowdStrikeのZscaler買収＝11/22トライアル版と同一出来事）、OpenAI Blog 7日以内5本・うち2日以内2本、Google Research Blog 4本、Anthropic Blog 7日以内0本（11/09の1本は期間外）、Hacker News(AI) 4本。OpenAI Blog の11/24記事2本（GPT-6のタンパク質設計の実証、Astraによる系外惑星候補の発見）は AI 欄の採用候補になり得たが、push 後の到着のため採用見送り。run-log のソース別候補数は親側の検索にもとづく数値のまま残す。採用した11本の記事自体に誤りはない
+
+## 2026-11-27
+
+- 開始 / 終了(JST): 06:30 / 06:37（ブリーフィング push 完了時刻。run-log 自体の push はその後に実施）
+- push したコミット: f12f5dd1367f183a18066b3780f752a47670862b（ブリーフィング。run-log のコミットは別途）
+- 承認カード: 出なかった
+- push が完了した時刻(JST): 06:37
+- 完走: はい
+- 人の操作・承認: 0回
+- check.sh: 1回実行。1回目の結果 PASS、最終結果 PASS
+- ソース別の候補数(7日以内 / うち2日以内):
+  - 日経新聞: 3 / 2
+  - NewsPicks: 0 / 0
+  - TechCrunch: 3 / 2
+  - OpenAI Blog: 3 / 0
+  - Google Research Blog: 1 / 1
+  - Anthropic Blog: 1 / 1
+  - Hacker News(AI): 0 / 0（サブエージェントの表を回収できず未確認）
+  - Hacker News(Show HN / Launch HN): 1 / 0（詳細未確認）
+  - Product Hunt: 14 / 14
+  - DevelopersIO: 10 / 10
+  - 窓の杜: 0 / 0（サブエージェントの表を回収できず未確認）
+  - Publickey: 0 / 0（サブエージェントの表を回収できず未確認）
+  - LeadDev: 1 / 1
+  - InfoQ: 1 / 0（詳細未確認）
+  - The Hacker News: 2 / 1
+  - IPA: 0 / 0
+- 過去との重複で落とした候補: Anthropic Blog「Messages APIをRustへ移行」（11-25、2026-11-26公式版と同一URL）、Google Research Blog「Fuse」（11-25、11-26トライアル版と同一URL）、OpenAI Blog「GPT-6.2 AstraとSol」（11-17、期間外かつ既出）、OpenAI「APIの医療向けモデル構成」（11-24、2026-11-26公式版と同一出来事）、TechCrunch「AmazonのDecart買収」（11-24、11-23トライアル版と同一出来事）、The Hacker News「GPGMEの重大な脆弱性」（11-21、11-22トライアル版と同一URL）、The Hacker News「Ruby 7件の脆弱性」（11-19、11-21トライアル版と同一URL）
+- 鮮度ルールで落とした候補: 日経「NHK中間決算、赤字197億円」（11-24）、Product Hunt「Samiksa」（11-20）はいずれも各欄に2日以内候補があるため不採用
+- 続報として採用したもの: 日経「日経平均が反発、一時1100円高」— 11月25日の1633円安から26日に反発し、キオクシアが一時ストップ高となったことが新しい展開。The Hacker News「Drupalの新たな脆弱性CVE-2026-136716」— Fail2Install（CVE-2026-132165）の修正後も残る脆弱なインストール状態に対処する新たなCVEで、悪用が確認されたことが新しい展開
+- ⭐の次点と、選ばなかった理由: OpenAI「GPT-6のタンパク質設計」— 実験で結合が確認されたが、悪用確認済みのDrupalの方が即時の対応必要性が高いため
+- 使ったトークン量(分かれば): 不明
+- 困ったこと・手順どおりにできなかったこと:
+  - 収集サブエージェント4件は全件完了したが、最終結果がハンドオフで届かず、セッションファイルにも全文がなかったため、親側で直接検索して候補を補った。ソース別候補数のうち Hacker News(AI)・Show HN・窓の杜・Publickey・InfoQ は親側で未確認のため0件として記載した
+  - 最初の `git push deploy main` がSSH認証で失敗した。原因は ~/.ssh/config が存在せず、デプロイキー指定とプロキシ経由のProxyCommandが読まれていなかったため（11/26初日は動作していた設定が消えていた）。~/.ssh/config を再作成し、さらにホスト鍵検証で止まったため GIT_SSH_COMMAND に StrictHostKeyChecking=accept-new を付けて push し直し、06:37 に成功した。exec 環境で HOME が /root と /home/hatch で揺れる呼び出しがあったため、/root/.ssh にも鍵と設定を置いた
+  - 11/26公式版がAnthropicのRust移行を既に掲載していたため、AI欄の候補をOpenAIの11/24記事2本に切り替えた（2日以内に採用できる候補がない欄のため、3日前の記事を採用）
